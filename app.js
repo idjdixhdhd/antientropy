@@ -820,6 +820,7 @@ const NEWS_CATS = [
   { v: 'opensource', label: '开源工具' },
   { v: 'frontend', label: '前端设计' },
   { v: 'science', label: '科学科普' },
+  { v: 'philosophy', label: '哲学哲思' },
   { v: 'hardware', label: '科技数码', locked: true },
   { v: 'code', label: '编程开发', locked: true },
   { v: 'study', label: '学习效率', locked: true },
@@ -832,6 +833,8 @@ let NEWS_FETCHED = '';
 let NEWS_SELECTED = [];            // 多选：空数组 = 看全部；否则只看这些类别
 let newsTimer = null;
 const NEWS_PREFS_KEY = 'ae_news_cats';
+const NEWS_KEYS_KEY = 'ae_news_keys';
+let NEWS_KEYS = [];                // 个人关注词：自己输入，按词过滤
 function catLabel(v) { const c = NEWS_CATS.find(x => x.v === v); return c ? c.label : v; }
 
 // 离线回退缓存：与 news.json 同步，仅在联网失败时启用，界面明确标"缓存"
@@ -855,6 +858,8 @@ const LAST_CACHE = {
     { id: 'quanta-aging', title: 'Why Aging May Be a Program, Not a Breakdown', titleZh: '衰老可能是程序设定，而不是自然损耗', summary: '科学家通过解密数百万小鼠细胞的分子特征，发现衰老更像一场"细胞社会的重组"，而不是随机磨损——这个视角正在改变衰老研究。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-14', url: 'https://www.quantamagazine.org/why-aging-may-be-a-program-not-a-breakdown-20260814/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Junyue-Cao-cr-Karan-Dias-Default.webp', tags: ['生物', '衰老', '研究'], category: 'science', translated: true },
     { id: 'quanta-fractal', title: 'Graduate Student Proves a Quantum Uncertainty Principle for Fractals', titleZh: '研究生证明分形的量子不确定性原理', summary: '一位研究生把混沌、量子理论和无限复杂的分形结构结合，证明了一个被称为"基础性成果"的新不确定性原理——数学物理的突破。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-12', url: 'https://www.quantamagazine.org/graduate-student-proves-the-fractal-uncertainty-principle-20260812/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Fractal-Uncertainty-cr-Ada-Zejun-Shen-Default.webp', tags: ['数学', '量子', '突破'], category: 'science', translated: true },
     { id: 'quanta-rivers', title: 'Why Are Rivers So Mathematical?', titleZh: '为什么河流如此数学？', summary: '一条简单的尺度定律让混乱的水流、岩石和泥沙有了秩序。新发现把这条定律推得更远——自然界里的数学之美。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-10', url: 'https://www.quantamagazine.org/why-are-rivers-so-mathematical-20260810/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia-River-Fractals-cr-Ada-Zejun-Shen-Default.webp', tags: ['数学', '自然', '规律'], category: 'science', translated: true },
+    { id: 'aeon-zealotry', title: 'In praise of zealotry', titleZh: '赞颂狂热：为什么被边缘化的人需要"不礼貌"的辩论', summary: '思想史散文：早期女权主义者（如 Mary Astell）拒绝在辩论里保持"礼貌"，因为礼貌的框架本身就带着特权。关于辩论伦理、思想自由与发声方式的哲学反思。', source: 'Aeon', sourceUrl: 'https://aeon.co', publishedAt: '2026-08-18', url: 'https://aeon.co/essays/polite-debate-has-privilege-the-marginalised-need-zealotry', image: null, tags: ['哲学', '伦理', '思辨'], category: 'philosophy', translated: true },
+    { id: 'aeon-stereotyping', title: 'How we meet the future', titleZh: '我们如何遇见未来：刻板印象何时是工具、何时是罪', summary: '哲学散文：刻板印象不全是坏事——有时候它是快速理解世界的"工具"，有时候却变成偏见与伤害的"罪"。探讨它到底该何时用、何时该停下。', source: 'Aeon', sourceUrl: 'https://aeon.co', publishedAt: '2026-08-10', url: 'https://aeon.co/essays/when-is-stereotyping-a-handy-tool-and-when-is-it-a-sin', image: null, tags: ['哲学', '认知', '思辨'], category: 'philosophy', translated: true },
   ],
 };
 
@@ -890,10 +895,18 @@ function newsCard(it) {
 
 function renderNews() {
   const grid = $('#newsGrid');
+  renderKeyTags();
   // 多选过滤：未选任何类别 = 看全部（你和你朋友各选各的）
-  const list = NEWS_SELECTED.length
+  let list = NEWS_SELECTED.length
     ? NEWS_ITEMS.filter(i => NEWS_SELECTED.includes(i.category))
     : NEWS_ITEMS;
+  // 个人关注词过滤：标题 / 中文标题 / 摘要 / 标签包含任一关注词
+  if (NEWS_KEYS.length) {
+    list = list.filter(it => {
+      const hay = ((it.titleZh || '') + (it.title || '') + (it.summary || '') + (it.tags || []).join(' ')).toLowerCase();
+      return NEWS_KEYS.some(k => k && hay.includes(k.toLowerCase()));
+    });
+  }
   $('#newsCount').textContent = NEWS_ITEMS.length;
   $('#newsStatus').textContent = NEWS_STATUS === 'live' ? '实时' : '缓存';
   $('#newsStatus').className = 'metalab ' + (NEWS_STATUS === 'live' ? 'is-live' : 'is-cache');
@@ -917,11 +930,25 @@ function renderNews() {
   }));
   if (!list.length) {
     grid.innerHTML = '<div class="news-empty"><div class="empty-ic" data-icon="inbox"></div>'
-      + '这一类别暂时没有条目。<br>点“全部”或换一个类别，或点"立即刷新"重新拉取。</div>';
+      + (NEWS_KEYS.length ? '没有匹配关注词的条目。<br>换个词，或删掉关注词再看看。' : '这一类别暂时没有条目。<br>点"全部"或换一个类别，或点"立即刷新"重新拉取。')
+      + '</div>';
     paintIcons(grid); return;
   }
   grid.innerHTML = list.map(newsCard).join('');
   paintIcons(grid);
+}
+
+function renderKeyTags() {
+  const box = $('#keyTags'); if (!box) return;
+  box.innerHTML = NEWS_KEYS.map(k =>
+    '<span class="keytag"><span class="key-t">' + esc(k) + '</span><b class="key-x" data-key="' + esc(k) + '" role="button" aria-label="移除">×</b></span>'
+  ).join('');
+  $$('#keyTags [data-key]').forEach(el => el.addEventListener('click', () => {
+    const k = el.dataset.key;
+    NEWS_KEYS = NEWS_KEYS.filter(x => x !== k);
+    try { localStorage.setItem(NEWS_KEYS_KEY, JSON.stringify(NEWS_KEYS)); } catch (e) {}
+    renderKeyTags(); renderNews();
+  }));
 }
 
 function showNewsStat(msg, on) {
@@ -964,6 +991,11 @@ function loadNews() {
     const saved = JSON.parse(localStorage.getItem(NEWS_PREFS_KEY) || '[]');
     if (Array.isArray(saved)) NEWS_SELECTED = saved.filter(Boolean);
   } catch (e) {}
+  // 读取个人关注词
+  try {
+    const ks = JSON.parse(localStorage.getItem(NEWS_KEYS_KEY) || '[]');
+    if (Array.isArray(ks)) NEWS_KEYS = ks.filter(x => typeof x === 'string' && x.trim());
+  } catch (e) {}
   applyNews(LAST_CACHE, 'cache');             // 先显示离线缓存，立即可见
   const ctrl = new AbortController();
   newsTimer = setTimeout(() => ctrl.abort(), 8000);
@@ -1001,6 +1033,14 @@ function boot() {
   // 灵感雷达：真实资讯流
   loadNews();
   $('#newsRefresh').addEventListener('click', refreshNews);
+  $('#keyForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = $('#keyInp').value.trim(); if (!v) return;
+    if (!NEWS_KEYS.includes(v)) NEWS_KEYS.push(v);
+    $('#keyInp').value = '';
+    try { localStorage.setItem(NEWS_KEYS_KEY, JSON.stringify(NEWS_KEYS)); } catch (e) {}
+    renderKeyTags(); renderNews();
+  });
 
   const d = keyToDate(TODAY);
   $('#sideDate').textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日';
