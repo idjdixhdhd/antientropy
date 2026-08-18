@@ -85,6 +85,7 @@ svg{display:block}
   -webkit-mask-image:radial-gradient(circle at 62% 34%,#000 0%,transparent 78%);
 }
 .bg-amb{position:absolute;border-radius:50%;filter:blur(90px)}
+.bg-dust{position:absolute;inset:0;width:100%;height:100%}
 .bg-amb-a{width:820px;height:820px;left:-180px;top:-320px;background:var(--acc);opacity:.055}
 .bg-amb-b{width:700px;height:700px;right:-200px;bottom:-300px;background:var(--g2);opacity:.04}
 .bg-noise{
@@ -180,7 +181,8 @@ svg{display:block}
 
 .phead{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s5);
   padding-bottom:var(--s5);margin-bottom:var(--s6);border-bottom:1px solid var(--line)}
-.ptitle{font-size:29px;line-height:1.25;letter-spacing:-.02em}
+.ptitle{font-size:29px;line-height:1.25;letter-spacing:-.02em;
+  background:linear-gradient(94deg,var(--tx) 24%,var(--acc) 82%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .psub{margin:9px 0 0;max-width:62ch;font-size:13.5px;color:var(--tx-2);line-height:1.7}
 .phead-meta{flex:0 0 auto;text-align:right}
 .bigmeta{font-family:var(--f-num);font-size:32px;line-height:1;letter-spacing:-.03em;color:var(--acc)}
