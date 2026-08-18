@@ -892,7 +892,7 @@ function applyNews(data, status) {
     seen[key] = 1; clean.push(it);
   });
   if (!clean.length) { if (!NEWS_ITEMS.length) { NEWS_STATUS = 'cache'; showNewsStat('抓取到的内容无效，已显示离线缓存。', true); } return; }
-  NEWS_ITEMS = clean.slice(0, 10);
+  NEWS_ITEMS = clean.slice(0, 30);   // 全品类池子：多类别混流，每类都要有内容（原 10 条上限会截掉尾部类别）
   NEWS_STATUS = status;
   NEWS_FETCHED = data.fetchedAt || '';
   showNewsStat(status === 'cache' ? '本次联网未成功，正在显示上一次成功抓取的缓存。' : '', status === 'cache');
