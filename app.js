@@ -762,6 +762,54 @@ function closeEgg() {
 }
 
 /* ==========================================================
+   环境音 BGM：Web Audio 合成，无需外部音频文件、无版权问题
+   默认关闭（浏览器不允许自动播放），用户点击"环境音"开关才开启
+   和弦进行 Am - F - C - G，低通滤波 + 慢包络，做冥想氛围垫音
+   ========================================================== */
+const BGM = {
+  ctx: null, timer: null, on: false,
+  chords: [[220, 277.18, 329.63], [174.61, 220, 261.63], [130.81, 196, 261.63], [196, 246.94, 293.66]],
+  toggle() { return this.on ? this.stop() : this.start(); },
+  start() {
+    if (this.on) return true;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return false;
+    const ctx = this.ctx = new AC();
+    const master = ctx.createGain(); master.gain.value = 0.05;
+    const filt = ctx.createBiquadFilter(); filt.type = 'lowpass'; filt.frequency.value = 820;
+    master.connect(filt); filt.connect(ctx.destination);
+    const self = this;
+    let ci = 0;
+    const step = () => {
+      const t = ctx.currentTime;
+      const ch = self.chords[ci % self.chords.length]; ci++;
+      ch.forEach((f, k) => {
+        const o = ctx.createOscillator();
+        o.type = k === 0 ? 'sine' : 'triangle';
+        o.frequency.value = f;
+        o.detune.value = Math.random() * 6 - 3;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(0.5, t + 2.4);
+        g.gain.setValueAtTime(0.5, t + 6.2);
+        g.gain.linearRampToValueAtTime(0.0001, t + 8.1);
+        o.connect(g); g.connect(master);
+        o.start(t); o.stop(t + 8.3);
+      });
+    };
+    step();
+    self.timer = setInterval(step, 8000);
+    self.on = true; return true;
+  },
+  stop() {
+    this.on = false;
+    if (this.timer) { clearInterval(this.timer); this.timer = null; }
+    if (this.ctx) { try { this.ctx.close(); } catch (e) {} this.ctx = null; }
+    return false;
+  },
+};
+
+/* ==========================================================
    E. 灵感雷达（真实资讯流 · 数据管线前端）
    原则：只显示可验证官方源的真实条目；离线时回退上次成功缓存并明确标"缓存"。
    ========================================================== */
@@ -981,6 +1029,12 @@ function boot() {
   });
   $('#replayBtn').addEventListener('click', playEgg);
   $('#eggClose').addEventListener('click', closeEgg);
+  $('#bgmBtn').addEventListener('click', () => {
+    const on = BGM.toggle();
+    $('#bgmBtn').classList.toggle('on', on);
+    $('#bgmState').textContent = on ? 'ON' : 'OFF';
+    toast(on ? '环境音已开启' : '环境音已关闭');
+  });
   $('#resetLove').addEventListener('click', () => {
     askConfirm('重置全部记录？', '会清空所有"在意的人"记录并回到 0 / 20。这个操作不可撤销。', () => {
       S.loves = []; S.eggSeen = false; save(); renderLove(); toast('已重置为 0 / 20');
@@ -1013,6 +1067,7 @@ function boot() {
   window.AE = {
     go: go, theme: t => { S.theme = t; applyTheme(); if (S.view === 'mainline') drawAllCharts(); },
     egg: playEgg, closeEgg: closeEgg, redraw: drawAllCharts, state: () => S, news: loadNews,
+    bgm: () => BGM.on, bgmToggle: () => BGM.toggle(),
   };
 }
 document.addEventListener('DOMContentLoaded', boot);
