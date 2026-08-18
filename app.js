@@ -813,13 +813,18 @@ const BGM = {
    E. 灵感雷达（真实资讯流 · 数据管线前端）
    原则：只显示可验证官方源的真实条目；离线时回退上次成功缓存并明确标"缓存"。
    ========================================================== */
-// 类别定义：雷达的“标签开关”就按这些大类。UI 只显示池子里实际存在的类别。
+// 类别定义：成长学习向全品类池子。locked=true = 数据源还在接入中（UI 显示灰态"待解锁"）。
+// 原则：能配到真实官方源就解锁，配不到就诚实标灰，绝不造假数据。
 const NEWS_CATS = [
-  { v: 'ai', label: 'AI 大模型' },
+  { v: 'ai', label: 'AI 前沿' },
   { v: 'opensource', label: '开源工具' },
   { v: 'frontend', label: '前端设计' },
-  { v: 'study', label: '学习法' },
-  { v: 'science', label: 'AI 科普' },
+  { v: 'science', label: '科学科普' },
+  { v: 'hardware', label: '科技数码', locked: true },
+  { v: 'code', label: '编程开发', locked: true },
+  { v: 'study', label: '学习效率', locked: true },
+  { v: 'ai101', label: 'AI 科普', locked: true },
+  { v: 'growth', label: '个人成长', locked: true },
 ];
 let NEWS_ITEMS = [];
 let NEWS_STATUS = 'live';          // 'live' | 'cache'
@@ -846,6 +851,10 @@ const LAST_CACHE = {
     { id: 'smashing-baseline', title: 'How Baseline Can Help Ship Less JavaScript', titleZh: '用 Baseline 少写 JavaScript：浏览器原生能力就够了', summary: 'Smashing Magazine 实战：用 Baseline、Intl、Fetch、<dialog>、CSS 锚点定位这些浏览器原生能力，少依赖第三方包，包体积更小、加载更快。对你做网站很实用。', source: 'Smashing Magazine', sourceUrl: 'https://www.smashingmagazine.com/', publishedAt: '2026-08-07', url: 'https://smashingmagazine.com/2026/08/how-baseline-can-help-ship-less-javascript/', image: null, tags: ['前端', '性能', '实战'], category: 'frontend', translated: true },
     { id: 'smashing-lottie', title: 'Building Tactile UX: Honoring Intentional Design With Lottie', titleZh: '用 Lottie 做"有质感"的交互：不用物理引擎也好看', summary: 'Smashing Magazine：用 Lottie 做出"触觉感"的前端动效——靠 DOM、CSS 变量和移动端性能优化，不引入重型物理引擎，也能让界面有质感。适合你追求视觉的站点。', source: 'Smashing Magazine', sourceUrl: 'https://www.smashingmagazine.com/', publishedAt: '2026-08-11', url: 'https://smashingmagazine.com/2026/08/building-tactile-ux-honoring-intentional-design-lottie/', image: null, tags: ['前端', '动效', '设计'], category: 'frontend', translated: true },
     { id: 'csstricks-darkmode', title: 'Dark mode toggles: two states are enough', titleZh: '深色模式开关：两种状态就够，别过度设计', summary: 'CSS-Tricks：深色模式切换只要"亮/暗"两种状态就够了，别搞一堆中间档把用户绕晕。前端 UI 的实用小贴士，你站点也能用。', source: 'CSS-Tricks', sourceUrl: 'https://css-tricks.com/', publishedAt: '2026-08-17', url: 'https://css-tricks.com/dark-mode-toggles-two-states-are-enough/', image: null, tags: ['前端', 'UI', '深色模式'], category: 'frontend', translated: true },
+    { id: 'quanta-fluids', title: 'Theory of Fluids Enters the 21st Century', titleZh: '流体理论迈入 21 世纪', summary: '从 19 世纪到 21 世纪初，物理学家一直用同一套理论理解流体。现在借助一个现代洞见，他们从底层重新定义了流体的理论——物理前沿的科普。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-17', url: 'https://www.quantamagazine.org/theory-of-fluids-enters-the-21st-century-20260817/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Slow-mo-paint-cr-DepositPhotos_Alamy-Default.webp', tags: ['物理', '流体', '前沿'], category: 'science', translated: true },
+    { id: 'quanta-aging', title: 'Why Aging May Be a Program, Not a Breakdown', titleZh: '衰老可能是程序设定，而不是自然损耗', summary: '科学家通过解密数百万小鼠细胞的分子特征，发现衰老更像一场"细胞社会的重组"，而不是随机磨损——这个视角正在改变衰老研究。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-14', url: 'https://www.quantamagazine.org/why-aging-may-be-a-program-not-a-breakdown-20260814/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Junyue-Cao-cr-Karan-Dias-Default.webp', tags: ['生物', '衰老', '研究'], category: 'science', translated: true },
+    { id: 'quanta-fractal', title: 'Graduate Student Proves a Quantum Uncertainty Principle for Fractals', titleZh: '研究生证明分形的量子不确定性原理', summary: '一位研究生把混沌、量子理论和无限复杂的分形结构结合，证明了一个被称为"基础性成果"的新不确定性原理——数学物理的突破。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-12', url: 'https://www.quantamagazine.org/graduate-student-proves-the-fractal-uncertainty-principle-20260812/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Fractal-Uncertainty-cr-Ada-Zejun-Shen-Default.webp', tags: ['数学', '量子', '突破'], category: 'science', translated: true },
+    { id: 'quanta-rivers', title: 'Why Are Rivers So Mathematical?', titleZh: '为什么河流如此数学？', summary: '一条简单的尺度定律让混乱的水流、岩石和泥沙有了秩序。新发现把这条定律推得更远——自然界里的数学之美。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-10', url: 'https://www.quantamagazine.org/why-are-rivers-so-mathematical-20260810/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia-River-Fractals-cr-Ada-Zejun-Shen-Default.webp', tags: ['数学', '自然', '规律'], category: 'science', translated: true },
   ],
 };
 
@@ -889,14 +898,15 @@ function renderNews() {
   $('#newsStatus').textContent = NEWS_STATUS === 'live' ? '实时' : '缓存';
   $('#newsStatus').className = 'metalab ' + (NEWS_STATUS === 'live' ? 'is-live' : 'is-cache');
   $('#newsFetched').textContent = '上次刷新：' + fmtFetched(NEWS_FETCHED);
-  // 动态生成类别开关：只列池子里实际存在的类别 + “全部”
-  const cats = [...new Set(NEWS_ITEMS.map(i => i.category).filter(Boolean))];
-  const chips = [{ v: 'all', label: '全部' }].concat(cats.map(c => ({ v: c, label: catLabel(c) })));
-  $('#newsSrc').innerHTML = chips.map(c =>
-    '<button class="srcbtn catbtn' + ((c.v === 'all' && !NEWS_SELECTED.length) || NEWS_SELECTED.includes(c.v) ? ' on' : '') + '" type="button" data-cat="' + esc(c.v) + '">' + esc(c.label) + '</button>'
-  ).join('');
+  // 生成类别开关：显示全部类别（含"待解锁"灰态），已解锁的按数据过滤
+  const chips = [{ v: 'all', label: '全部' }].concat(NEWS_CATS.map(c => ({ v: c.v, label: c.label, locked: !!c.locked })));
+  $('#newsSrc').innerHTML = chips.map(c => {
+    const on = (c.v === 'all' && !NEWS_SELECTED.length) || NEWS_SELECTED.includes(c.v);
+    return '<button class="srcbtn catbtn' + (on ? ' on' : '') + (c.locked ? ' lock' : '') + '" type="button" data-cat="' + esc(c.v) + '"' + (c.locked ? ' disabled' : '') + '>' + esc(c.label) + (c.locked ? '<em class="cat-lock">待解锁</em>' : '') + '</button>';
+  }).join('');
   $$('#newsSrc [data-cat]').forEach(b => b.addEventListener('click', () => {
     const v = b.dataset.cat;
+    if (b.disabled) { toast('这个类别还在接入数据源，先看已解锁的'); return; }
     if (v === 'all') NEWS_SELECTED = [];
     else {
       const i = NEWS_SELECTED.indexOf(v);

@@ -184,6 +184,62 @@
       "tags": ["前端", "UI", "深色模式"],
       "category": "frontend",
       "translated": true
+    },
+    {
+      "id": "quanta-fluids",
+      "title": "Theory of Fluids Enters the 21st Century",
+      "titleZh": "流体理论迈入 21 世纪",
+      "summary": "从 19 世纪到 21 世纪初，物理学家一直用同一套理论理解流体。现在借助一个现代洞见，他们从底层重新定义了流体的理论——物理前沿的科普。",
+      "source": "Quanta Magazine",
+      "sourceUrl": "https://www.quantamagazine.org",
+      "publishedAt": "2026-08-17",
+      "url": "https://www.quantamagazine.org/theory-of-fluids-enters-the-21st-century-20260817/",
+      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Slow-mo-paint-cr-DepositPhotos_Alamy-Default.webp",
+      "tags": ["物理", "流体", "前沿"],
+      "category": "science",
+      "translated": true
+    },
+    {
+      "id": "quanta-aging",
+      "title": "Why Aging May Be a Program, Not a Breakdown",
+      "titleZh": "衰老可能是程序设定，而不是自然损耗",
+      "summary": "科学家通过解密数百万小鼠细胞的分子特征，发现衰老更像一场“细胞社会的重组”，而不是随机磨损——这个视角正在改变衰老研究。",
+      "source": "Quanta Magazine",
+      "sourceUrl": "https://www.quantamagazine.org",
+      "publishedAt": "2026-08-14",
+      "url": "https://www.quantamagazine.org/why-aging-may-be-a-program-not-a-breakdown-20260814/",
+      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Junyue-Cao-cr-Karan-Dias-Default.webp",
+      "tags": ["生物", "衰老", "研究"],
+      "category": "science",
+      "translated": true
+    },
+    {
+      "id": "quanta-fractal",
+      "title": "Graduate Student Proves a Quantum Uncertainty Principle for Fractals",
+      "titleZh": "研究生证明分形的量子不确定性原理",
+      "summary": "一位研究生把混沌、量子理论和无限复杂的分形结构结合，证明了一个被称为“基础性成果”的新不确定性原理——数学物理的突破。",
+      "source": "Quanta Magazine",
+      "sourceUrl": "https://www.quantamagazine.org",
+      "publishedAt": "2026-08-12",
+      "url": "https://www.quantamagazine.org/graduate-student-proves-the-fractal-uncertainty-principle-20260812/",
+      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Fractal-Uncertainty-cr-Ada-Zejun-Shen-Default.webp",
+      "tags": ["数学", "量子", "突破"],
+      "category": "science",
+      "translated": true
+    },
+    {
+      "id": "quanta-rivers",
+      "title": "Why Are Rivers So Mathematical?",
+      "titleZh": "为什么河流如此数学？",
+      "summary": "一条简单的尺度定律让混乱的水流、岩石和泥沙有了秩序。新发现把这条定律推得更远——自然界里的数学之美。",
+      "source": "Quanta Magazine",
+      "sourceUrl": "https://www.quantamagazine.org",
+      "publishedAt": "2026-08-10",
+      "url": "https://www.quantamagazine.org/why-are-rivers-so-mathematical-20260810/",
+      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia-River-Fractals-cr-Ada-Zejun-Shen-Default.webp",
+      "tags": ["数学", "自然", "规律"],
+      "category": "science",
+      "translated": true
     }
   ]
 }

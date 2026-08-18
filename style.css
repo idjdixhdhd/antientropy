@@ -530,6 +530,13 @@ svg{display:block}
   border:1px solid var(--line-2);border-radius:5px;padding:6px 12px;cursor:pointer;transition:.16s}
 .srcbtn:hover{border-color:var(--line-2);color:var(--tx);background:var(--panel-3)}
 .srcbtn.on{color:var(--acc);border-color:var(--acc-line);background:var(--acc-soft)}
+.srcbtn.lock{opacity:.42;cursor:not-allowed;color:var(--tx-3);background:var(--panel-2)}
+.srcbtn.lock:hover{border-color:var(--line);color:var(--tx-3);background:var(--panel-2)}
+.srcbtn.lock .cat-lock{font-style:normal;font-size:9px;letter-spacing:.05em;margin-left:5px;border:1px solid var(--line-2);border-radius:3px;padding:0 3px;color:var(--tx-3)}
+@media (max-width:600px){
+  .newssrc{flex-wrap:nowrap;overflow-x:auto;padding-bottom:5px;-webkit-overflow-scrolling:touch}
+  .newssrc::-webkit-scrollbar{height:0}
+}
 .newsact{display:flex;align-items:center;gap:var(--s3)}
 .newsact .newsrefresh{font-size:12px;color:var(--tx-3);font-family:var(--f-num)}
 .metalab.is-live{color:var(--acc)}
