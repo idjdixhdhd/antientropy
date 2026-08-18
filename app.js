@@ -810,6 +810,57 @@ const BGM = {
 };
 
 /* ==========================================================
+   熵尘粒子背景：克制的动态氛围（低密度 / 低透明度 / 缓慢漂移）
+   薄荷 + 玫瑰微光，服务"熵"主题但不打扰内容；尊重减弱动效
+   ========================================================== */
+let dustRAF = null;
+function initDust() {
+  const cv = $('#bgDust'); if (!cv) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const ctx = cv.getContext('2d');
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  let W = 0, H = 0, parts = [];
+  function resize() {
+    W = window.innerWidth; H = window.innerHeight;
+    cv.width = W * DPR; cv.height = H * DPR;
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+  function spawn() {
+    const n = Math.min(34, Math.max(14, Math.round(W * H / 46000)));
+    parts = [];
+    for (let i = 0; i < n; i++) parts.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.6 + Math.random() * 2.0,
+      vx: (Math.random() - 0.5) * 0.16,
+      vy: -(0.04 + Math.random() * 0.14),
+      ph: Math.random() * Math.PI * 2,
+      sp: 0.004 + Math.random() * 0.012,
+      rose: Math.random() < 0.35,
+    });
+  }
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of parts) {
+      p.ph += p.sp;
+      p.x += p.vx + Math.sin(p.ph) * 0.12;
+      p.y += p.vy;
+      if (p.y < -8) { p.y = H + 8; p.x = Math.random() * W; }
+      if (p.x < -8) p.x = W + 8; if (p.x > W + 8) p.x = -8;
+      const a = 0.09 + 0.20 * (0.5 + 0.5 * Math.sin(p.ph));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.rose ? 'rgba(229,171,142,' + a.toFixed(3) + ')' : 'rgba(139,233,190,' + a.toFixed(3) + ')';
+      ctx.fill();
+    }
+    dustRAF = requestAnimationFrame(frame);
+  }
+  resize(); spawn(); frame();
+  let rt = null;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { resize(); spawn(); }, 200); });
+}
+
+/* ==========================================================
    E. 灵感雷达（真实资讯流 · 数据管线前端）
    原则：只显示可验证官方源的真实条目；离线时回退上次成功缓存并明确标"缓存"。
    ========================================================== */
@@ -1021,6 +1072,7 @@ function refreshNews() {
    ========================================================== */
 function boot() {
   paintIcons();
+  initDust();
   buildNav();
   applyTheme();
   checkCycles();
