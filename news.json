@@ -240,6 +240,34 @@
       "tags": ["数学", "自然", "规律"],
       "category": "science",
       "translated": true
+    },
+    {
+      "id": "aeon-zealotry",
+      "title": "In praise of zealotry",
+      "titleZh": "赞颂狂热：为什么被边缘化的人需要“不礼貌”的辩论",
+      "summary": "思想史散文：早期女权主义者（如 Mary Astell）拒绝在辩论里保持“礼貌”，因为礼貌的框架本身就带着特权。关于辩论伦理、思想自由与发声方式的哲学反思。",
+      "source": "Aeon",
+      "sourceUrl": "https://aeon.co",
+      "publishedAt": "2026-08-18",
+      "url": "https://aeon.co/essays/polite-debate-has-privilege-the-marginalised-need-zealotry",
+      "image": null,
+      "tags": ["哲学", "伦理", "思辨"],
+      "category": "philosophy",
+      "translated": true
+    },
+    {
+      "id": "aeon-stereotyping",
+      "title": "How we meet the future",
+      "titleZh": "我们如何遇见未来：刻板印象何时是工具、何时是罪",
+      "summary": "哲学散文：刻板印象不全是坏事——有时候它是快速理解世界的“工具”，有时候却变成偏见与伤害的“罪”。探讨它到底该何时用、何时该停下。",
+      "source": "Aeon",
+      "sourceUrl": "https://aeon.co",
+      "publishedAt": "2026-08-10",
+      "url": "https://aeon.co/essays/when-is-stereotyping-a-handy-tool-and-when-is-it-a-sin",
+      "image": null,
+      "tags": ["哲学", "认知", "思辨"],
+      "category": "philosophy",
+      "translated": true
     }
   ]
 }
