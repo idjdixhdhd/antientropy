@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="mint">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>逆熵 ANTIENTROPY · 个人复利工作台</title>
+<meta name="description" content="对抗熵增的个人复利操作系统：学习线与创造线双轨复利、今日必须完成、身体账户、在意的人。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ 背景层（可拍摄：2.5D 最底层） ============ -->
+<div class="bglayer" data-layer="bg" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-amb bg-amb-a"></div>
+  <div class="bg-amb bg-amb-b"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<div class="app">
+
+  <!-- ============ 桌面侧栏（可拍摄：UI 层） ============ -->
+  <aside class="side" data-layer="ui">
+    <div class="brand" data-shot="wordmark">
+      <span class="brand-mark" data-icon="mark"></span>
+      <span class="brand-tx">
+        <b class="brand-cn">逆熵</b>
+        <i class="brand-en">ANTIENTROPY</i>
+      </span>
+    </div>
+    <p class="brand-sub">熵增是默认的<br>复利是唯一的解</p>
+
+    <nav class="nav" id="nav" aria-label="主导航"></nav>
+
+    <div class="side-foot">
+      <button class="themebtn" id="themeBtn" type="button" aria-label="切换主题">
+        <span data-icon="palette"></span>
+        <span class="themebtn-tx">主题</span>
+        <span class="themedots" id="themeDots"></span>
+      </button>
+      <div class="side-meta">
+        <span id="sideDate">—</span>
+        <span class="dot-sep">·</span>
+        <span id="sideCycle">—</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============ 移动端顶栏 ============ -->
+  <header class="mtop" data-layer="ui">
+    <div class="brand brand-sm">
+      <span class="brand-mark" data-icon="mark"></span>
+      <span class="brand-tx"><b class="brand-cn">逆熵</b><i class="brand-en">ANTIENTROPY</i></span>
+    </div>
+    <button class="themebtn themebtn-sm" id="themeBtnM" type="button" aria-label="切换主题">
+      <span data-icon="palette"></span>
+    </button>
+  </header>
+
+  <!-- ============ 内容层 ============ -->
+  <main class="main" data-layer="content" id="main">
+
+    <!-- ---------- A. 主线复利 ---------- -->
+    <section class="panel is-on" data-view="mainline">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">主线复利</h1>
+          <p class="psub">两条线各自独立复利、各自独立归零。学习是一条线，创造是另一条线，不混算。</p>
+        </div>
+        <div class="phead-meta" id="mainlineMeta"></div>
+      </div>
+      <div class="tracks" id="tracks"></div>
+      <div class="rule-note">
+        <span data-icon="info"></span>
+        <span>规则：每天最多记录一次。<b>连续 48 小时没有推进，该线当前复利周期归零</b>，以当前累计值作为新周期起点——另一条线不受影响。</span>
+      </div>
+    </section>
+
+    <!-- ---------- B. 今日必须完成 ---------- -->
+    <section class="panel" data-view="today">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">今日必须完成</h1>
+          <p class="psub">短期生活与学习任务，和长期主线完全分开。今天不做完的，明天不会自动原谅。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta"><b id="todayDone">0</b><span id="todayAll">/ 0</span></div>
+          <span class="metalab">今日完成</span>
+        </div>
+      </div>
+      <div class="card card-pad">
+        <form class="addrow" id="taskForm" autocomplete="off">
+          <input class="inp" id="taskInp" type="text" maxlength="60" placeholder="今天必须完成的一件事…">
+          <button class="btn btn-acc" id="taskAdd" type="submit" disabled><span data-icon="plus"></span>添加</button>
+        </form>
+        <div class="progline"><i id="taskProg" style="width:0%"></i></div>
+        <ul class="tasks" id="taskList"></ul>
+      </div>
+    </section>
+
+    <!-- ---------- C. 身体账户 ---------- -->
+    <section class="panel" data-view="body">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">身体账户</h1>
+          <p class="psub">以周为周期存入健康行为。存得越多，身体内部的水位越高——空心的人被填满。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta"><b id="bodyCnt">0</b><span id="bodyTarget">/ 21</span></div>
+          <span class="metalab">本周存入</span>
+        </div>
+      </div>
+      <div class="bodywrap">
+        <div class="card card-pad bodyviz">
+          <div class="bodyviz-hd">
+            <span class="lv-lab">充实度</span>
+            <span class="lv-val" id="bodyPct">0%</span>
+          </div>
+          <div class="humanbox">
+            <svg class="human" viewBox="0 0 200 400" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+              <defs>
+                <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" class="wg-a"/>
+                  <stop offset="1" class="wg-b"/>
+                </linearGradient>
+                <!-- 水体体积光：从水面往下渐隐，制造"内部有光" -->
+                <radialGradient id="waterGlowG" cx="50%" cy="0%" r="86%">
+                  <stop offset="0" class="wgl-a"/>
+                  <stop offset="1" class="wgl-b"/>
+                </radialGradient>
+                <!-- 中空轮廓的立体描边：左暗右亮，模拟受光 -->
+                <linearGradient id="bodyStroke" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" class="bs-a"/>
+                  <stop offset="0.5" class="bs-b"/>
+                  <stop offset="1" class="bs-c"/>
+                </linearGradient>
+                <filter id="bodyInner" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#000" flood-opacity="0.55"/>
+                </filter>
+                <!-- 空腔纵深：左上方受光、右下方幽暗，制造玻璃腔体体积 -->
+                <radialGradient id="bodyCavity" cx="90" cy="78" r="240" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" class="cav-a"/>
+                  <stop offset="1" class="cav-b"/>
+                </radialGradient>
+                <!-- 身体 = 头 + 一个连续身体路径（肩-腰-臀-腿-脚 全部连成一条线） -->
+                <clipPath id="bodyClip">
+                  <circle cx="100" cy="40" r="22"/>
+                  <path d="M100,54
+                           C 88,54  80,58  78,64
+                           L 66,78  C 58,90  58,102  66,110
+                           L 60,144 C 56,174  58,204  64,234
+                           L 70,264 C 72,284  72,304  70,324
+                           L 70,354 C 70,366  78,372  88,372
+                           L 112,372 C 122,372  130,366  130,354
+                           L 130,324 C 128,304  128,284  130,264
+                           L 136,234 C 142,204  144,174  140,144
+                           L 134,110 C 142,102  142,90  134,78
+                           L 122,64 C 120,58  112,54  100,54 Z"/>
+                </clipPath>
+              </defs>
+
+              <!-- 中空轮廓（描边用，立体受光） -->
+              <g class="human-out" filter="url(#bodyInner)">
+                <path d="M100,54
+                         C 88,54  80,58  78,64
+                         L 66,78  C 58,90  58,102  66,110
+                         L 60,144 C 56,174  58,204  64,234
+                         L 70,264 C 72,284  72,304  70,324
+                         L 70,354 C 70,366  78,372  88,372
+                         L 112,372 C 122,372  130,366  130,354
+                         L 130,324 C 128,304  128,284  130,264
+                         L 136,234 C 142,204  144,174  140,144
+                         L 134,110 C 142,102  142,90  134,78
+                         L 122,64 C 120,58  112,54  100,54 Z"
+                      fill="url(#bodyCavity)"/>
+                <circle cx="100" cy="40" r="22" fill="url(#bodyCavity)"/>
+              </g>
+
+              <!-- 水位：rect 的 y=水面，height 远大于剩余空间，clip 切到身体轮廓内 -->
+              <g clip-path="url(#bodyClip)">
+                <rect id="waterG" x="0" y="380" width="200" height="400" fill="url(#waterGrad)"/>
+                <rect id="waterGlow" x="0" y="380" width="200" height="400" fill="url(#waterGlowG)"/>
+                <path id="waterWave1" class="wave wave-1" d="" fill="var(--g1)" opacity=".45"/>
+                <path id="waterWave2" class="wave wave-2" d="" fill="var(--g2)" opacity=".25"/>
+                <!-- 水面发光高光线 -->
+                <path id="waterSurf" class="watersurf" d="M-40,380 L240,380"/>
+              </g>
+
+              <!-- 刻度 -->
+              <g class="ticks" id="bodyTicks"></g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="card card-pad bodylist">
+          <h2 class="ctitle">今日可存入</h2>
+          <ul class="habits" id="habitList"></ul>
+          <div class="weekbar">
+            <span class="ctitle-sm">本周足迹</span>
+            <div class="weekdots" id="weekDots"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- D. 在意的人 ---------- -->
+    <section class="panel" data-view="love">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">在意的人</h1>
+          <p class="psub">记下你真正为别人做过的具体事。攒够 20 件，这里会发生一件很好的事。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta bigmeta-rose"><b id="loveCnt">0</b><span>/ 20</span></div>
+          <span class="metalab">累计行动</span>
+        </div>
+      </div>
+
+      <div class="lovewrap">
+        <div class="card card-pad">
+          <form class="addrow addrow-2" id="loveForm" autocomplete="off">
+            <input class="inp inp-who" id="loveWho" type="text" maxlength="12" placeholder="为谁">
+            <input class="inp" id="loveWhat" type="text" maxlength="48" placeholder="具体做了什么（越具体越好）">
+            <button class="btn btn-rose" id="loveAdd" type="submit" disabled><span data-icon="plus"></span>记下</button>
+          </form>
+          <div class="lovemeter">
+            <div class="lovemeter-bar"><i id="loveBar" style="width:0%"></i></div>
+            <span class="lovemeter-tx" id="loveLeft">还差 20 件</span>
+          </div>
+          <ul class="loves" id="loveList"></ul>
+        </div>
+        <div class="card card-pad loveside">
+          <h2 class="ctitle">彩蛋</h2>
+          <p class="tip">攒到 20 件会自动触发一次。之后你随时可以重放。</p>
+          <button class="btn btn-ghost btn-w" id="replayBtn" type="button" disabled><span data-icon="replay"></span>重放彩蛋</button>
+          <button class="btn btn-danger btn-w" id="resetLove" type="button"><span data-icon="trash"></span>重置记录</button>
+          <div class="loveside-foot">
+            <span data-icon="info"></span>
+            <span>重置需要二次确认，会回到 0 / 20。</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- E. 灵感雷达（真实资讯流） ---------- -->
+    <section class="panel" data-view="radar">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">灵感雷达</h1>
+          <p class="psub">每天十条真正重要的能力更新。只来自可验证的官方公开源，未经证实的一律不放。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta"><b id="newsCount">—</b><span>条</span></div>
+          <span class="metalab" id="newsStatus">读取中…</span>
+        </div>
+      </div>
+
+      <div class="newsbar">
+        <div class="newssrc" id="newsSrc"></div>
+        <div class="newsact">
+          <span class="newsrefresh" id="newsFetched">上次刷新：—</span>
+          <button class="btn btn-ghost btn-sm" id="newsRefresh" type="button"><span data-icon="replay"></span>立即刷新</button>
+        </div>
+      </div>
+
+      <div class="newsstat" id="newsStat" hidden></div>
+      <div class="newsgrid" id="newsGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- ============ 移动端底栏 ============ -->
+  <nav class="mtab" id="mtab" data-layer="ui" aria-label="移动导航"></nav>
+</div>
+
+<!-- ============ 彩蛋层（可拍摄：特效层） ============ -->
+<div class="egg" id="egg" data-layer="fx" aria-hidden="true">
+  <div class="egg-dim"></div>
+  <div class="egg-beam"></div>
+  <div class="egg-stage">
+    <svg class="rose" viewBox="-160 -170 320 340" aria-hidden="true">
+      <defs>
+        <radialGradient id="petalG" cx="50%" cy="78%" r="72%">
+          <stop offset="0" stop-color="#fbe4cd"/>
+          <stop offset="0.52" stop-color="#eeb992"/>
+          <stop offset="1" stop-color="#c07a5c"/>
+        </radialGradient>
+        <radialGradient id="petalG2" cx="50%" cy="80%" r="70%">
+          <stop offset="0" stop-color="#fdeedd"/>
+          <stop offset="0.55" stop-color="#f2c9a4"/>
+          <stop offset="1" stop-color="#cd8b66"/>
+        </radialGradient>
+        <radialGradient id="coreG" cx="50%" cy="50%" r="60%">
+          <stop offset="0" stop-color="#fff3e2"/>
+          <stop offset="1" stop-color="#e0a878"/>
+        </radialGradient>
+      </defs>
+      <g class="rose-rings" id="roseRings"></g>
+      <circle class="rose-core" cx="0" cy="0" r="11" fill="url(#coreG)"/>
+    </svg>
+    <div class="fireflies" id="fireflies"></div>
+    <div class="memcards" id="memCards"></div>
+    <div class="egg-cap">
+      <b class="egg-cap-t">20 件小事</b>
+      <span class="egg-cap-s">你把别人放在心上的那些时刻</span>
+    </div>
+  </div>
+  <button class="egg-close" id="eggClose" type="button">收起</button>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- 二次确认 -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-box">
+    <h3 class="modal-t" id="modalT">确认操作</h3>
+    <p class="modal-p" id="modalP">这个操作不可撤销。</p>
+    <div class="modal-act">
+      <button class="btn btn-ghost" id="modalNo" type="button">取消</button>
+      <button class="btn btn-danger" id="modalYes" type="button">确认</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
