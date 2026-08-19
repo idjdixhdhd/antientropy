@@ -202,7 +202,7 @@ function seedLoves() {
 }
 function freshState() {
   return {
-    v: 14, theme: 'mint', view: 'mainline', seq: 100,
+    v: 16, theme: 'mint', view: 'mainline', seq: 100,
     tracks: {
       study: {
         id: 'study', name: '学习线', icon: 'book', unit: '分钟',
@@ -223,9 +223,9 @@ function freshState() {
     },
     tasks: [                          // 产品引导型任务：只教操作，不绑任何身份
       { id: 't1', text: '记下今天最重要的一件事', done: false },
-      { id: 't2', text: '试试勾掉这条任务', done: false },
-      { id: 't3', text: '双击这条文字可以改成你的话', done: false },
-      { id: 't4', text: '每条线每天记录一次，曲线才会长出来', done: true },
+      { id: 't2', text: '试试勾掉一件已完成的事', done: false },
+      { id: 't3', text: '点两下文字可以改成你的话', done: false },
+      { id: 't4', text: '做完的事勾掉，进度条会往前推', done: true },
     ],
     body: {},                           // 习惯列表走 getHabits()，可自行增删
     loves: seedLoves().slice(0, 5),     // 5 条无人称示例，写自己的版本替代
@@ -240,8 +240,8 @@ function load() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return freshState();
     const o = JSON.parse(raw);
-    // 版本守卫：v<14 时（早期示例数据）一律作废，回到引导态
-    if (!o || (typeof o.v === 'number' ? o.v < 14 : true) || !o.tracks) return freshState();
+    // 版本守卫：v<16 时（早期示例数据）一律作废，回到引导态
+    if (!o || (typeof o.v === 'number' ? o.v < 16 : true) || !o.tracks) return freshState();
     // 兜底：tracks 内残留 seedRecs 旧数据也清掉
     if (o.tracks.study && o.tracks.study.recs) {
       const total = Object.values(o.tracks.study.recs).reduce((a, b) => a + b, 0);
@@ -372,13 +372,13 @@ function buildTracks() {
       + '<button class="btn btn-acc" type="submit"><span data-icon="plus"></span>记录今日</button></form>'
       + '<div class="plans">'
       + '<div class="planrow"><span class="planlab">明日计划</span>'
-      + '<input class="inp" data-plan="tomorrow" maxlength="60" placeholder="明天先做哪一件"></div>'
+      + '<input class="inp" data-plan="tomorrow" maxlength="60" placeholder="明天想做的一件事（可选）"></div>'
       + '<div class="planrow"><span class="planlab">本周计划</span>'
-      + '<input class="inp" data-plan="week" maxlength="60" placeholder="这一周要推到哪"></div></div>'
+      + '<input class="inp" data-plan="week" maxlength="60" placeholder="这一周想推到哪一步"></div></div>'
       + '<div class="track-act"><button class="btn btn-ghost btn-sm" type="button" data-restart>'
-      + '<span data-icon="replay"></span>重启周期</button></div>'
+      + '<span data-icon="replay"></span>重置这条线</button></div>'
       + '<div class="deadnote" data-dead hidden><span data-icon="alert"></span>'
-      + '<span>超过 48 小时没有推进，上一个复利周期已归零。以当前累计值为新起点重新开始。</span></div>'
+      + '<span>超过 48 小时没记录，这条线会从头开始——以当前累计值作为新起点。</span></div>'
       + '</article>';
   }).join('');
   paintIcons();
@@ -427,14 +427,14 @@ function renderTracks() {
     dl.classList.toggle('zero', !today);
 
     const chip = $('[data-chip]', card);
-    if (c.dead) { chip.textContent = '已归零'; chip.className = 'chip chip-dead'; }
+    if (c.dead) { chip.textContent = '该打卡了'; chip.className = 'chip chip-dead'; }
     else if (c.left < 24) { chip.textContent = '周期第 ' + c.days + ' 天'; chip.className = 'chip chip-warn'; }
     else { chip.textContent = '周期第 ' + c.days + ' 天'; chip.className = 'chip chip-live'; }
 
     $('[data-sub]', card).innerHTML = '本周 ' + weekSum(t) + ' ' + t.unit
       + '<span class="dot-sep"> · </span>'
-      + (c.dead ? '<b class="txd">周期已归零，记录一次即可重新开始</b>'
-        : '距归零还有 <b>' + Math.floor(c.left) + '</b> 小时');
+      + (c.dead ? '<b class="txd">该打卡了，记一次就重新开始</b>'
+        : '距下次重置还有 <b>' + Math.floor(c.left) + '</b> 小时');
 
     $('[data-dead]', card).hidden = !t.wasReset;
     const btn = $('[data-rec] button', card);
@@ -446,7 +446,7 @@ function renderTracks() {
   });
   const alive = Object.values(S.tracks).filter(t => !cycleInfo(t).dead).length;
   $('#mainlineMeta').innerHTML = '<div class="bigmeta">' + alive + '<span>/ 2</span></div>'
-    + '<span class="metalab">在燃的线</span>';
+    + '<span class="metalab">活跃的线</span>';
 }
 
 function rollNumber(el, target) {
@@ -1613,8 +1613,9 @@ function boot() {
   });
 
   // 人话服务：已通过 Cloudflare Worker 接入（key 在服务端加密）
-  $('#hsState').textContent = '已接入';
-  $('#hsState').classList.add('on');
+  // （人话服务卡片已移除）
+  // $('#hsState').textContent = '已接入';
+  // $('#hsState').classList.add('on');
   // 灵感清单：按关注类别生成朋友圈碎片文字
   $('#inspireBtn').addEventListener('click', genInspire);
   const iai = $('#inspireAiBtn'); if (iai) iai.addEventListener('click', aiInspire);
