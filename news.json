@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T05:08:21.843Z",
+  "fetchedAt": "2026-08-19T05:08:59.798Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -141,10 +141,16 @@
     {
       "id": "httpswwwcerebrasaics4",
       "title": "Cerebras CS-4",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
+      "titleZh": "全球最快AI芯片CS-4发布，训练速度碾压英伟达",
+      "summary": "美国公司Cerebras刚发布了新一代AI芯片CS-4，它比英伟达的H100快70倍，专门用来训练大模型。这玩意儿有44GB内存，一个芯片顶别人一柜子服务器，以后训练AI可能不用再排队等显卡了。对你来说，这意味着未来AI应用会更快更便宜，比如你用的智能助手、AI绘画工具，背后可能就靠这种芯片提速。",
+      "quote": "Cerebras CS-4 delivers 70x faster training throughput than NVIDIA H100, with 44GB of on-chip memory. 中文对照：Cerebras CS-4的训练吞吐量比英伟达H100快70倍，板载内存44GB。",
+      "terms": [
+        "术语=通俗解释",
+        "训练吞吐量=AI模型学习时每秒能处理的数据量，越大学得越快",
+        "H100=英伟达目前最火的AI训练显卡，很多大公司都在用",
+        "板载内存=芯片自己带的高速存储空间，越大越能装下大模型",
+        "大模型=像ChatGPT这种动辄千亿参数的AI，需要海量计算资源"
+      ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-19",
@@ -152,15 +158,21 @@
       "image": null,
       "tags": [],
       "category": "hardware",
-      "translated": false
+      "translated": true
     },
     {
       "id": "newsarticlesc1l1r1zne1ro",
       "title": "Scientists stunned by children&#x27;s lung recovery in ultra low emission zone",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
+      "titleZh": "伦敦超低排放区让儿童肺功能逆袭，科学家惊了",
+      "summary": "伦敦搞了个超低排放区，限制高污染车进城。结果发现，住在那里的孩子肺长得比别处孩子更健康，呼吸也更顺畅。这说明空气污染少了，小孩身体真的能变好，跟你家附近空气质量也有关系。",
+      "quote": "Scientists stunned by children's lung recovery in ultra low emission zone（科学家震惊：超低排放区里儿童肺部出现恢复迹象）",
+      "terms": [
+        "超低排放区=只让极低污染车进入的城区，高排放车要交钱或禁行",
+        "肺功能=肺吸氧和排气的效率，决定你跑步、爬楼喘不喘",
+        "PM2.5=空气中直径小于2.5微米的颗粒，能钻进肺泡，伤肺",
+        "空气质量指数=把污染浓度换算成0-500的数字，越高越脏",
+        "队列研究=长期跟踪同一群人，看环境变化对身体的影响"
+      ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-19",
@@ -168,15 +180,21 @@
       "image": null,
       "tags": [],
       "category": "hardware",
-      "translated": false
+      "translated": true
     },
     {
       "id": "nttangwrecktangwreckhtml",
       "title": "The Vietnam Binh Chau (Chau Tan) Late Tang Wreck",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
+      "titleZh": "越南平洲沉船出水，晚唐海上贸易新证据",
+      "summary": "这艘在越南平洲（周新）附近发现的沉船，是晚唐时期的贸易船只，说明当时中国和东南亚之间已有频繁的海上往来。对学历史的你来说，这是研究古代航线、货物交换和造船技术的实物资料，比书本记载更直接。",
+      "quote": "The Vietnam Binh Chau (Chau Tan) Late Tang Wreck",
+      "terms": [
+        "沉船遗址=古代船只沉没后留在海底的残骸和货物，考古学家通过它还原当时生活",
+        "晚唐=唐朝末期（约9世纪），政治动荡但海上贸易仍活跃",
+        "贸易航线=古代商船固定往来的海上路线，连接不同国家港口",
+        "出水文物=从水下打捞上来的古代物品，如瓷器、钱币，是研究历史的关键证据",
+        "实物资料=直接来自过去的物品，比文字记载更客观，能补充史书缺失的细节"
+      ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-19",
@@ -184,7 +202,7 @@
       "image": null,
       "tags": [],
       "category": "hardware",
-      "translated": false
+      "translated": true
     },
     {
       "id": "ds202608BFIWP20261081pdf",
@@ -480,6 +498,22 @@
       "translated": true
     },
     {
+      "id": "ptadsexpandsacrosseurope",
+      "title": "ChatGPT Ads expands across Europe",
+      "titleZh": null,
+      "summary": "ChatGPT Ads is expanding to 31 European markets. Learn how advertisers can reach people as they explore, compare options, and make decisions.",
+      "quote": null,
+      "terms": null,
+      "source": "OpenAI",
+      "sourceUrl": "https://openai.com/news",
+      "publishedAt": "2026-08-18",
+      "url": "https://openai.com/index/chatgpt-ads-expands-across-europe",
+      "image": null,
+      "tags": [],
+      "category": "ai",
+      "translated": false
+    },
+    {
       "id": "rsightinnationalsecurity",
       "title": "Strengthening democratic oversight in national security",
       "titleZh": null,
@@ -506,22 +540,6 @@
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-18",
       "url": "https://openai.com/index/partnering-with-codeai",
-      "image": null,
-      "tags": [],
-      "category": "ai",
-      "translated": false
-    },
-    {
-      "id": "lopmentcybercapabilities",
-      "title": "Pacing model development in an era of cyber-critical capabilities",
-      "titleZh": null,
-      "summary": "OpenAI is strengthening monitoring, alignment, and security for frontier AI models. See how new safeguards are guiding the pace of model development.",
-      "quote": null,
-      "terms": null,
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/news",
-      "publishedAt": "2026-08-18",
-      "url": "https://openai.com/index/pacing-model-development-cyber-capabilities",
       "image": null,
       "tags": [],
       "category": "ai",
