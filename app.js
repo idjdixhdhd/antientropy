@@ -173,26 +173,26 @@ function delHabit(id) {
   toast('已删除');
   renderBody();
 }
-/* 演示数据：示例动作而非关系（克制身份），用模糊代词替代"妈妈/妹妹/同桌"等明指 */
+/* 演示数据：示例动作而非关系（无人称、无身份），避免"妈妈/爸爸/同桌"类明指 */
 const LOVE_SEED = [
-  ['把手机里三年的照片备份出来了', '她说怕哪天丢。'],
-  ['陪一位长辈看完了一整场球', '我不懂，但他懂。'],
-  ['晚饭后主动把碗洗了', '没让谁开口。'],
-  ['帮一个朋友远程修电脑到十二点', '也没问为什么。'],
-  ['电话那头只是听', '二十多分钟。'],
-  ['熬夜帮她把汇报的排版改完了', '她说格式像乱码。'],
-  ['把那台一直没装好的路由器弄通了', '他站在旁边看我接了三根线。'],
-  ['把整理好的公式表复印了一份', '他没说谢谢。'],
-  ['记得他说腰疼', '第二天桌上就多了一个靠垫。'],
-  ['他情绪不好', '陪他打了两小时游戏，没聊别的。'],
-  ['教一个人用剪辑软件', '没有嫌她慢。'],
-  ['把几张老照片修清楚打印出来', '递过去的时候，他手有点抖。'],
-  ['她生日', '提前一周就准备好了礼物。'],
-  ['主动说了一句谢谢', '他愣了一下。'],
-  ['他没带饭', '把自己的分了一半。'],
-  ['答应的事', '真的做到了。'],
-  ['帮她把折断的折纸重新折好', '花了十分钟。'],
-  ['帮他把简历从头改了一遍', '改到他能说清每一段。'],
+  ['把手机里三年的照片全部备份了一遍', '怕哪天突然丢了。'],
+  ['陪坐看完整场球赛', '不懂规则，但没走。'],
+  ['晚饭后把碗洗了', '没让谁开口。'],
+  ['远程把一台蓝屏的电脑修好了', '修到很晚，也没问为什么。'],
+  ['电话那头讲了二十分钟', '只是听。'],
+  ['熬夜把一份混乱的排版改整齐了', '像乱码的稿子能看了。'],
+  ['把一直没弄通的路由器接好了', '三根线，重新走了一遍。'],
+  ['把整理好的笔记复印了一份', '没说谢谢，但收下了。'],
+  ['记得提过腰疼', '第二天桌上多了个靠垫。'],
+  ['情绪不好的那天', '陪着打了两个小时游戏，没聊别的。'],
+  ['教一个人用剪辑软件', '没有嫌他慢。'],
+  ['把几张旧照片修清楚打印出来', '递过去的时候，手有点抖。'],
+  ['提前一周准备好了礼物', '没有说为什么。'],
+  ['主动说了一句谢谢', '对方愣了一下。'],
+  ['把自己的午饭分了一半', '有人没带饭。'],
+  ['答应过的事', '真的做到了。'],
+  ['把折断的折纸重新折好', '花了十分钟。'],
+  ['把一份简历从头改到尾', '改到每一段都能说清。'],
 ];
 function seedLoves() {
   return LOVE_SEED.map((x, i) => ({
@@ -202,7 +202,7 @@ function seedLoves() {
 }
 function freshState() {
   return {
-    v: 1, theme: 'mint', view: 'mainline', seq: 100,
+    v: 14, theme: 'mint', view: 'mainline', seq: 100,
     tracks: {
       study: {
         id: 'study', name: '学习线', icon: 'book', unit: '分钟',
@@ -221,9 +221,14 @@ function freshState() {
         plans: { tomorrow: '', week: '' },
       },
     },
-    tasks: [],                          // 无示例任务
-    body: {},                           // 无示例身体记录
-    loves: [],                          // 无示例微光
+    tasks: [                          // 产品引导型任务：只教操作，不绑任何身份
+      { id: 't1', text: '记下今天最重要的一件事', done: false },
+      { id: 't2', text: '试试勾掉这条任务', done: false },
+      { id: 't3', text: '双击这条文字可以改成你的话', done: false },
+      { id: 't4', text: '每条线每天记录一次，曲线才会长出来', done: true },
+    ],
+    body: {},                           // 习惯列表走 getHabits()，可自行增删
+    loves: seedLoves().slice(0, 5),     // 5 条无人称示例，写自己的版本替代
     eggSeen: false,
   };
 }
@@ -235,7 +240,17 @@ function load() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return freshState();
     const o = JSON.parse(raw);
-    if (!o || o.v !== 1 || !o.tracks) return freshState();
+    // 版本守卫：v<14 时（早期示例数据）一律作废，回到引导态
+    if (!o || (typeof o.v === 'number' ? o.v < 14 : true) || !o.tracks) return freshState();
+    // 兜底：tracks 内残留 seedRecs 旧数据也清掉
+    if (o.tracks.study && o.tracks.study.recs) {
+      const total = Object.values(o.tracks.study.recs).reduce((a, b) => a + b, 0);
+      if (total > 0 && !o._userTouched) { delete o.tracks.study.recs; o.tracks.study.cycleStart = TODAY; }
+    }
+    if (o.tracks.craft && o.tracks.craft.recs) {
+      const total = Object.values(o.tracks.craft.recs).reduce((a, b) => a + b, 0);
+      if (total > 0 && !o._userTouched) { delete o.tracks.craft.recs; o.tracks.craft.cycleStart = TODAY; }
+    }
     return o;
   } catch (e) { return freshState(); }
 }
@@ -378,6 +393,7 @@ function buildTracks() {
       if (t.recs[TODAY]) { toast('今天已经记录过了，一天只记一次'); return; }
       t.recs[TODAY] = clamp(v, 1, 900);
       t.lastTs = NOW; t.wasReset = false;
+      S._userTouched = true;            // 用户首次真实记录：保留，不再被版本清空
       inp.value = ''; save();
       renderTracks(); requestAnimationFrame(drawAllCharts);
       toast(t.name + ' 今日 +' + v + ' ' + t.unit);
@@ -943,7 +959,8 @@ let NEWS_SELECTED = [];            // 多选：空数组 = 看全部；否则只
 let newsTimer = null;
 const NEWS_PREFS_KEY = 'ae_news_cats';
 const NEWS_KEYS_KEY = 'ae_news_keys';
-const WORKER = 'https://antientropy-api.3353367139.workers.dev';   // Cloudflare 轻后端（key 在服务端）
+const WORKER = 'https://antientropy-api.3353367139.workers.dev';   // Cloudflare Worker（备用通道）
+const PAGES_API = 'https://antientropy.pages.dev/api';             // Cloudflare Pages Functions（主通道，国内可访问）
 let NEWS_KEYS = [];                // 个人关注词：自己输入，按词过滤
 function catLabel(v) { const c = NEWS_CATS.find(x => x.v === v); return c ? c.label : v; }
 
@@ -1210,19 +1227,25 @@ function renderSaved() {
   ).join('');
 }
 
-/* 人话服务：经 Cloudflare Worker 调用 DeepSeek（key 在服务端），三段式改写单条资讯 */
+/* 人话服务：经 Cloudflare（Pages Functions 优先，key 在服务端），三段式改写单条资讯 */
 async function humanizeCard(it, cardEl) {
   if (!it) return;
   const btn = cardEl.querySelector('.nc-hz');
   if (btn) btn.textContent = '改写中';
   try {
-    const resp = await fetch(WORKER + '/humanize', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ item: { title: it.titleZh || it.title || '', summary: it.summary || '' } })
-    });
-    const data = await resp.json();
-    if (!data.ok || !data.result) throw new Error((data && data.error) || '改写失败');
+    let data = null;
+    for (const ep of [PAGES_API + '/humanize', WORKER + '/humanize']) {
+      try {
+        const resp = await fetch(ep, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ item: { title: it.titleZh || it.title || '', summary: it.summary || '' } })
+        });
+        const d = await resp.json();
+        if (d.ok && d.result) { data = d; break; }
+      } catch (e) { /* 换通道 */ }
+    }
+    if (!data || !data.result) throw new Error((data && data.error) || '改写失败');
     const text = data.result;
     const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
     let titleZh = '', plain = '', quote = '', terms = [];
@@ -1346,28 +1369,14 @@ async function aiInspire() {
     '每条不超过 30 字。',
   ].join('\n');
   let aiSuccess = false;
-  // 路径 1：用户本地 key（手机也能用，最快）
-  const userKey = (localStorage.getItem(HS_KEY) || '').trim();
-  if (userKey) {
-    try {
-      const text = await callDSUser({ messages: [{ role: 'user', content: aiPrompt }], key: userKey, max_tokens: 500 });
-      const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
-      if (lines.length) {
-        renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自你本地 DeepSeek Key');
-        aiSuccess = true;
-        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'local' })); } catch (e) {}
-        showLastAi();
-      }
-    } catch (e) {
-      toast('本地 AI 调用未成功（' + (e.message || e) + '），正在试云端 Worker...');
-    }
-  }
-  // 路径 2：Cloudflare Worker 中转
-  if (!aiSuccess) {
+  // 云端主通道（Cloudflare Pages Functions，国内可访问，key 在服务端）
+  const endpoints = [PAGES_API + '/inspire', WORKER + '/inspire'];
+  for (const ep of endpoints) {
+    if (aiSuccess) break;
     try {
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), 5000);
-      const r = await fetch(WORKER + '/inspire', {
+      const r = await fetch(ep, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ tags }),
@@ -1377,14 +1386,14 @@ async function aiInspire() {
       const d = await r.json();
       if (d.ok && d.result) {
         const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
-        renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自 Cloudflare · DeepSeek 深度生成');
+        renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自云端 · DeepSeek 深度生成');
         aiSuccess = true;
-        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'worker' })); } catch (e) {}
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'cloud' })); } catch (e) {}
         showLastAi();
       }
-    } catch (e) { /* 吞掉，往下走 */ }
+    } catch (e) { /* 换下一个通道 */ }
   }
-  // 路径 3：都没成功 → 友好提示（不弹窗、不要求输入 key；AI 能力在云端，手机网络受限时不可用）
+  // 都没成功 → 友好提示（不弹窗、不要求输入 key；AI 能力在云端，网络受限时不可用）
   if (!aiSuccess) {
     btn.disabled = false; btn.innerHTML = orig;
     toast('AI 深度暂不可用：云端服务在当前网络下连接失败。本地灵感不受影响。');
@@ -1583,6 +1592,7 @@ function boot() {
   renderTasks();
   renderBody();
   renderLove();
+  maybeOnboard();
 
   // 灵感雷达：真实资讯流
   loadNews();
@@ -1709,3 +1719,22 @@ function boot() {
   }
 }
 document.addEventListener('DOMContentLoaded', boot);
+
+/* ---------------- 首次引导（onboarding） ---------------- */
+const ONBOARD_KEY = 'ae_onboard_done_v1';
+function maybeOnboard() {
+  let done = false;
+  try { done = localStorage.getItem(ONBOARD_KEY) === '1'; } catch (e) {}
+  if (done) return;
+  const card = $('#onboard'); if (!card) return;
+  card.setAttribute('aria-hidden', 'false');
+  card.classList.add('show');
+  const close = () => {
+    card.classList.remove('show');
+    card.setAttribute('aria-hidden', 'true');
+    try { localStorage.setItem(ONBOARD_KEY, '1'); } catch (e) {}
+  };
+  const goBtn = $('#onboardGo');
+  if (goBtn) goBtn.addEventListener('click', () => { close(); go('today'); });
+  card.addEventListener('click', e => { if (e.target === card) close(); });
+}
