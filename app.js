@@ -64,6 +64,11 @@ const ICO = {
   inbox: '<path d="M21.4 12.4h-5.6l-1.8 2.8H10l-1.8-2.8H2.6"/><path d="M5.7 5.3 2.6 12v6a2 2 0 0 0 2 2h14.8a2 2 0 0 0 2-2v-6l-3.1-6.7a2 2 0 0 0-1.8-1.1H7.5a2 2 0 0 0-1.8 1.1Z"/>',
   book: '<path d="M4 19.4A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2.6H20v18.8H6.5A2.5 2.5 0 0 1 4 18.9V5.1a2.5 2.5 0 0 1 2.5-2.5Z"/>',
   code: '<path d="m17.8 15.8 3.8-3.8-3.8-3.8"/><path d="m6.2 8.2-3.8 3.8 3.8 3.8"/><path d="m14.4 4-4.8 16"/>',
+  spark: '<path d="M12 2.6 14.4 9l6.4 2.4-6.4 2.4L12 20l-2.4-6.2-6.4-2.4L9.6 9Z"/><path d="M19 4.2 19.9 6.4l2.2.9-2.2.9L19 10.4l-.9-2.2-2.2-.9 2.2-.9Z"/>',
+  bookmark: '<path d="M6.2 3.4h11.6a1 1 0 0 1 1 1v16.2l-6.8-4.4-6.8 4.4V4.4a1 1 0 0 1 1-1Z"/>',
+  copy: '<rect x="8.4" y="8.4" width="12" height="12" rx="1.8"/><path d="M15.6 5.2H5.2v10.4"/>',
+  quote: '<path d="M10 8.2H4.6v5.4H8c0 1.9-1 3.1-2.6 3.6l.8 2.1c2.7-.7 4.6-3 4.6-6V8.2a2 2 0 0 0-.8-1.6Z"/><path d="M21.4 8.2H16v5.4h3.4c0 1.9-1 3.1-2.6 3.6l.8 2.1c2.7-.7 4.6-3 4.6-6V8.2a2 2 0 0 0-.8-1.6Z"/>',
+  arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
 };
 function ico(name, size) {
   const s = size || 24;
@@ -87,6 +92,7 @@ const VIEWS = [
   { id: 'body', name: '身体账户', short: '身体', icon: 'person' },
   { id: 'love', name: '在意的人', short: '在意', icon: 'heart' },
   { id: 'radar', name: '灵感雷达', short: '雷达', icon: 'radar' },
+  { id: 'inspire', name: '灵感清单', short: '灵感', icon: 'spark' },
 ];
 const THEMES = ['mint', 'ember', 'indigo'];
 
@@ -935,6 +941,7 @@ function fmtFetched(iso) {
 }
 function srcClass(src) { return 'src-' + String(src).toLowerCase().replace(/[^a-z]/g, ''); }
 
+/* 三段式卡片：标题（大白话）+ 摘要（详细解释）+ 折叠的原文引用/术语词典 */
 function newsCard(it) {
   const hasZh = !!(it.titleZh && it.titleZh !== it.title);
   const title = hasZh ? it.titleZh : it.title;
@@ -944,22 +951,79 @@ function newsCard(it) {
     : '<div class="nc-img nc-ph ' + srcClass(it.source) + '"><span data-icon="radar"></span><b>' + esc(it.source) + '</b></div>';
   const tags = (it.tags || []).map(t => '<i class="nc-tag">' + esc(t) + '</i>').join('');
   const dateTxt = (it.publishedAt || '').slice(0, 10);
-  // 人话服务：经 Cloudflare Worker（key 在服务端加密），始终显示"译"按钮
+  // 原文区（默认折叠）：原文关键句 + 术语词典
+  const hasQuote = !!(it.quote || (it.title && it.title !== it.titleZh));
+  const orig = hasQuote
+    ? '<div class="nc-orig">'
+      + '<button class="nc-orig-btn" type="button" aria-expanded="false"><span data-icon="quote"></span>展开原话<b class="nc-chev">▾</b></button>'
+      + '<div class="nc-orig-body" hidden>'
+      + (it.quote ? '<p class="nc-quote">' + esc(it.quote) + '</p>' : '')
+      + (it.title && it.title !== it.titleZh ? '<p class="nc-quote nc-quote-en">' + esc(it.title) + '</p>' : '')
+      + ((it.terms || []).length ? '<ul class="nc-terms">' + it.terms.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>' : '')
+      + '</div></div>'
+    : '';
+  const saved = isSaved(it.id);
+  // 人话服务：经 Cloudflare Worker（key 在服务端加密），卡片可"译"改写
   const hzBtn = '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>';
-  return '<a class="ncard" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">'
+  return '<div class="ncard">'
     + img
     + '<div class="nc-body">'
     + '<div class="nc-top"><span class="nc-src ' + srcClass(it.source) + '">' + esc(it.source) + '</span>'
     + (it.category ? '<span class="nc-cat">' + esc(catLabel(it.category)) + '</span>' : '')
+    + '<span class="nc-date">' + esc(dateTxt) + '</span>'
     + hzBtn
-    + '<span class="nc-date">' + esc(dateTxt) + '</span></div>'
+    + '</div>'
     + '<h3 class="nc-title">' + esc(title) + (hasZh ? '' : ' <em class="nc-en">原文</em>') + '</h3>'
     + '<p class="nc-sum">' + esc(summary) + '</p>'
-    + '<div class="nc-tags">' + tags + '</div>'
-    + '</div></a>';
+    + (tags ? '<div class="nc-tags">' + tags + '</div>' : '')
+    + orig
+    + '<div class="nc-foot">'
+    + '<button class="nc-copy" type="button" data-copy="' + esc(copyText(it)) + '">复制全文</button>'
+    + '<button class="nc-fav' + (saved ? ' on' : '') + '" type="button" data-fav="' + esc(it.id) + '">' + (saved ? '已收藏' : '收藏') + '</button>'
+    + '<a class="nc-open" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">打开原文 <span data-icon="arrow"></span></a>'
+    + '</div>'
+    + '</div></div>';
 }
 
-/* 人话服务：经 Cloudflare Worker 调用 DeepSeek（key 在服务端），把单条资讯改写成大白话 */
+/* ---------------- 收藏（摘抄本） ---------------- */
+const SAVED_KEY = 'ae_saved';
+function getSaved() { try { return JSON.parse(localStorage.getItem(SAVED_KEY) || '[]'); } catch (e) { return []; } }
+function setSaved(list) { try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch (e) {} }
+function isSaved(id) { return getSaved().some(x => x.id === id); }
+function copyText(it) {
+  return '【' + (it.titleZh || it.title) + '】\n' + (it.summary || '')
+    + (it.quote ? '\n原话：' + it.quote : '')
+    + '\n来源：' + it.source + '\n原文：' + it.url;
+}
+function copySaved(x) {
+  return x.title + (x.summary ? '\n' + x.summary : '') + '\n来源：' + x.source + (x.url ? '\n' + x.url : '');
+}
+function saveCard(it) {
+  const list = getSaved();
+  const ex = list.find(x => x.id === it.id);
+  if (ex) { setSaved(list.filter(x => x.id !== it.id)); renderSaved(); return '已取消收藏'; }
+  list.unshift({ id: it.id, title: it.titleZh || it.title, summary: it.summary || '', source: it.source, url: it.url, savedAt: Date.now() });
+  setSaved(list); renderSaved(); return '已收藏 · 灵感清单里有你的摘抄本';
+}
+function renderSaved() {
+  const box = $('#savedList'); if (!box) return;
+  const list = getSaved();
+  const cnt = $('#savedCount'); if (cnt) cnt.textContent = list.length;
+  if (!list.length) {
+    box.innerHTML = '<div class="inspire-empty">还没有收藏。看到喜欢的句子，点卡片或灵感上的"收藏"就会收进来。</div>';
+    return;
+  }
+  box.innerHTML = list.map(x =>
+    '<div class="saved-item">'
+    + '<p class="saved-txt">' + esc(x.title) + '</p>'
+    + (x.summary ? '<p class="saved-sum">' + esc(x.summary) + '</p>' : '')
+    + '<div class="saved-foot"><span class="saved-src">' + esc(x.source) + '</span>'
+    + '<button class="saved-copy" type="button" data-copy="' + esc(copySaved(x)) + '">复制</button>'
+    + '<button class="saved-del" type="button" data-del="' + esc(x.id) + '">删除</button></div></div>'
+  ).join('');
+}
+
+/* 人话服务：经 Cloudflare Worker 调用 DeepSeek（key 在服务端），三段式改写单条资讯 */
 async function humanizeCard(it, cardEl) {
   if (!it) return;
   const btn = cardEl.querySelector('.nc-hz');
@@ -974,19 +1038,54 @@ async function humanizeCard(it, cardEl) {
     if (!data.ok || !data.result) throw new Error((data && data.error) || '改写失败');
     const text = data.result;
     const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
-    const t = (lines[0] || '').replace(/^标题[:：]/, '').trim();
-    const s = (lines[1] || '').replace(/^摘要[:：]/, '').trim() || text.trim();
+    let titleZh = '', plain = '', quote = '', terms = [];
+    for (const ln of lines) {
+      if (/^标题[:：]/.test(ln)) titleZh = ln.replace(/^标题[:：]/, '').trim();
+      else if (/^大白话[:：]/.test(ln)) plain = ln.replace(/^大白话[:：]/, '').trim();
+      else if (/^原文[:：]/.test(ln)) quote = ln.replace(/^原文[:：]/, '').trim();
+      else if (/^术语[:：]/.test(ln)) { /* 术语段起始，后面以 = 分隔的行都属于术语 */ }
+      else if (/[=＝]/.test(ln) && /^[^：]{1,12}[=＝]/.test(ln)) terms.push(ln.trim());
+    }
+    if (!titleZh && !plain) { titleZh = ''; plain = text.slice(0, 140); }
     const body = cardEl.querySelector('.nc-body');
     if (body) {
-      const tt = body.querySelector('.nc-title'); if (tt && t) tt.textContent = t;
-      const ss = body.querySelector('.nc-sum'); if (ss && s) ss.textContent = s;
+      const tt = body.querySelector('.nc-title'); if (tt && titleZh) tt.textContent = titleZh;
+      const ss = body.querySelector('.nc-sum'); if (ss && plain) ss.textContent = plain;
+      // 更新原文区：若卡片原本没有，则动态补一个
+      let orig = body.querySelector('.nc-orig');
+      const foot = body.querySelector('.nc-foot');
+      if ((quote || terms.length) && !orig && foot) {
+        orig = document.createElement('div'); orig.className = 'nc-orig';
+        orig.innerHTML = '<button class="nc-orig-btn" type="button" aria-expanded="false"><span data-icon="quote"></span>展开原话<b class="nc-chev">▾</b></button>'
+          + '<div class="nc-orig-body" hidden></div>';
+        foot.parentNode.insertBefore(orig, foot);
+        orig.querySelector('.nc-orig-btn').addEventListener('click', () => toggleOrig(orig));
+      }
+      if (orig) {
+        const ob = orig.querySelector('.nc-orig-body');
+        let html = '';
+        if (quote) html += '<p class="nc-quote">' + esc(quote) + '</p>';
+        if (it.title && it.title !== it.titleZh) html += '<p class="nc-quote nc-quote-en">' + esc(it.title) + '</p>';
+        if (terms.length) html += '<ul class="nc-terms">' + terms.map(t => '<li>' + esc(t) + '</li>').join('') + '</ul>';
+        if (html) ob.innerHTML = html;
+      }
     }
     if (btn) btn.textContent = '已译';
+    toast('已改写成大白话，展开原话可看原文与术语');
   } catch (e) {
     console.error(e);
     toast('人话改写失败：' + (e.message || 'Worker 未就绪'));
     if (btn) btn.textContent = '译';
   }
+}
+
+function toggleOrig(orig) {
+  const btn = orig.querySelector('.nc-orig-btn');
+  const body = orig.querySelector('.nc-orig-body');
+  const open = body.hidden;
+  body.hidden = !open;
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  btn.classList.toggle('open', open);
 }
 
 /* 灵感清单：按关注的类别生成朋友圈碎片文字（经 Cloudflare Worker） */
@@ -1009,11 +1108,11 @@ function genInspire() {
         out.innerHTML = lines.map(l => {
           const txt = l.replace(/^「|」$/g, '');
           return '<div class="inspire-item"><span class="inspire-txt">' + esc(txt) + '</span>'
-            + '<button class="inspire-copy" type="button" data-copy="' + esc(txt) + '">复制</button></div>';
+            + '<div class="inspire-item-act">'
+            + '<button class="inspire-fav" type="button" data-favtxt="' + esc(txt) + '">收藏</button>'
+            + '<button class="inspire-copy" type="button" data-copy="' + esc(txt) + '">复制</button>'
+            + '</div></div>';
         }).join('') || '<div class="inspire-empty">没有生成内容，换个类别试试</div>';
-        $$('#inspireOut .inspire-copy').forEach(b => b.addEventListener('click', () => {
-          try { navigator.clipboard.writeText(b.dataset.copy); toast('已复制，可发朋友圈'); } catch (e) {}
-        }));
       } else {
         out.innerHTML = '<div class="inspire-empty">' + esc((d && d.error) || '生成失败') + '</div>';
       }
@@ -1065,12 +1164,32 @@ function renderNews() {
   }
   grid.innerHTML = list.map(newsCard).join('');
   paintIcons(grid);
-  // 人话服务：绑定单卡"译"按钮（Key 在用户自己浏览器，直连 DeepSeek）
+  // 三段式卡片交互
+  $$('#newsGrid .nc-orig-btn').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation(); toggleOrig(b.closest('.nc-orig'));
+  }));
+  $$('#newsGrid .nc-copy').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    try { navigator.clipboard.writeText(b.dataset.copy); toast('已复制全文'); } catch (err) {}
+  }));
+  $$('#newsGrid .nc-fav').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const it = NEWS_ITEMS.find(x => x.id === b.dataset.fav);
+    if (it) { const msg = saveCard(it); toast(msg); b.textContent = isSaved(it.id) ? '已收藏' : '收藏'; b.classList.toggle('on', isSaved(it.id)); }
+  }));
+  // 人话服务：绑定单卡"译"按钮（Key 在服务端 Cloudflare Worker）
   $$('#newsGrid .nc-hz').forEach(b => b.addEventListener('click', e => {
     e.preventDefault(); e.stopPropagation();
     const it = NEWS_ITEMS.find(x => x.id === b.dataset.hz);
     if (it) humanizeCard(it, b.closest('.ncard'));
   }));
+  // 同步灵感面板的类别提示
+  const itg = $('#inspireTags');
+  if (itg) {
+    itg.textContent = NEWS_SELECTED.length
+      ? '当前跟随类别：' + NEWS_SELECTED.map(catLabel).join(' / ')
+      : '当前未勾选类别，按默认四个方向生成（文博 / 华语音乐 / 游戏人文 / 现代诗歌）。';
+  }
 }
 
 function renderKeyTags() {
@@ -1204,6 +1323,23 @@ function boot() {
   $('#hsState').classList.add('on');
   // 灵感清单：按关注类别生成朋友圈碎片文字
   $('#inspireBtn').addEventListener('click', genInspire);
+  renderSaved();
+  // 事件委托：灵感输出与摘抄本的动态按钮
+  document.addEventListener('click', e => {
+    const copy = e.target.closest('.inspire-copy');
+    if (copy) { try { navigator.clipboard.writeText(copy.dataset.copy); toast('已复制，可发朋友圈'); } catch (err) {} return; }
+    const fav = e.target.closest('.inspire-fav');
+    if (fav) {
+      const list = getSaved();
+      list.unshift({ id: 'insp' + Date.now(), title: fav.dataset.favtxt, summary: '', source: '灵感清单', url: '', savedAt: Date.now() });
+      setSaved(list); renderSaved(); toast('已收藏到摘抄本');
+      return;
+    }
+    const sc = e.target.closest('.saved-copy');
+    if (sc) { try { navigator.clipboard.writeText(sc.dataset.copy); toast('已复制'); } catch (err) {} return; }
+    const sd = e.target.closest('.saved-del');
+    if (sd) { setSaved(getSaved().filter(x => x.id !== sd.dataset.del)); renderSaved(); toast('已删除'); }
+  });
 
   const d = keyToDate(TODAY);
   $('#sideDate').textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日';
