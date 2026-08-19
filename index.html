@@ -291,13 +291,20 @@
       <div class="humanize" id="humanizeBox">
         <div class="humanize-h">
           <span class="humanize-t">人话服务</span>
-          <span class="humanize-st" id="hsState">未设置</span>
+          <span class="humanize-st on" id="hsState">已接入</span>
         </div>
-        <form class="humanize-form" id="hsForm">
-          <input class="newskey-inp" id="hsKey" type="password" placeholder="粘贴你的 DeepSeek Key" autocomplete="off" aria-label="DeepSeek Key">
-          <button class="btn btn-ghost btn-sm" type="submit">保存</button>
-        </form>
-        <p class="humanize-note">Key 只存在<b>你自己浏览器</b>，不上传、不进代码仓库。卡片上的"译"按钮用它把资讯改写成大白话。</p>
+        <p class="humanize-note">已通过 <b>Cloudflare 安全通道</b>接入，Key 存在服务端加密存储，浏览器无需填。卡片上的"译"按钮可直接用。</p>
+      </div>
+
+      <div class="inspire" id="inspireBox">
+        <div class="inspire-h">
+          <div>
+            <h2 class="inspire-t">灵感清单</h2>
+            <p class="inspire-p">按你关注的类别，生成几句适合发朋友圈的碎片文字</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="inspireBtn" type="button">生成灵感</button>
+        </div>
+        <div class="inspire-out" id="inspireOut"></div>
       </div>
 
       <div class="newsstat" id="newsStat" hidden></div>
