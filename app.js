@@ -661,9 +661,11 @@ function renderBody() {
     + '<span class="hb-add-tx">+ 添加新习惯</span></li>';
 
   $$('.habiti').forEach(li => {
+    if (!li) return;
     if (li.dataset.add) li.addEventListener('click', addHabit);
-    else {
-      $('[data-t]', li).addEventListener('click', e => {
+    else if (li.dataset.h) {
+      const t = $('[data-t]', li);
+      if (t) t.addEventListener('click', e => {
         e.stopPropagation();
         const id = li.dataset.h;
         const arr = S.body[TODAY] || (S.body[TODAY] = []);
@@ -1583,6 +1585,7 @@ function refreshNews() {
    启动
    ========================================================== */
 function boot() {
+  try {
   paintIcons();
   initDust();
   buildNav();
@@ -1714,5 +1717,8 @@ function boot() {
     egg: playEgg, closeEgg: closeEgg, redraw: drawAllCharts, state: () => S, news: loadNews,
     bgm: () => BGM.on, bgmToggle: () => BGM.toggle(),
   };
+  } catch (e) {
+    console.error('[boot ERROR]', e && (e.stack || e.message || e));
+  }
 }
 document.addEventListener('DOMContentLoaded', boot);
