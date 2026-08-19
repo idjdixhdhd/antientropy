@@ -338,6 +338,62 @@
       "tags": ["天文", "卫星", "前沿"],
       "category": "science",
       "translated": true
+    },
+    {
+      "id": "yys-oddgame",
+      "title": "一款“刮鱼鳞”的游戏上线前，数百万人已经玩过它的山寨版",
+      "titleZh": "一款“刮鱼鳞”的游戏上线前，数百万人已玩过它的山寨版",
+      "summary": "游研社人文故事：创意可以被抄走，但精神不会。一款小众独立游戏的山寨版先火了——讲的是原创与模仿背后的游戏文化。",
+      "source": "游研社",
+      "sourceUrl": "https://www.yystv.cn/",
+      "publishedAt": "2026-08-19",
+      "url": "https://www.yystv.cn/p/14282",
+      "image": null,
+      "tags": ["游戏", "人文", "独立游戏"],
+      "category": "game",
+      "translated": true
+    },
+    {
+      "id": "yys-sega",
+      "title": "世嘉在中国：30年、7家公司，与一次新的归来",
+      "titleZh": "世嘉在中国：30 年、7 家公司，与一次新的归来",
+      "summary": "从街机、主机到 VCD，再到 PC、网游与旗舰店——世嘉在中国的 30 年，就是一部中国游戏玩家记忆的编年史。",
+      "source": "游研社",
+      "sourceUrl": "https://www.yystv.cn/",
+      "publishedAt": "2026-08-18",
+      "url": "https://www.yystv.cn/p/14276",
+      "image": null,
+      "tags": ["游戏", "历史", "人文"],
+      "category": "game",
+      "translated": true
+    },
+    {
+      "id": "dpm-forum",
+      "title": "故宫博物院举办第五届故宫学与古代建筑营造讲习班",
+      "titleZh": "故宫举办第五届故宫学与古代建筑营造讲习班",
+      "summary": "故宫官方资讯：第五届故宫学与古代建筑营造讲习班开讲，古代建筑怎么造、怎么修复——文博爱好者的干货。",
+      "source": "故宫博物院",
+      "sourceUrl": "https://www.dpm.org.cn/",
+      "publishedAt": "2026-08-13",
+      "url": "https://www.dpm.org.cn/classify_detail/379498.html",
+      "image": null,
+      "tags": ["文博", "古建", "故宫"],
+      "category": "museum",
+      "translated": true
+    },
+    {
+      "id": "dpm-bag",
+      "title": "2026年“故宫小书包”暑期公益活动在故宫博物院举办",
+      "titleZh": "2026 年“故宫小书包”暑期公益活动在故宫举办",
+      "summary": "故宫官方资讯：面向孩子的“故宫小书包”暑期公益活动，把传统文化装进书包——文博教育的日常模样。",
+      "source": "故宫博物院",
+      "sourceUrl": "https://www.dpm.org.cn/",
+      "publishedAt": "2026-08-11",
+      "url": "https://www.dpm.org.cn/activity/education/379429.html",
+      "image": null,
+      "tags": ["文博", "教育", "故宫"],
+      "category": "museum",
+      "translated": true
     }
   ]
 }
