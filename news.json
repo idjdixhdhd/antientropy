@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T07:10:48.837Z",
+  "fetchedAt": "2026-08-19T07:10:49.984Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -590,15 +590,12 @@
     {
       "id": "DharmaAIgpumanagementpt2",
       "title": "Same Cluster, 33 Points More Utilization: What Changed Was the Order",
-      "titleZh": "同簇芯片利用率暴涨33%，只因调整了执行顺序",
-      "summary": "这研究发现，在相同的芯片集群上，仅改变任务执行的先后顺序，就能让硬件利用率提升33%。对写代码的你来说，这意味着不换硬件、不加预算，只优化指令调度，就能让程序跑得更快更省资源。",
-      "quote": "Same Cluster, 33 Points More Utilization: What Changed Was the Order（同一集群，利用率提升33个百分点：改变的只是顺序）",
+      "titleZh": "同簇数据利用率暴涨33%，只因改了顺序",
+      "summary": "这项研究发现，把数据在内存中的排列顺序调换一下，哪怕它们仍属于同一个“簇”，实际使用率也能大幅提升33%。这就像整理书架，书没变，但摆放顺序不同，找书效率就天差地别。对你写代码、跑程序时优化速度很有参考价值，尤其是处理大量数据时。",
+      "quote": "Same Cluster, 33 Points More Utilization: What Changed Was the Order — 同一数据簇，利用率提升33个点，改变的是顺序。",
       "terms": [
-        "集群=多块芯片连在一起协同工作，像一组人分工干活",
-        "利用率=硬件实际干活的时间占比，越高越不浪费",
-        "执行顺序=程序里指令被CPU处理的先后次序，调换可能影响效率",
-        "调度=系统决定谁先用资源、谁后用的管理策略",
-        "指令=CPU能直接执行的最小操作，比如加减法或读写内存"
+        "簇（Cluster）= 一组在物理上相邻存放的数据块，系统读写时视为一个整体",
+        "顺序（Order）= 数据在存储介质上的排列先后次序，影响访问效率"
       ],
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/blog",
@@ -612,15 +609,15 @@
     {
       "id": "unusualtouristattraction",
       "title": "The World Famous Gopher Hole Museum",
-      "titleZh": "加拿大小镇的松鼠标本博物馆，藏着消失的农场记忆",
-      "summary": "这个博物馆在加拿大一个农业小镇里，里面摆满了被做成标本的地鼠，它们穿着衣服、摆着人类生活的场景。这些标本不是为了吓人，而是为了留住一个已经快消失的农场时代。对高中生来说，你可以把它看作一种“用动物演人类生活”的乡村文化记录，挺有冲击力，也能理解当地人为什么怀念过去。",
+      "titleZh": "加拿大小镇的“地鼠博物馆”，藏着回不去的乡村记忆",
+      "summary": "这个博物馆在加拿大一个农业小镇里，里面全是做成标本的地鼠，摆成各种生活场景。它不是为了搞笑，而是用这种方式记录一个已经消失的乡村世界。对高中生来说，这能让你看到，一个小镇如何用奇怪又温柔的方式，留住自己的历史。",
       "quote": "In this bittersweet portrait of a farm town in Canada, taxidermied gophers preserve a place that no longer exists.",
       "terms": [
-        "taxidermy=动物标本制作术，把动物皮剥下填充，使其保持生前的样子",
-        "gopher=地鼠，一种小型啮齿动物，北美常见，常被当作农业害兽",
-        "bittersweet=苦乐参半，既让人感伤又觉得温暖",
-        "farm town=农业小镇，以种田或养牲畜为主要经济来源的村镇",
-        "preserve=保存，这里指用标本形式让某种记忆或景象不消失"
+        "taxidermy=动物标本制作术，把死去的动物剥皮、填充，做成像活着的样子",
+        "gopher=地鼠，一种小型啮齿动物，北美草原常见，常被当地农民视为害兽",
+        "bittersweet=苦乐参半，既带伤感又带温暖的情感",
+        "Aeon Video=Aeon平台出品的视频，Aeon是一个专注科学、哲学与文化的在线杂志",
+        "farm town=农业小镇，以农耕为主要经济来源的乡村聚居地"
       ],
       "source": "Aeon",
       "sourceUrl": "https://aeon.co",
@@ -634,15 +631,15 @@
     {
       "id": "acousticecologyofthesoil",
       "title": "Worm munch matters",
-      "titleZh": "听土壤“悄悄话”，知生态好坏",
-      "summary": "科学家发现，通过监听土壤里虫子活动的声音，就能判断这片土地健不健康。以前要挖土看虫，现在用麦克风就行。这对你关心的环保、农业和气候变化都有实际用处，而且技术门槛不高，未来人人都能参与监测。",
+      "titleZh": "听土里虫子动静，能知生态好坏",
+      "summary": "科学家发现，通过监听土壤里蠕虫和昆虫活动的声音，就能判断土壤生态是否健康。这项技术对农业和环保很重要，未来可能帮我们不用挖土就能监测土地质量。你吃的粮食、喝的水，都跟地下这些小家伙的健康有关。",
       "quote": "The lives that slither and scurry beneath the soil’s surface are vital for ecological health: now we can listen in to them.",
       "terms": [
-        "生态健康=指一个环境中动植物和微生物能正常生活、循环运转的状态，就像人体健康一样。",
-        "生物声学=研究动物发出的声音及其意义的科学，这里指用声音监测土壤生物。",
-        "土壤生物=生活在土里的蚯蚓、甲虫、螨虫等微小动物，它们负责分解落叶、疏松土壤。",
-        "监测=持续观察和记录数据，用来判断环境变化或问题。",
-        "麦克风阵列=多个麦克风按一定位置摆放，能同时捕捉不同方向的声音，类似“顺风耳”。"
+        "生态健康=指土壤、水、空气等自然系统保持平衡和活力的状态",
+        "土壤声学监测=用麦克风或传感器记录地下生物活动声音的技术",
+        "地下生物群=生活在土壤里的蚯蚓、昆虫、微生物等所有生物的总称",
+        "农业可持续=在保证产量的同时，不破坏土壤和环境的耕作方式",
+        "传感器=能感知声音、温度等变化并转换成信号的电子设备"
       ],
       "source": "Aeon",
       "sourceUrl": "https://aeon.co",
@@ -656,15 +653,15 @@
     {
       "id": "httpswwwyystvcnp14298",
       "title": "奎爷演员质疑《战神》电视剧：为什么没有游戏原作编剧参与？",
-      "titleZh": "奎爷配音演员开怼《战神》真人剧：游戏编剧咋不参与？",
-      "summary": "亚马逊正在拍《战神》真人剧，但配音演员克里斯托弗·贾奇发现剧组里没有游戏原作编剧，只有游戏总监挂名制片人。他担心改编会跑偏，因为游戏的故事和角色灵魂恰恰是原编剧写的。对玩家来说，这直接关系到剧集能不能还原你熟悉的奎爷和北欧神话剧情。",
-      "quote": "Christopher Judge, the voice and motion-capture actor for Kratos in the new God of War games, questioned why no original game writers are involved in Amazon's TV adaptation. The show's writing is led by Ronald D. Moore, known for Star Trek: Discovery, while only three game directors serve as producers.",
+      "titleZh": "战神剧集没请游戏编剧，奎爷演员公开质疑",
+      "summary": "亚马逊要把热门游戏《战神》拍成真人剧，但剧组里没有原作游戏编剧，只有游戏总监挂名制片人。给奎托斯配音和动作捕捉的演员克里斯托弗·贾奇对此表示不满，认为改编游戏却不尊重原创作团队，可能让剧情走样。你如果喜欢游戏或关注影视改编，这事关系到经典角色会不会被拍崩。",
+      "quote": "Christopher Judge, the actor behind Kratos in the new God of War games, has questioned why no original game writers are involved in Amazon's TV adaptation.",
       "terms": [
-        "动捕=动作捕捉，演员穿特制服装做动作，电脑记录后生成游戏角色的动画，奎爷的打架动作就是这么来的",
-        "制片人=负责统筹剧组资金、人员、进度的人，不直接写剧本，但能影响创作方向",
-        "编剧=写剧本的人，决定故事怎么讲、台词怎么说，是剧集内容的核心创作者",
-        "改编=把游戏的故事搬到电视剧里，但媒介不同，需要重新设计叙事节奏和表现方式",
-        "IP=知识产权，这里指《战神》游戏本身拥有的角色、世界观和故事版权，真人剧就是基于这个IP开发的"
+        "动作捕捉=演员穿特殊设备记录身体动作，让虚拟角色动起来更真实",
+        "制片人=负责统筹剧组资金、人员和进度的人，不直接写剧本",
+        "编剧=负责写故事和台词的人，决定剧情走向和角色塑造",
+        "真人剧=用真实演员拍摄的电视剧，区别于动画或游戏画面",
+        "游戏总监=游戏开发中负责整体方向和设计决策的负责人"
       ],
       "source": "游研社",
       "sourceUrl": "https://www.yystv.cn/",
@@ -678,14 +675,14 @@
     {
       "id": "httpswwwyystvcnp14297",
       "title": "当国产3A不再是偶然",
-      "titleZh": "国产3A《湮灭之潮》线下试玩排场拉满",
-      "summary": "这是一款国产3A游戏《湮灭之潮》的首次线下试玩活动，地点在成都东郊记忆演艺中心，整个场地被改造成欧式古堡和圆桌大厅，还安排了真人骑士守卫，排场很大。对玩家来说，这说明国产3A游戏在制作和宣传上已经不再“小打小闹”，开始对标国际大作的水准。",
-      "quote": "The venue was transformed from an old factory into a European-style castle, with armored guards standing on both sides of a pointed arch doorway. 场地从老厂房被改造成欧式古堡，尖拱门两侧站着披甲持戟的真人守卫。",
+      "titleZh": "国产3A大作线下试玩，排场不输国外",
+      "summary": "这篇文章讲的是国产游戏《湮灭之潮》在成都办了一场线下试玩活动，场地布置得非常用心，把老厂房改造成了欧式古堡，还有真人骑士站岗，排场很大。这说明国产3A游戏越来越成熟，不再是小打小闹，而是真刀真枪地跟国际大作比肩了。你如果喜欢玩游戏，以后这类国产大作的线下活动可能会越来越多，值得关注。",
+      "quote": "The venue was transformed from an old factory into a European-style castle, with armored guards standing on both sides of the pointed arch entrance. （场地从老厂房变成了欧式古堡，尖拱门两侧站着披甲持戟的真人守卫。）",
       "terms": [
-        "3A游戏=指高成本、高体量、高质量的单机大作，通常开发周期长、投入大，代表游戏工业的顶尖水准",
-        "线下试玩=游戏发售前，厂商组织玩家到现场亲自体验游戏内容，用于收集反馈和造势",
-        "圆桌大厅=以亚瑟王圆桌骑士为灵感设计的圆形大厅，常见于中世纪题材游戏场景",
-        "东郊记忆=成都一个由老工业厂房改造的文化创意园区，常举办展览和演出活动"
+        "3A游戏=指开发成本高、制作周期长、宣传力度大的顶级游戏作品，通常画面和玩法都是行业顶尖水平",
+        "线下试玩=游戏公司组织玩家到现场亲手体验游戏，是宣传和收集反馈的重要方式",
+        "圆桌大厅=模仿亚瑟王圆桌骑士的圆形会议厅，在游戏里常作为重要场景出现",
+        "尖拱门=哥特式建筑特有的尖顶拱形门，常见于欧洲古堡和教堂"
       ],
       "source": "游研社",
       "sourceUrl": "https://www.yystv.cn/",
@@ -699,15 +696,15 @@
     {
       "id": "httpswwwyystvcnp14296",
       "title": "独家专访《无期迷途》团队：22年二游大逃杀的生还者，如今牵手三体",
-      "titleZh": "四年老游戏逆袭畅销榜，《无期迷途》靠什么活下来？",
-      "summary": "这是一篇关于游戏《无期迷途》的专访报道。游戏在2022年竞争激烈的二次元手游市场中存活下来，如今迎来四周年，不仅和科幻IP《三体》联动，还冲上了畅销榜前十。对喜欢研究游戏行业或关注这款游戏的你来说，能看懂它为什么能活这么久、还越活越好。",
-      "quote": "Exclusive interview with the team behind *Path to Nowhere*: survivors of the 2022 gacha game bloodbath, now joining forces with *The Three-Body Problem*. — 独家专访《无期迷途》团队：2022年二次元大逃杀中的生还者，如今牵手《三体》。",
+      "titleZh": "四年老游戏《无期迷途》牵手《三体》，靠死磕内容杀回畅销榜前十",
+      "summary": "这是一款2022年上线的二次元手游，在当年竞争最激烈的时候活了下来，靠的不是抽卡骗氪，而是把剧情和角色内容做扎实。今年四周年庆，它跟科幻大IP《三体》联动，还办线下音乐会、上百城投屏，结果开服当天冲进畅销榜前十。对新手来说，这游戏能活四年还越活越好，说明它的剧情和角色塑造值得一试，不是那种割一波就跑路的作品。",
+      "quote": "Exclusive interview with the \"Path to Nowhere\" team: survivors of the 2022 second-game battle royale, now joining forces with \"Three-Body Problem\". 靠“死磕内容”突围。",
       "terms": [
-        "- 二游=二次元游戏，指画风、剧情偏日系动漫风格的手游，如《原神》《明日方舟》等。",
-        "- 畅销榜=游戏商店里按收入排名的榜单，冲进前10说明玩家花钱多、游戏赚钱猛。",
-        "- 联动=两个不同IP（如游戏和小说）合作推出活动或角色，互相带人气。",
-        "- 前瞻直播=游戏官方在重大更新前开的线上发布会，提前告诉玩家接下来有什么新内容。",
-        "- 死磕内容=团队坚持把剧情、角色、美术等核心内容做到极致，不靠短期噱头吸引人。"
+        "二次元手游=以动漫风格角色和剧情为核心卖点的手机游戏，玩家常因角色和故事入坑",
+        "畅销榜=游戏商店按收入排名的榜单，进前十说明当天玩家花钱很多，游戏热度高",
+        "IP联动=两个知名品牌合作出内容，比如这次《无期迷途》和《三体》互相带流量",
+        "前瞻直播=官方在活动前开直播预告内容，相当于提前给玩家画饼，吸引人回来玩",
+        "LiveHouse=小型现场音乐演出场地，游戏办这类活动是为了让玩家线下聚在一起，增强归属感"
       ],
       "source": "游研社",
       "sourceUrl": "https://www.yystv.cn/",
