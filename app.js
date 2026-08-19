@@ -898,48 +898,63 @@ let NEWS_KEYS = [];                // 个人关注词：自己输入，按词过
 function catLabel(v) { const c = NEWS_CATS.find(x => x.v === v); return c ? c.label : v; }
 
 /* ============ 灵感清单 · 本地模板引擎（零网络零 key，手机也能用） ============
-   原理：内置高质量素材库 + 占位符变体，浏览器本地即时组合。
-   手机连不上 Cloudflare Worker 也能出内容；AI 深度生成为可选增强。 */
+   原则：每条模板用不同句式结构（碎片/独白/疑问/对比/对话/留白），
+   避免连发"折进 X 里叠好不寄"这种套路。生成时 3-5 条不重复模板。 */
 const INSPIRE_LIB = {
   museum: {
     label: '文博',
     patterns: [
       '站在{her}前，{time}被压成了展柜里的一厘米。',
       '博物馆是诚实的沉默者——把{era}的喧哗，收进{art}的裂纹里。',
-      '原来时间有形状：{art}的包浆，是{num}年人海流过的痕迹。',
-      '逛完{place}，出来时天已经暗了。把{era}留在馆里，把自己带回今天。',
-      '有人把{era}写进史书，有人把{era}烧进{art}。后者比前者活得更久。',
       '隔着玻璃看{art}，忽然明白：我们不是在看文物，是在看时间怎么把呐喊熬成安静。',
-      '{place}的屋顶有鸽子，馆里有{era}。抬头是现在，低头是过去，中间是喘不过气的一秒。',
+      '{place}。{era}。玻璃。冷光。一千年的沉默。',
       '文物修复师说，他们修的不是{art}，是{era}的尊严。',
-      '在{place}遇到一件{art}，没写说明牌。它站在角落，像一句没人接的话。',
+      '有人把{era}写进史书，有人把{era}烧进{art}。后者比前者活得更久。',
       '走出{place}那刻想：{num}年后，也会有人隔着玻璃看我生活的这个时代吧。',
+      '{place}的屋顶有鸽子，馆里有{era}。抬头是现在，低头是过去，中间是喘不过气的一秒。',
+      '——展柜灯暗了。我没出声。',
+      '逛完{place}，出来时天已经暗了。把{era}留在馆里，把自己带回今天。',
+      '{art}躺在{era}的枕边，像一封没拆的信。',
+      '{num} 件展品。{num} 年时间。{place}的空气里有种慢。',
+      '一件{art}没写说明牌。它站在角落，像一句没人接的话。',
+      '我们去看{era}，{era}也在看我们。',
+      '……留白。',
     ],
     pool: {
       art: ['青铜饕餮纹', '唐三彩马', '汝窑天青盏', '敦煌残经', '错金银虎符', '越王勾践剑', '长信宫灯', '青花缠枝莲', '彩绘陶俑', '战国编钟'],
       era: ['商周', '大唐', '两宋', '大明', '晚清', '汉'],
       her: ['那件青铜器', '那尊陶俑', '那卷残经', '那只青瓷盏', '那枚虎符', '那盏宫灯'],
       time: ['三千年', '一千年', '八百年的风', '六百年的砖', '两千年的锈'],
-      num: ['三千', '两千', '八百', '五百', '一千零一'],
+      num: ['三', '两千', '八', '五百', '一千零一'],
       place: ['故宫', '国博', '省博', '莫高窟', '旧城墙', '博物馆'],
     },
   },
   music: {
     label: '华语音乐',
     patterns: [
+      '凌晨。{song}。{singer}。{year} 年。',
       '深夜耳机里单曲循环{song}，{singer}把没说出口的那句，替我唱完了。',
-      '歌单翻到{singer}，{year}年的旧歌，现在听全是新心事。',
-      '有些歌不敢在白天听——{song}的前奏一响，{year}年的事就全回来了。',
-      '{singer}唱的是别人的词，我听到的是自己的命。',
-      '我把{song}设成单曲循环，不是因为好听，是那句词太像我了。',
       '现在的歌好听，但心里那首{song}，还是{year}年那版。',
-      '音乐是唯一不会说谎的时光机：{singer}的声音一出来，{year}年就站在门口。',
+      '{singer}的歌还能听几年？',
+      '{year} 年。{song}。{place}。{num} 颗星。',
       '有人说{singer}过气了。可我的歌单里，{song}还是单曲循环。',
+      '{singer}唱的是别人的词，我听到的是自己的命。',
+      '音乐是唯一不会说谎的时光机：{singer}的声音一出来，{year}年就站在门口。',
+      '副歌。副歌。副歌。{num} 次。{singer}。{year}。',
+      '我把{song}设成单曲循环，不是因为好听，是那句词太像我了。',
+      '那年{year}，谁在{place}听{singer}的{song}？',
+      '——耳机摘了。',
+      '歌单翻到{singer}，{year}年的旧歌，现在听全是新心事。',
+      '{song}。{singer}。{num} 分钟。{era}。',
+      '有些歌不敢在白天听——{song}的前奏一响，{year}年的事就全回来了。',
     ],
     pool: {
       song: ['《烟火里的尘埃》', '《小半》', '《理想三旬》', '《大眠》', '《年少有为》', '《暗涌》', '《给自己的歌》', '《平凡之路》'],
       singer: ['陈粒', '毛不易', '薛之谦', '朴树', '李宗盛', '林宥嘉', '陈奕迅'],
       year: ['2016', '2018', '2019', '2021', '2013'],
+      place: ['地铁', '出租屋', '自习室', '老巷口', '天台'],
+      num: ['三', '七', '十', '无数'],
+      era: ['去年', '那年', '初秋'],
     },
   },
   game: {
@@ -947,35 +962,51 @@ const INSPIRE_LIB = {
     patterns: [
       '游戏打多了会明白：真正的攻略不是背出装，是学会在{game}里跟自己和解。',
       '从{game}退坑那天，我删的不是账号，是{num}个睡不着的夜晚。',
-      '我在{game}里认识的人，比现实里更懂"队友"两个字。',
-      '游戏是假的，但{game}里掉的眼泪是真的。',
+      '{game}。{num} 点。{place}。',
       '成年人的逃避方式很统一：打开{game}，假装今天还没结束。',
-      '{game}教会我的第一课：逆风局别急着投降。',
       '后来不打{game}了，不是不喜欢，是没人再在频道里喊我上线。',
+      '我在{game}里认识的人，比现实里更懂"队友"两个字。',
+      '{game}里到底通关过几个世界？',
+      '{num} 个夜晚。{game}。{era}。{place}。',
       '每次打完{game}抬头，窗外天都亮了。时间在游戏里过得快，在现实里也快。',
+      '游戏是假的，但{game}里掉的眼泪是真的。',
+      '{game}教会我的第一课：逆风局别急着投降。',
+      '——退出频道。{num} 个好友在线。',
+      '{game}的 BGM 比现实的歌更懂我。',
+      '{era} 的{game}玩家，{era}还在，{game}没了。',
+      '{game}。{place}。{num} 级。{era}。',
     ],
     pool: {
       game: ['王者峡谷', '我的世界', '塞尔达', '星露谷', '英雄联盟', '原神'],
-      num: ['一百', '两百', '三百', '无数'],
+      num: ['一', '两', '三', '无数'],
+      place: ['出租屋', '天台', '地铁', '老巷口', '网吧'],
+      era: ['去年', '那年', '初秋', '小时候'],
     },
   },
   poetry: {
     label: '现代诗歌',
     patterns: [
-      '我把{obj}放在窗台，等风替我说完剩下的句子。',
-      '黄昏把影子拉得很长，像一场没来得及的道别。',
-      '有些话落在纸上太重，落在{place}又太轻。',
-      '月亮是{era}唯一的旧物，{num}年了一直亮着。',
-      '我数过夜里的{num}颗星，没有一颗记得我。',
-      '秋天把叶子一片片寄出去，地址写的是{place}。',
-      '把心事折进{obj}里，叠好，不寄。',
-      '人声退潮以后，{place}才开始说话。',
+      '{era}的风经过{place}时，已经不像{era}的风了。',
+      '"最近过得怎样？" "正在过。"',
+      '写信给明天的自己。地址栏不知道该填哪儿。',
+      '凌晨三点。{place}。{num} 颗星。空白页。',
+      '旧的烦恼撑不过一个{era}，新的却等不及。',
+      '"再见。" "再见。" ——{era}的{place}，留下一个句号。',
+      '——这段话留给你。见谅。',
+      '{obj}的影子比{obj}更长。',
+      '你不在的城市，{place}正在下小雨。',
+      '雨下了一夜。{place}的灯，比雨更像是我。',
+      '写到这里还要继续吗？',
+      '我打开{place}的窗，{era}就落进来了。',
+      '{num} 点 {num} 分。空瓶，空灯，{era}的风。',
+      '……这页留给时间。',
+      '不是不想说，是说了又怎样。',
     ],
     pool: {
-      obj: ['一张旧车票', '半页没写完的信', '折坏的纸飞机', '一枚硬币', '路边的落叶'],
-      place: ['老巷口', '天台', '学校后门', '江边', '空教室'],
-      era: ['去年', '那年', '初秋'],
-      num: ['七千', '一万', '三千', '四十'],
+      obj: ['一张旧车票', '半页没写完的信', '一枚硬币', '路边的落叶', '一把钥匙', '一杯凉茶'],
+      place: ['老巷口', '天台', '学校后门', '江边', '空教室', '出租屋'],
+      era: ['去年', '那年', '初秋', '小时候'],
+      num: ['七千', '一万', '三', '四十'],
     },
   },
 };
@@ -986,17 +1017,24 @@ function fillTpl(tpl, pool, rnd) {
     return p && p.length ? pickOne(p, rnd) : m;
   });
 }
-/* 本地生成灵感：按关注类别选 1-2 类，出 3-5 条碎片 */
+/* 本地生成灵感：选 1-2 个类别，每类不同模板，5 条不重复 */
 function genLocalInspire(cats) {
   const rnd = Math.random;
-  const want = (cats && cats.length ? cats.filter(c => INSPIRE_LIB[c]) : ['museum', 'music', 'game', 'poetry']);
-  if (!want.length) want.push('poetry');
+  let want = (cats && cats.length ? cats.filter(c => INSPIRE_LIB[c]) : ['museum', 'music', 'game', 'poetry']);
+  if (!want.length) want = ['poetry'];
   const chosen = want.slice(0, 2);
-  const count = 3 + Math.floor(rnd() * 3);
+  const count = 4 + Math.floor(rnd() * 2);   // 4-5 条
   const items = [];
-  for (let i = 0; i < count; i++) {
+  const used = {};                            // 防同模板
+  let tries = 0;
+  while (items.length < count && tries < 40) {
+    tries++;
     const lib = INSPIRE_LIB[pickOne(chosen, rnd)];
-    items.push({ tag: lib.label, text: fillTpl(pickOne(lib.patterns, rnd), lib.pool, rnd) });
+    const tpl = pickOne(lib.patterns, r);
+    const key = lib.label + ':' + tpl;
+    if (used[key]) continue;
+    used[key] = 1;
+    items.push({ tag: lib.label, text: fillTpl(tpl, lib.pool, rnd) });
   }
   return items;
 }
@@ -1219,18 +1257,23 @@ function genInspire() {
   toast(cats.length ? '本地灵感已生成 · 按你勾选的类别' : '本地灵感已生成');
 }
 
-/* 灵感清单：AI 深度生成（走 Cloudflare Worker，需联网；失败不影响本地版） */
+/* 灵感清单：AI 深度生成（走 Cloudflare Worker，5s 超时，失败不影响本地版） */
 function aiInspire() {
   const btn = $('#inspireAiBtn'), out = $('#inspireOut');
   if (!btn || !out) return;
-  btn.disabled = true; btn.textContent = 'AI 生成中…';
+  const orig = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="ai-spin"></span>AI 生成中…';
   const tags = NEWS_SELECTED.length
     ? NEWS_SELECTED.map(catLabel)
     : ['文博', '华语流行音乐', '游戏人文', '现代诗歌'];
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 5000);   // 5s 超时，避免手机上无限 pending
   fetch(WORKER + '/inspire', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tags })
+    body: JSON.stringify({ tags }),
+    signal: ctrl.signal,
   })
     .then(r => r.json())
     .then(d => {
@@ -1238,12 +1281,29 @@ function aiInspire() {
         const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
         renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自 Cloudflare · DeepSeek 深度生成');
         toast('AI 深度灵感已生成');
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length })); } catch (e) {}
+        showLastAi();
       } else {
-        toast('AI 深度生成不可用：' + ((d && d.error) || '未知') + '。本地灵感仍在。');
+        toast('AI 深度生成未完成：' + ((d && d.error) || 'Worker 未就绪') + '。本地灵感仍在可用。');
       }
     })
-    .catch(() => { toast('AI 深度生成需要联网（手机连不上 Worker 时请用左侧"生成灵感"），本地版不受影响。'); })
-    .finally(() => { btn.disabled = false; btn.textContent = 'AI 深度'; });
+    .catch((e) => {
+      const msg = (e && e.name === 'AbortError') ? '手机连不上 Worker（5s 超时）' : '网络失败';
+      toast('AI 深度生成未完成：' + msg + '。本地灵感不受影响。');
+    })
+    .finally(() => { clearTimeout(t); btn.disabled = false; btn.innerHTML = orig; });
+}
+/* 显示"上次 AI 生成"时间，让用户看到 AI 真在工作 */
+function showLastAi() {
+  const box = $('#lastAi'); if (!box) return;
+  try {
+    const v = JSON.parse(localStorage.getItem('ae_last_ai') || 'null');
+    if (!v) { box.hidden = true; return; }
+    const d = new Date(v.ts);
+    const p = n => (n < 10 ? '0' : '') + n;
+    box.hidden = false;
+    box.textContent = '上次 AI 生成：' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' · ' + v.count + ' 条（来自 Cloudflare · DeepSeek）';
+  } catch (e) { box.hidden = true; }
 }
 
 function renderNews() {
@@ -1449,6 +1509,7 @@ function boot() {
   // 灵感清单：按关注类别生成朋友圈碎片文字
   $('#inspireBtn').addEventListener('click', genInspire);
   const iai = $('#inspireAiBtn'); if (iai) iai.addEventListener('click', aiInspire);
+  showLastAi();
   renderSaved();
   // 事件委托：灵感输出与摘抄本的动态按钮
   document.addEventListener('click', e => {
