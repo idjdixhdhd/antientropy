@@ -293,22 +293,47 @@
           <span class="humanize-t">人话服务</span>
           <span class="humanize-st on" id="hsState">已接入</span>
         </div>
-        <p class="humanize-note">已通过 <b>Cloudflare 安全通道</b>接入，Key 存在服务端加密存储，浏览器无需填。卡片上的"译"按钮可直接用。</p>
-      </div>
-
-      <div class="inspire" id="inspireBox">
-        <div class="inspire-h">
-          <div>
-            <h2 class="inspire-t">灵感清单</h2>
-            <p class="inspire-p">按你关注的类别，生成几句适合发朋友圈的碎片文字</p>
-          </div>
-          <button class="btn btn-ghost btn-sm" id="inspireBtn" type="button">生成灵感</button>
-        </div>
-        <div class="inspire-out" id="inspireOut"></div>
+        <p class="humanize-note">已通过 <b>Cloudflare 安全通道</b>接入，Key 存在服务端加密存储。未译的卡片点"译"按钮可直接改写成大白话（含原文引用与术语解释）。</p>
       </div>
 
       <div class="newsstat" id="newsStat" hidden></div>
       <div class="newsgrid" id="newsGrid"></div>
+    </section>
+
+    <!-- ---------- F. 灵感清单（独立面板：生成碎片 + 我的收藏） ---------- -->
+    <section class="panel" data-view="inspire">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">灵感清单</h1>
+          <p class="psub">按你关注的类别，生成几句适合发朋友圈的碎片文字。收藏过的句子都收在"我的收藏"里，随时复制。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta"><b id="savedCount">0</b><span>收藏</span></div>
+          <span class="metalab" id="inspireHint">碎片文字</span>
+        </div>
+      </div>
+
+      <div class="inspire-wrap">
+        <div class="card card-pad inspire-gen">
+          <div class="inspire-h">
+            <div>
+              <h2 class="inspire-t">生成灵感</h2>
+              <p class="inspire-p" id="inspireTags">当前跟随你在雷达勾选的类别；没勾就用默认四个方向。</p>
+            </div>
+            <button class="btn btn-acc" id="inspireBtn" type="button"><span data-icon="spark"></span>生成灵感</button>
+          </div>
+          <div class="inspire-out" id="inspireOut">
+            <div class="inspire-empty">点"生成灵感"，按你关注的类别写几句朋友圈碎片：短句、小诗、歌单简介、文博感悟。</div>
+          </div>
+        </div>
+
+        <div class="card card-pad inspire-save">
+          <h2 class="ctitle">我的收藏<span class="ctitle-note">摘抄本 · 存本地</span></h2>
+          <div class="saved-list" id="savedList">
+            <div class="inspire-empty">还没有收藏。看到喜欢的句子，点卡片或灵感上的"收藏"就会收进来。</div>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
