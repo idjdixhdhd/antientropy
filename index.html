@@ -9,7 +9,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
 
@@ -53,7 +53,7 @@
         <span class="dot-sep">·</span>
         <span id="sideCycle">—</span>
       </div>
-      <div class="side-ver" id="sideVer">v15</div>
+      <div class="side-ver" id="sideVer" hidden>v16</div>
     </div>
   </aside>
 
@@ -76,7 +76,7 @@
       <div class="phead">
         <div>
           <h1 class="ptitle">主线复利</h1>
-          <p class="psub">两条线各自独立复利、各自独立归零。学习是一条线，创造是另一条线，不混算。</p>
+          <p class="psub">学习是一条线，创造是另一条。每条每天记一次，曲线才会长出来。</p>
         </div>
         <div class="phead-meta" id="mainlineMeta"></div>
       </div>
@@ -103,7 +103,7 @@
       <div class="phead">
         <div>
           <h1 class="ptitle">今日必须完成</h1>
-          <p class="psub">短期生活与学习任务，和长期主线完全分开。今天不做完的，明天不会自动原谅。</p>
+          <p class="psub">写下今天要做的，做完就勾掉。明天再写新的。</p>
         </div>
         <div class="phead-meta">
           <div class="bigmeta"><b id="todayDone">0</b><span id="todayAll">/ 0</span></div>
@@ -125,17 +125,17 @@
       <div class="phead">
         <div>
           <h1 class="ptitle">身体账户</h1>
-          <p class="psub">以周为周期存入健康行为。存得越多，身体内部的水位越高——空心的人被填满。</p>
+          <p class="psub">每天存入几个好习惯，进度就会涨。一周攒满，整个人都稳。</p>
         </div>
         <div class="phead-meta">
           <div class="bigmeta"><b id="bodyCnt">0</b><span id="bodyTarget">/ 21</span></div>
-          <span class="metalab">本周存入</span>
+          <span class="metalab">这周目标 21 次</span>
         </div>
       </div>
       <div class="bodywrap">
         <div class="card card-pad bodyviz">
           <div class="bodyviz-hd">
-            <span class="lv-lab">充实度</span>
+            <span class="lv-lab">这周状态</span>
             <span class="lv-val" id="bodyPct">0%</span>
           </div>
           <div class="humanbox">
@@ -269,7 +269,7 @@
       <div class="phead">
         <div>
           <h1 class="ptitle">灵感雷达</h1>
-          <p class="psub">每天十条真正重要的能力更新。只来自可验证的官方公开源，未经证实的一律不放。</p>
+          <p class="psub">每天看点精选资讯。来源可查，随时点'译'看通俗版。</p>
         </div>
         <div class="phead-meta">
           <div class="bigmeta"><b id="newsCount">—</b><span>条</span></div>
@@ -293,13 +293,7 @@
         <div class="newskey-tags" id="keyTags"></div>
       </div>
 
-      <div class="humanize" id="humanizeBox">
-        <div class="humanize-h">
-          <span class="humanize-t">人话服务</span>
-          <span class="humanize-st on" id="hsState">已接入</span>
-        </div>
-        <p class="humanize-note">已通过 <b>Cloudflare 安全通道</b>接入，Key 存在服务端加密存储。未译的卡片点"译"按钮可直接改写成大白话（含原文引用与术语解释）。</p>
-      </div>
+      <p class="radar-tip">看不懂英文原话？点卡片右下角 <b>译</b> 按钮，看通俗版（含术语解释）。</p>
 
       <div class="newsstat" id="newsStat" hidden></div>
       <div class="newsgrid" id="newsGrid"></div>
@@ -337,7 +331,7 @@
         </div>
 
         <div class="card card-pad inspire-save">
-          <h2 class="ctitle">我的收藏<span class="ctitle-note">摘抄本 · 存本地</span></h2>
+          <h2 class="ctitle">我的收藏<span class="ctitle-note">存在你本地，永不丢失</span></h2>
           <div class="saved-list" id="savedList">
             <div class="inspire-empty">还没有收藏。看到喜欢的句子，点卡片或灵感上的"收藏"就会收进来。</div>
           </div>
@@ -405,12 +399,13 @@
   <div class="onboard-card">
     <div class="onboard-mark"><span data-icon="trend"></span></div>
     <h1 class="onboard-title">欢迎来到<br><b>逆熵工作台</b></h1>
-    <p class="onboard-sub">记录 → 累积 → 复利。这里的一切，都从你真实记录开始。</p>
+    <p class="onboard-sub">记下做了什么，曲线就会长出来。<br>这里的一切，都从你的真实记录开始。</p>
     <ol class="onboard-steps">
-      <li><b>主线复利</b>两条线，每条每天记一次，曲线才长出来</li>
-      <li><b>今日必须完成</b>写下要做的事，完成就勾掉</li>
-      <li><b>微光</b>记下为别人做的小事，攒满 20 件有彩蛋</li>
-      <li><b>灵感雷达 / 清单</b>看世界在发生什么，也生成你自己的文字</li>
+      <li><b>主线复利</b>学习与创造各一条，每天记一次，曲线才会长</li>
+      <li><b>今日必须完成</b>写下今天要做的，做完就勾掉</li>
+      <li><b>微光</b>记下为别人做的小事，攒满 20 件亮一次</li>
+      <li><b>灵感雷达</b>看看世界在发生什么</li>
+      <li><b>灵感清单</b>也生成几句你自己的文字</li>
     </ol>
     <button class="btn btn-acc btn-w" id="onboardGo" type="button"><span data-icon="check"></span>开始使用</button>
     <p class="onboard-foot">示例可删可改，随时替换成你自己的。</p>
@@ -418,6 +413,6 @@
 </div>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a09ec544095341bf91860fc1398fe7c1"}'></script>
-<script src="app.js?v=15"></script>
+<script src="app.js?v=16"></script>
 </body>
 </html>
