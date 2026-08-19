@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T05:08:18.260Z",
+  "fetchedAt": "2026-08-19T05:08:21.843Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -78,15 +78,14 @@
     {
       "id": "awsparallelstobigtobacco",
       "title": "Meta&#x27;s blockbuster trial draws parallels to big tobacco",
-      "titleZh": "Meta被告上法庭，像当年烟草公司一样？",
-      "summary": "美国联邦贸易委员会把Meta告了，说它靠买下Instagram和WhatsApp垄断社交市场，打压竞争。这案子让人想起当年烟草公司被告的套路——都是先做大再被清算。跟你有关的是，以后刷社交软件的选择可能会变多，价格也可能更透明。",
+      "titleZh": "Meta又上被告席，这次像极了当年烟草巨头",
+      "summary": "美国联邦贸易委员会正在起诉Meta，指控它长期垄断社交市场，靠收购Instagram和WhatsApp消灭对手。这案子跟当年告烟草公司很像——都是政府终于出手，要算一笔拖了很久的旧账。对你来说，如果Meta输了，以后刷Instagram、WhatsApp的规则可能都会变。",
       "quote": "Meta's blockbuster trial draws parallels to big tobacco.",
       "terms": [
-        "FTC=美国联邦贸易委员会，专门管市场公平竞争的政府机构，这次是原告。",
-        "垄断=一家公司把市场全占了，别人没法进来竞争，消费者选择变少。",
-        "反垄断诉讼=政府起诉大公司“吃独食”，要求拆分或罚款，恢复市场活力。",
-        "Instagram收购案=Meta在2012年买下照片分享App，后来又被指“买掉对手”的关键一步。",
-        "大烟草类比=上世纪烟草公司隐瞒危害被告垮，现在Meta被指用类似“先扩张后压制”的手段。"
+        "联邦贸易委员会（FTC）= 美国政府里管“生意别做太大、别坑消费者”的部门，相当于市场裁判。",
+        "垄断 = 一家公司把某个行业几乎全占了，别人没法公平竞争，最后用户没得选。",
+        "收购 = 大公司花钱把别的小公司买下来，变成自己的，比如Meta买下Instagram。",
+        "反垄断诉讼 = 政府告大公司“你管太宽了”，要求拆开或罚款，保护市场活力。"
       ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
@@ -100,11 +99,15 @@
     {
       "id": "httpsopenlogiorgen",
       "title": "OpenLogi",
-      "titleZh": "AI帮你写作业，还能看出你哪儿不会",
-      "summary": "OpenLogi是个新出的AI学习工具，能根据你写的内容判断你掌握得怎么样，然后告诉你哪里没搞懂。它不是直接给你答案，而是帮你搞明白自己卡在哪儿了。对高中生来说，写论文或做练习时，它能当个随时在线的“思维教练”。",
-      "quote": "OpenLogi is an AI-powered learning tool that analyzes your writing to identify gaps in understanding.",
+      "titleZh": "AI帮你写论文？新工具OpenLogi让逻辑更清晰",
+      "summary": "这是个帮学生检查论文逻辑漏洞的AI工具。你写完草稿丢进去，它能标出哪里论证不连贯、哪里证据不足，还会给修改建议。对高中生写议论文或研究性学习报告特别有用，相当于多了个24小时在线的逻辑教练。",
+      "quote": "OpenLogi is a tool that helps you identify logical gaps in your writing.",
       "terms": [
-        "- AI（人工智能）= 让电脑模仿人脑做判断和学习的科技"
+        "逻辑漏洞=论证过程中没讲通的地方，比如结论跳步骤",
+        "论证链=从观点到证据再到结论的完整推理链条",
+        "反例=专门用来推翻某个观点的例子",
+        "证据强度=一条证据能支撑结论的可信程度",
+        "结构性反馈=不只改字词，而是针对整篇文章框架提意见"
       ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
@@ -118,15 +121,13 @@
     {
       "id": "fleanverifiedmathematics",
       "title": "Palomar: A registry of Lean verified mathematics",
-      "titleZh": "数学证明也能用电脑查错？Palomar帮你搞定",
-      "summary": "数学论文里的证明，以前全靠人肉检查，现在有个叫Palomar的“登记册”，专门收录用Lean软件验证过的数学结果。简单说，就是给数学证明上“官方认证”，确保每一步推理都没毛病。你以后写作业、搞竞赛，甚至做研究，都能用它来确认某个定理是不是真的被机器验证过，省得自己瞎猜。",
-      "quote": "Palomar: A registry of Lean verified mathematics",
+      "titleZh": "数学证明也能上“档案库”了",
+      "summary": "这是一个叫Palomar的在线数学资料库，专门收录用Lean软件验证过的数学证明。简单说，就是让电脑帮你检查数学证明有没有错，确保每一步都严谨可靠。对高中生来说，以后查数学定理、看证明过程，可能多了一个更靠谱的参考来源。",
+      "quote": "Palomar: A registry of Lean verified mathematics.",
       "terms": [
-        "Lean=一个帮数学家写证明的电脑软件，能自动检查推理有没有漏洞",
-        "registry=登记册，像图书馆目录一样，把验证过的数学结果整理好供人查询",
-        "verified=经过验证的，指证明被电脑一步步检查过，不是人拍脑袋说的",
-        "formal proof=形式化证明，把数学推理变成电脑能读懂的严格步骤，一点含糊都不行",
-        "theorem=定理，就是数学里被证明为真的结论，比如勾股定理"
+        "Lean=一种计算机辅助证明工具，能像编译器检查代码一样检查数学证明的逻辑",
+        "registry=注册库，即集中存放、分类和检索信息的在线目录",
+        "formal proof=形式化证明，用严格符号语言写出的、可被机器验证的证明"
       ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
