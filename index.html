@@ -277,6 +277,18 @@
         <div class="newskey-tags" id="keyTags"></div>
       </div>
 
+      <div class="humanize" id="humanizeBox">
+        <div class="humanize-h">
+          <span class="humanize-t">人话服务</span>
+          <span class="humanize-st" id="hsState">未设置</span>
+        </div>
+        <form class="humanize-form" id="hsForm">
+          <input class="newskey-inp" id="hsKey" type="password" placeholder="粘贴你的 DeepSeek Key" autocomplete="off" aria-label="DeepSeek Key">
+          <button class="btn btn-ghost btn-sm" type="submit">保存</button>
+        </form>
+        <p class="humanize-note">Key 只存在<b>你自己浏览器</b>，不上传、不进代码仓库。卡片上的"译"按钮用它把资讯改写成大白话。</p>
+      </div>
+
       <div class="newsstat" id="newsStat" hidden></div>
       <div class="newsgrid" id="newsGrid"></div>
     </section>
