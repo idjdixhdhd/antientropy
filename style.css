@@ -758,3 +758,15 @@ svg{display:block}
 }
 .onboard-steps li b{color:var(--tx);display:block;font-size:13px;margin-bottom:2px}
 .onboard-foot{font-size:10.5px;color:var(--tx-3);margin:14px 0 0;letter-spacing:.04em}
+/* ============ v16 · 用户视角优化 ============ */
+.radar-tip{
+  font-size:11.5px;color:var(--tx-3);line-height:1.7;letter-spacing:.02em;
+  padding:10px 14px;border-radius:12px;background:var(--panel-2);border:1px solid var(--line);
+  margin:0 0 14px;
+}
+.radar-tip b{color:var(--acc);font-weight:600}
+.onboard-foot{margin-top:18px}
+@media (max-width:720px){
+  .onboard-steps{gap:6px}
+  .onboard-steps li{padding:9px 11px;font-size:12px}
+}
