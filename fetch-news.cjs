@@ -1,25 +1,22 @@
 #!/usr/bin/env node
 /* ==========================================================
-   逆熵 ANTIENTROPY · 真实 AI 资讯数据管线
+   逆熵 ANTIENTROPY · 真实资讯数据管线（多品类版）
    ----------------------------------------------------------
    只从可验证的官方公开源读取 RSS，做筛选/去重/校验，
-   输出 news.json 供站点读取。纯 Node（无需 npm 安装，
-   Node 18+ 自带 fetch）。
+   输出 news.json 供站点读取。纯 Node（无需 npm 安装）。
 
-   设计原则（对齐第三轮提示词）：
-   1. 只抓官方源：OpenAI News / GitHub Changelog / Google AI Blog / Hugging Face Blog
-   2. 优先模型/Agent/MCP/工具调用/API/图像/视频/语音/推理；过滤融资/人事/观点
-   3. 每条保存：原始标题、中文标题(留空待 AI 译)、中文摘要(留空待 AI 译)、
-      来源、发布时间、原文 URL、图片 URL、标签、抓取时间
-   4. 图片优先 RSS media → 其次 og:image → 没有则 null（站点用来源占位，不伪造）
-   5. 每天取重要性最高的 10 条；翻译由 AI 在二次整理时完成，失败保留英文不编造
-   6. 全部源失败 → 回退上一次成功缓存并标 status:'cache'；仅成功联网才标 'live'
-   7. 所有卡片点击打开官方原文（url 字段）
-   8. 容错：重复链接/无效日期/空摘要/超时/断网 各自 try-catch 不影响整体
+   设计：
+   1. 只抓 RSS 源，不爬网页（结构化、干净）
+   2. 白名单 PRIORITY + 黑名单 BLOCK 双列表过滤
+   3. 每条保存：原始标题、中文标题、摘要、来源、时间、URL、图、标签、类别
+   4. 【合并保护】保留已有"人工中文"条目（translated:true 或已有 titleZh），
+      只合并新增条目（新增标 translated:false，待 AI 二次整理补中文）
+   5. 全部源失败 → 回退缓存并标 status:'cache'
+   6. 容错：单源失败不影响整体
 
    用法：
-     node fetch-news.cjs            # 抓取并写 news.json
-     node fetch-news.cjs --force    # 即使全失败也覆盖（调试用）
+     node fetch-news.cjs            # 抓取并合并写入 news.json
+     node fetch-news.cjs --force    # 强制覆盖（调试用，会丢人工中文）
    ========================================================== */
 
 'use strict';
@@ -28,40 +25,41 @@ const path = require('path');
 
 const OUT = path.join(__dirname, 'news.json');
 const TIMEOUT = 9000;
-const TOP_N = 10;
+const POOL_CAP = 40;    // 合并后池子上限（保留最新）
 
-/* 官方公开 RSS 源（任一失效都不影响其它源） */
+/* 官方公开 RSS 源（带类别 cat，供站点标签过滤；任一失效不影响其它源） */
 const SOURCES = [
-  { name: 'OpenAI', home: 'https://openai.com/news', feed: 'https://openai.com/news/rss.xml' },
-  { name: 'GitHub', home: 'https://github.blog/changelog/', feed: 'https://github.blog/changelog/feed/' },
-  { name: 'Google', home: 'https://blog.google/technology/ai/', feed: 'https://blog.google/technology/ai/rss/' },
-  { name: 'Hugging Face', home: 'https://huggingface.co/blog', feed: 'https://huggingface.co/blog/feed.xml' },
+  { name: 'OpenAI', home: 'https://openai.com/news', feed: 'https://openai.com/news/rss.xml', cat: 'ai' },
+  { name: 'GitHub', home: 'https://github.blog/changelog/', feed: 'https://github.blog/changelog/feed/', cat: 'ai' },
+  { name: 'Google', home: 'https://blog.google/technology/ai/', feed: 'https://blog.google/technology/ai/rss/', cat: 'ai' },
+  { name: 'Hugging Face', home: 'https://huggingface.co/blog', feed: 'https://huggingface.co/blog/feed.xml', cat: 'opensource' },
+  { name: '游研社', home: 'https://www.yystv.cn/', feed: 'https://www.yystv.cn/rss', cat: 'game' },
+  { name: '故宫博物院', home: 'https://www.dpm.org.cn/', feed: 'https://www.dpm.org.cn/rss/news.xml', cat: 'museum' },
+  { name: '中华遗产', home: 'https://www.zhonghuayichan.cn/', feed: 'https://www.zhonghuayichan.cn/rss', cat: 'museum' },
+  { name: '看展日记', home: 'https://zhaiyiming.com/', feed: 'https://zhaiyiming.com/feed.xml', cat: 'museum' },
 ];
 
-/* 优先类别（命中加权越高越靠前） */
+/* 白名单：命中加权，越高越靠前（粗筛用字面匹配，后续可接语义过滤） */
 const PRIORITY = [
   { kw: ['mcp'], w: 12 },
   { kw: ['agent', 'agentic'], w: 11 },
   { kw: ['tool call', 'function call', 'tool use'], w: 10 },
   { kw: ['api'], w: 9 },
-  { kw: ['reason', 'o1', 'o3', 'gpt-5', 'gpt5', 'gemini', 'claude', 'model', 'llm', 'frontier'], w: 8 },
-  { kw: ['image', 'diffusion', 'vision'], w: 7 },
-  { kw: ['video', 'veo', 'sora', 'omni'], w: 7 },
-  { kw: ['voice', 'speech', 'audio', 'tts'], w: 7 },
-  { kw: ['inference', 'train', 'fine-tun', 'open weight', 'open model'], w: 7 },
+  { kw: ['reason', 'gpt-5', 'gpt5', 'gemini', 'claude', 'model', 'llm', 'frontier'], w: 8 },
+  { kw: ['image', 'diffusion', 'vision', 'video', 'veo', 'omni'], w: 7 },
+  { kw: ['voice', 'speech', 'audio', 'tts', 'inference', 'open model'], w: 7 },
 ];
 
-/* 过滤类别（命中即丢弃） */
+/* 黑名单：命中即丢弃 */
 const BLOCK = [
   'raise', 'funding', 'series ', 'valuation', 'invest', 'led by',
   'appoint', 'joins as', 'chief executive', 'promot', 'hire', 'depart',
-  'opinion', 'perspective', 'why we', 'hot take', 'interview', 'podcast',
-  'webinar', 'event', 'conference', 'sponsor', 'partnership with', 'customer story',
+  'opinion', 'perspective', 'hot take', 'webinar', 'sponsor', 'customer story',
 ];
 
 function catScore(text) {
   const t = ' ' + String(text).toLowerCase() + ' ';
-  if (BLOCK.some(b => t.includes(b))) return -1;        // 直接过滤
+  if (BLOCK.some(b => t.includes(b))) return -1;
   let s = 1;
   for (const p of PRIORITY) if (p.kw.some(k => t.includes(k))) s += p.w;
   return s;
@@ -97,9 +95,8 @@ function pickAttr(block, tag, attr) {
   const m = block.match(new RegExp('<' + tag + '[^>]*\\b' + attr + '="([^"]*)"', 'i'));
   return m ? m[1] : '';
 }
-function parseFeed(xml, source) {
+function parseFeed(xml, source, cat) {
   const out = [];
-  // RSS 2.0: <item>   /   Atom: <entry>
   const blocks = xml.match(/<(item|entry)[\s\S]*?<\/\1>/gi) || [];
   for (const b of blocks) {
     const isAtom = /^<entry/i.test(b);
@@ -109,27 +106,13 @@ function parseFeed(xml, source) {
     const pub = isAtom ? pick(b, 'updated') || pick(b, 'published') : pick(b, 'pubDate');
     let summary = decodeEnt(pick(b, 'description') || pick(b, 'summary') || pick(b, 'content') || pick(b, 'content:encoded'));
     summary = summary.slice(0, 240);
-    // 图片：优先 media:content / media:thumbnail，其次 enclosure
     let image = pickAttr(b, 'media:content', 'url') || pickAttr(b, 'media:thumbnail', 'url')
       || pickAttr(b, 'enclosure', 'url');
     if (image && !/image|png|jpg|jpeg|webp/i.test(image)) image = '';
     if (!title || !link) continue;
-    out.push({ source, title, url: link, publishedAt: pub ? new Date(pub).toISOString().slice(0, 10) : '', summary, image: image || null });
+    out.push({ source, cat: cat || '', title, url: link, publishedAt: pub ? new Date(pub).toISOString().slice(0, 10) : '', summary, image: image || null });
   }
   return out;
-}
-
-/* 补 og:image（仅对最终入选条目，带超时与失败兜底） */
-async function fillOgImage(items) {
-  await Promise.all(items.map(async (it) => {
-    if (it.image) return;
-    try {
-      const html = await fetchText(it.url, 6000);
-      const m = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)
-        || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
-      if (m) it.image = m[1];
-    } catch (e) { /* 保持 null，站点用来源占位 */ }
-  }));
 }
 
 /* ---------------- 主流程 ---------------- */
@@ -140,16 +123,15 @@ async function fillOgImage(items) {
   for (const s of SOURCES) {
     try {
       const xml = await fetchText(s.feed);
-      const items = parseFeed(xml, s.name);
+      const items = parseFeed(xml, s.name, s.cat);
       if (items.length) { all = all.concat(items); okCount++; }
-      console.log(`  ✓ ${s.name}: ${items.length} 条`);
+      console.log(`  ✓ ${s.name}(${s.cat || '-'}): ${items.length} 条`);
     } catch (e) {
       console.log(`  ✗ ${s.name}: ${e.message}`);
     }
   }
 
   if (!all.length && !force) {
-    // 全部失败 → 回退缓存
     if (fs.existsSync(OUT)) {
       const cached = JSON.parse(fs.readFileSync(OUT, 'utf8'));
       cached.status = 'cache';
@@ -163,8 +145,7 @@ async function fillOgImage(items) {
     return;
   }
 
-  // 容错：去重条目 / 校验日期 / 丢弃空标题
-  // 去重键用 url+title：同一来源页上的不同公告（URL 相同、标题不同）不算重复
+  // 容错：去重（url+title）/ 校验日期 / 丢弃空标题
   const seen = {};
   let cleaned = [];
   for (const it of all) {
@@ -179,35 +160,53 @@ async function fillOgImage(items) {
   // 打分排序：类别权重 + 时间新鲜度
   const now = Date.now();
   cleaned.forEach(it => {
-    const recency = Math.max(0, 30 - (now - new Date(it.publishedAt)) / 864e5); // 越新越高，封顶 30 天
+    const recency = Math.max(0, 30 - (now - new Date(it.publishedAt)) / 864e5);
     it._score = catScore(it.title + ' ' + it.summary) + recency * 0.5;
   });
   cleaned = cleaned.filter(it => it._score >= 0).sort((a, b) => b._score - a._score);
-  const top = cleaned.slice(0, TOP_N);
+  const freshRaw = cleaned.slice(0, 20);   // 每轮最多新增 20 条
 
-  await fillOgImage(top);
-
-  const data = {
-    fetchedAt: new Date().toISOString(),
-    status: okCount > 0 ? 'live' : 'cache',
-    note: okCount > 0
-      ? '由真实官方公开源抓取并结构化。中文标题/摘要由 AI 在二次整理时补全，未译时保留英文原文。'
-      : '联网未成功，已回退缓存。',
-    items: top.map(it => ({
+  // 【合并保护】保留已有的人工中文条目（translated:true 或已有 titleZh）
+  let prev = [];
+  if (!force && fs.existsSync(OUT)) {
+    try {
+      const d = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+      prev = (d.items || []).filter(it => it.translated === true || (it.titleZh && it.titleZh !== it.title));
+    } catch (e) { prev = []; }
+  }
+  const kept = force ? [] : prev;
+  const keptUrls = new Set(kept.map(it => it.url));
+  const fresh = freshRaw
+    .filter(it => !keptUrls.has(it.url))
+    .map(it => ({
       id: it.url.replace(/[^a-z0-9]/gi, '').slice(-24) || ('n' + Math.random().toString(36).slice(2, 8)),
       title: it.title,
       titleZh: null,            // 由 AI 翻译步骤补全，不在此编造
       summary: it.summary,
       source: it.source,
-      sourceUrl: SOURCES.find(s => s.name === it.source).home,
+      sourceUrl: (SOURCES.find(s => s.name === it.source) || {}).home || '',
       publishedAt: it.publishedAt,
       url: it.url,
-      image: it.image,          // 无则 null → 站点用来源占位
-      tags: [],                 // 由 AI 整理时打标
+      image: it.image,
+      tags: [],
+      category: it.cat || '',
       translated: false,
-    })),
+    }));
+
+  // 合并：人工中文在前，新增在后；按时间倒序；上限 POOL_CAP
+  let items = kept.concat(fresh);
+  items.sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')));
+  items = items.slice(0, POOL_CAP);
+
+  const data = {
+    fetchedAt: new Date().toISOString(),
+    status: okCount > 0 ? 'live' : 'cache',
+    note: okCount > 0
+      ? '多品类 RSS 自动抓取。中文条目为人工整理保留；新增条目待 AI 二次补译，未译保留英文原文。'
+      : '联网未成功，已回退缓存。',
+    items,
   };
 
   fs.writeFileSync(OUT, JSON.stringify(data, null, 2));
-  console.log(`已写入 news.json：状态=${data.status}，入选=${data.items.length} 条（来自 ${okCount}/${SOURCES.length} 个源）。`);
+  console.log(`已写入 news.json：状态=${data.status}，池子=${data.items.length}（保留人工中文=${kept.length}，新增=${fresh.length}），源=${okCount}/${SOURCES.length}`);
 })();
