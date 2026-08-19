@@ -1,0 +1,12 @@
+# 部署到 Cloudflare Pages 时排除无关文件（保持产物干净）
+.git
+.wrangler
+node_modules
+promo
+shots
+windows
+docs
+db
+out
+*.cjs
+antientropy-worker.js

@@ -69,6 +69,7 @@ const ICO = {
   copy: '<rect x="8.4" y="8.4" width="12" height="12" rx="1.8"/><path d="M15.6 5.2H5.2v10.4"/>',
   quote: '<path d="M10 8.2H4.6v5.4H8c0 1.9-1 3.1-2.6 3.6l.8 2.1c2.7-.7 4.6-3 4.6-6V8.2a2 2 0 0 0-.8-1.6Z"/><path d="M21.4 8.2H16v5.4h3.4c0 1.9-1 3.1-2.6 3.6l.8 2.1c2.7-.7 4.6-3 4.6-6V8.2a2 2 0 0 0-.8-1.6Z"/>',
   arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
+  music: '<path d="M9 18V5l10-2v13"/><circle cx="6.4" cy="18" r="2.6"/><circle cx="16.4" cy="16" r="2.6"/>',
 };
 function ico(name, size) {
   const s = size || 24;
@@ -93,6 +94,7 @@ const VIEWS = [
   { id: 'love', name: '微光', short: '微光', icon: 'spark' },
   { id: 'radar', name: '灵感雷达', short: '雷达', icon: 'radar' },
   { id: 'inspire', name: '灵感清单', short: '灵感', icon: 'spark' },
+  { id: 'music', name: '音乐 BGM', short: '音乐', icon: 'music' },
 ];
 const THEMES = ['mint', 'ember', 'indigo'];
 
@@ -307,7 +309,13 @@ function go(id) {
   $$('[data-go]').forEach(b => b.classList.toggle('is-on', b.dataset.go === id));
   if (id === 'mainline') requestAnimationFrame(drawAllCharts);
   if (id === 'body') { resetWater(); requestAnimationFrame(renderBody); }
+  // AI 对话浮窗：只在"灵感雷达"显示，其它界面不出现
+  updateChatFab();
   window.scrollTo({ top: 0, behavior: 'instant' in document.body.style ? 'instant' : 'auto' });
+}
+function updateChatFab() {
+  const f = document.getElementById('fabAsk'); if (!f) return;
+  f.style.display = (S.view === 'radar') ? '' : 'none';
 }
 
 /* ---------------- 主题 ---------------- */
@@ -882,6 +890,99 @@ const BGM = {
 };
 
 /* ==========================================================
+   BGM 模块：AI 生成提示词（纯音乐·无人声）+ 轻量播放器
+   ========================================================== */
+const BGM_PROMPTS = [
+  { name: '深夜流动', tag: 'Lo-fi / 慢', prompt: 'A calm lo-fi instrumental track, no vocals, soft electric piano and warm vinyl crackle, slow tempo 70 BPM, late-night study mood, gentle reverb, mellow and focused.' },
+  { name: '薄荷清晨', tag: 'Ambient / 明亮', prompt: 'Bright ambient instrumental, no vocals, shimmering synth pads and light acoustic guitar, airy and clean, 90 BPM, morning focus, uplifting but calm.' },
+  { name: '熵寂', tag: 'Cinematic / 空旷', prompt: 'Cinematic ambient drone, no vocals, deep strings and distant piano, vast empty space, slow swelling, philosophical and quiet, minimal rhythm.' },
+  { name: '雨夜代码', tag: 'Synthwave / 中速', prompt: 'Mid-tempo synthwave instrumental, no vocals, smooth analog bass and soft arpeggios, rainy night coding vibe, 100 BPM, slightly nostalgic.' },
+  { name: '文博慢步', tag: 'Neo-classical / 温柔', prompt: 'Neo-classical instrumental, no vocals, solo piano with soft chamber strings, gentle and reflective, walking through a museum mood, tender.' },
+  { name: '归零', tag: 'Deep / 催眠', prompt: 'Deep sleep music, no vocals, very slow drone and soft bell tones, dark yet peaceful, 50 BPM, fading into silence, meditative and grounding.' },
+];
+const BGM_TRACKS = [
+  { title: '示范曲 1 · Flow', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', note: '占位示范，替换成你生成的' },
+  { title: '示范曲 2 · Drift', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3', note: '占位示范' },
+  { title: '示范曲 3 · Ember', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3', note: '占位示范' },
+  { title: '示范曲 4 · Quiet', src: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3', note: '占位示范' },
+];
+
+const MusicPlayer = {
+  idx: 0, playing: false, mode: 'all', // all | one | shuffle
+  audio: null,
+  init() {
+    this.audio = $('#bgmAudio');
+    if (!this.audio) return;
+    this.audio.volume = 0.8;
+    this.audio.addEventListener('timeupdate', () => this.sync());
+    this.audio.addEventListener('loadedmetadata', () => this.sync());
+    this.audio.addEventListener('ended', () => this.onEnded());
+    this.audio.addEventListener('play', () => { this.playing = true; this.paintToggle(); });
+    this.audio.addEventListener('pause', () => { this.playing = false; this.paintToggle(); });
+    this.renderList();
+  },
+  load(i, autoplay) {
+    if (i < 0 || i >= BGM_TRACKS.length) return;
+    this.idx = i;
+    const t = BGM_TRACKS[i];
+    this.audio.src = t.src;
+    $('#bgmTitle').textContent = t.title;
+    $('#bgmSub').textContent = t.note || '';
+    this.renderList();
+    if (autoplay) this.play();
+  },
+  play() { const p = this.audio.play(); if (p && p.catch) p.catch(() => toast('该曲直链可能被拦截，换一首试试')); },
+  toggle() { if (this.audio.paused) this.play(); else this.audio.pause(); },
+  next() {
+    if (this.mode === 'shuffle') { let n; do { n = Math.floor(Math.random() * BGM_TRACKS.length); } while (n === this.idx && BGM_TRACKS.length > 1); this.load(n, true); }
+    else this.load((this.idx + 1) % BGM_TRACKS.length, true);
+  },
+  prev() { this.load((this.idx - 1 + BGM_TRACKS.length) % BGM_TRACKS.length, true); },
+  onEnded() { if (this.mode === 'one') { this.audio.currentTime = 0; this.play(); } else this.next(); },
+  setMode() {
+    this.mode = this.mode === 'all' ? 'one' : this.mode === 'one' ? 'shuffle' : 'all';
+    const lab = { all: '列表', one: '单曲', shuffle: '随机' }[this.mode];
+    const b = $('#bgmLoop'); if (b) { b.textContent = lab; b.dataset.mode = this.mode; }
+  },
+  setVol(v) { if (this.audio) this.audio.volume = v; },
+  sync() {
+    const a = this.audio; if (!a) return;
+    const d = a.duration || 0, c = a.currentTime || 0;
+    $('#bgmCur').textContent = fmtTime(c * 1000);
+    $('#bgmDur').textContent = fmtTime(d * 1000);
+    const bar = $('#bgmBar'); if (bar) bar.style.width = (d ? (c / d * 100) : 0) + '%';
+  },
+  paintToggle() {
+    const b = $('#bgmToggle'); if (b) b.classList.toggle('on', this.playing);
+  },
+  renderList() {
+    const box = $('#bgmList'); if (!box) return;
+    box.innerHTML = BGM_TRACKS.map((t, i) =>
+      '<button class="bgm-li' + (i === this.idx ? ' on' : '') + '" type="button" data-i="' + i + '">'
+      + '<span class="bgm-li-n">' + (i + 1) + '</span>'
+      + '<span class="bgm-li-t">' + esc(t.title) + '</span>'
+      + '<span class="bgm-li-s">' + esc(t.note || '') + '</span>'
+      + '</button>').join('');
+    $$('#bgmList [data-i]').forEach(b => b.addEventListener('click', () => this.load(+b.dataset.i, true)));
+  },
+};
+
+function renderMusic() {
+  const g = $('#promptGrid'); if (!g) return;
+  g.innerHTML = BGM_PROMPTS.map((p, i) =>
+    '<div class="prompt-card">'
+    + '<div class="prompt-top"><b class="prompt-name">' + esc(p.name) + '</b><span class="prompt-tag">' + esc(p.tag) + '</span></div>'
+    + '<p class="prompt-text" id="pt' + i + '">' + esc(p.prompt) + '</p>'
+    + '<button class="btn btn-ghost btn-sm prompt-copy" type="button" data-copy="pt' + i + '"><span data-icon="copy"></span>复制提示词</button>'
+    + '</div>').join('');
+  paintIcons(g);
+  $$('#promptGrid [data-copy]').forEach(b => b.addEventListener('click', () => {
+    const txt = $('#' + b.dataset.copy).textContent;
+    copyToClipboard(txt).then(ok => toast(ok ? '已复制，去 Suno/Udio 粘贴' : '复制失败，长按手动选'));
+  }));
+}
+
+/* ==========================================================
    熵尘粒子背景：克制的动态氛围（低密度 / 低透明度 / 缓慢漂移）
    薄荷 + 玫瑰微光，服务"熵"主题但不打扰内容；尊重减弱动效
    ========================================================== */
@@ -982,7 +1083,7 @@ const INSPIRE_LIB = {
       '——展柜灯暗了。我没出声。',
       '逛完{place}，出来时天已经暗了。把{era}留在馆里，把自己带回今天。',
       '{art}躺在{era}的枕边，像一封没拆的信。',
-      '{num} 件展品。{num} 年时间。{place}的空气里有种慢。',
+      '{num}件展品，{num}年。{place}的空气里有种慢。',
       '一件{art}没写说明牌。它站在角落，像一句没人接的话。',
       '我们去看{era}，{era}也在看我们。',
       '……留白。',
@@ -1003,16 +1104,16 @@ const INSPIRE_LIB = {
       '深夜耳机里单曲循环{song}，{singer}把没说出口的那句，替我唱完了。',
       '现在的歌好听，但心里那首{song}，还是{year}年那版。',
       '{singer}的歌还能听几年？',
-      '{year} 年。{song}。{place}。{num} 颗星。',
+      '{year} 年。{song}。{place}。{num}颗星。',
       '有人说{singer}过气了。可我的歌单里，{song}还是单曲循环。',
       '{singer}唱的是别人的词，我听到的是自己的命。',
       '音乐是唯一不会说谎的时光机：{singer}的声音一出来，{year}年就站在门口。',
-      '副歌。副歌。副歌。{num} 次。{singer}。{year}。',
+      '副歌。副歌。副歌。{num}次。{singer}。{year}。',
       '我把{song}设成单曲循环，不是因为好听，是那句词太像我了。',
       '那年{year}，谁在{place}听{singer}的{song}？',
       '——耳机摘了。',
       '歌单翻到{singer}，{year}年的旧歌，现在听全是新心事。',
-      '{song}。{singer}。{num} 分钟。{era}。',
+      '{song}。{singer}。{num}分钟。{era}。',
       '有些歌不敢在白天听——{song}的前奏一响，{year}年的事就全回来了。',
     ],
     pool: {
@@ -1029,23 +1130,23 @@ const INSPIRE_LIB = {
     patterns: [
       '游戏打多了会明白：真正的攻略不是背出装，是学会在{game}里跟自己和解。',
       '从{game}退坑那天，我删的不是账号，是{num}个睡不着的夜晚。',
-      '{game}。{num} 点。{place}。',
+      '{game}。{num}点。{place}。',
       '成年人的逃避方式很统一：打开{game}，假装今天还没结束。',
       '后来不打{game}了，不是不喜欢，是没人再在频道里喊我上线。',
       '我在{game}里认识的人，比现实里更懂"队友"两个字。',
       '{game}里到底通关过几个世界？',
-      '{num} 个夜晚。{game}。{era}。{place}。',
+      '{num}个夜晚。{game}。{era}。{place}。',
       '每次打完{game}抬头，窗外天都亮了。时间在游戏里过得快，在现实里也快。',
       '游戏是假的，但{game}里掉的眼泪是真的。',
       '{game}教会我的第一课：逆风局别急着投降。',
-      '——退出频道。{num} 个好友在线。',
+      '——退出频道。{num}个好友在线。',
       '{game}的 BGM 比现实的歌更懂我。',
       '{era} 的{game}玩家，{era}还在，{game}没了。',
-      '{game}。{place}。{num} 级。{era}。',
+      '{game}。{place}。{era}。',
     ],
     pool: {
       game: ['王者峡谷', '我的世界', '塞尔达', '星露谷', '英雄联盟', '原神'],
-      num: ['一个', '两个', '三个', '无数'],
+      num: ['一', '两', '三', '无数'],
       place: ['出租屋', '天台', '地铁', '老巷口', '网吧'],
       era: ['去年', '那年', '初秋', '小时候'],
     },
@@ -1076,31 +1177,146 @@ const INSPIRE_LIB = {
       num: ['七千', '一万', '三', '四十'],
     },
   },
+  /* 以下主题用于「按资讯类别生成」：本地零网络也能出连贯、跟类别的句子 */
+  tech: {
+    label: '科技数码',
+    patterns: [
+      '今天刷到{thing}的新进展，突然觉得手里的活儿又该重写了。',
+      '{thing}又更新了。我看了半小时文档，决定先不动，下周再说。',
+      '搞{thing}的人真幸福，踩的坑都有人写博客。',
+      '半夜调试{thing}，报错信息比代码还长。',
+      '有人用{thing}一天搭出原型，我还在配环境。这就是差距。',
+      '{thing}这东西，懂的人觉得理所当然，不懂的觉得像魔法。',
+      '收藏了一堆{thing}的教程，一行都没看。',
+      '今天终于把{thing}跑通了，比中奖还高兴。',
+      '看{thing}的发布会，钱包先紧张了。',
+      '写{thing}写到凌晨，抬头发现天亮了。',
+      '关掉编辑器，{thing}的坑明天再填。',
+      '{thing}的坑我替你踩过了：先看官方文档，别信二手教程。',
+    ],
+    pool: {
+      thing: ['模型', '开源项目', '前端框架', '新显卡', '代码', 'Agent', '终端', '机械键盘', '算法', '云服务器', '开发工具'],
+    },
+  },
+  science: {
+    label: '科学科普',
+    patterns: [
+      '科普里说{subj}的运行规律，比人类写的任何规则都优雅。',
+      '看完{subj}的纪录片，觉得自己懂的还不如一只蚂蚁。',
+      '{subj}不关心人类忙什么，它按自己的节奏走。',
+      '今天知道{subj}的一个冷知识，够吹一星期。',
+      '科学家研究{subj}几十年，结论还在改，挺好。',
+      '仰望{subj}的时候，手机里的焦虑突然变小了。',
+      '{subj}的尺度大到让我安心——我的烦恼太渺小了。',
+      '原来{subj}是这么运作的，小时候课本没讲清楚。',
+      '合上科普书，世界没变，我看它的方式变了。',
+      '研究{subj}的人，是把好奇心当饭吃的人。',
+    ],
+    pool: {
+      subj: ['恒星', '深海', '量子', '大脑', '河流', '细菌', '星系', '时间', '细胞', '引力', '气候'],
+    },
+  },
+  life: {
+    label: '成长生活',
+    patterns: [
+      '今天{act}了十分钟，比昨天多，比明天少。',
+      '{act}这件事，难的不是做，是每天都做。',
+      '把{act}排进日程，生活突然有了重心。',
+      '拖延的时候，{act}在脑子里越滚越大。',
+      '今天先{act}，剩下的明天再说。',
+      '别人问我怎么坚持{act}，我说我没坚持，只是没停。',
+      '{act}一个月，变化小到看不见，但确实不一样了。',
+      '周末{act}了一整天，周一反而更有劲儿。',
+      '睡前{act}五分钟，比刷手机睡得踏实。',
+    ],
+    pool: {
+      act: ['背单词', '复盘', '跑步', '读书', '学点新东西', '早睡', '写日记', '整理桌面', '冥想'],
+    },
+  },
+};
+/* 资讯类别 → 灵感主题（NEWS 类别与灵感库 key 不同，必须映射，否则永远落到诗歌） */
+const CAT_TO_THEME = {
+  museum: 'museum', game: 'game',
+  ai: 'tech', opensource: 'tech', frontend: 'tech', hardware: 'tech', code: 'tech', ai101: 'tech',
+  science: 'science',
+  philosophy: 'poetry',
+  study: 'life', growth: 'life',
 };
 function pickOne(arr, rnd) { return arr[Math.floor(rnd() * arr.length)]; }
+function fmtTime(ts) { try { const d = new Date(ts); return (d.getMonth() + 1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0'); } catch (e) { return ''; } }
 function fillTpl(tpl, pool, rnd) {
   return tpl.replace(/\{(\w+)\}/g, (m, k) => {
     const p = pool[k];
     return p && p.length ? pickOne(p, rnd) : m;
   });
 }
-/* 本地生成灵感：从候选类均衡随机（每条按概率从所有选中类里抽），5 条不重复模板 */
+/* 灵感的"风格"清单（与后端 inspire.js / worker INSPIRE_VOICES 对齐），
+   用户可多选 1-3 种作为当前想用的"语调"，让生成有真实风格差异。
+   为了贴近用户认知，前端 UI 称之"风格"，后端仍用 "voice" 字段名做兼容 */
+const INSPIRE_VOICES = [
+  { id: 'night',    name: '夜行者',   desc: '深夜放空写的短句，带一点私人情绪。' },
+  { id: 'museum',   name: '文博旁白', desc: '用展品/古建的意象写感悟，克制、有画面。' },
+  { id: 'lyric',    name: '歌词体',   desc: '两三句像歌词的片段，留一个记忆点。' },
+  { id: 'roast',    name: '冷梗吐槽', desc: '对刚看到的事俏皮点评，允许不完整句。' },
+  { id: 'poem',     name: '现代小诗', desc: '三四行，留白，别抒情过度。' },
+  { id: 'playlist', name: '歌单随笔', desc: '给一张私藏歌单写简介，带个人口味。' },
+];
+/* 资讯类别 → 中文标签（与上方 NEWS_CATS label 保持一致；用于灵感卡片"来源类别"标签） */
+const CAT_LABEL = {
+  ai: 'AI 前沿', opensource: '开源工具', frontend: '前端设计',
+  science: '科学科普', philosophy: '哲学哲思', museum: '文博人文',
+  game: '游戏人文', hardware: '科技数码', code: '编程开发',
+  study: '学习效率', ai101: 'AI 科普', growth: '个人成长',
+};
+let INSPIRE_STATE = { voices: ['night'], style: 'boxed' }; // 默认：夜行者 + 一条一框
 function genLocalInspire(cats) {
   const rnd = Math.random;
-  const want = (cats && cats.length ? cats.filter(c => INSPIRE_LIB[c]) : Object.keys(INSPIRE_LIB));
-  if (!want.length) want = ['poetry'];
+  // 把勾选的资讯类别映射成灵感主题；去重
+  let themes = (cats && cats.length ? cats : []).map(c => CAT_TO_THEME[c]).filter(Boolean);
+  themes = [...new Set(themes)];
+  // 没勾任何类别：均衡覆盖全部主题，保证多样性（不再退化成只有诗歌）
+  if (!themes.length) themes = ['museum', 'music', 'game', 'tech', 'science', 'life', 'poetry'];
   const count = 4 + Math.floor(rnd() * 2);   // 4-5 条
   const items = [];
+
+  // 准备 sources：每个主题 → 反向映射出一个资讯类别；从 NEWS_ITEMS 里按 category 抓真实标题
+  const themeToCats = {}; Object.keys(CAT_TO_THEME).forEach(k => { const t = CAT_TO_THEME[k]; (themeToCats[t] = themeToCats[t] || []).push(k); });
+  // 按 category 分组的资讯池
+  const catPools = {};
+  (NEWS_ITEMS || []).forEach(n => { if (n.category) (catPools[n.category] = catPools[n.category] || []).push(n); });
+
   const used = {};
   let tries = 0;
-  while (items.length < count && tries < 50) {
+  while (items.length < count && tries < 80) {
     tries++;
-    const lib = INSPIRE_LIB[pickOne(want, rnd)];
+    const themeKey = pickOne(themes, rnd);
+    const lib = INSPIRE_LIB[themeKey];
+    if (!lib) continue;
     const tpl = pickOne(lib.patterns, rnd);
-    const key = lib.label + ':' + tpl;
+    const key = themeKey + ':' + tpl;
     if (used[key]) continue;
     used[key] = 1;
-    items.push({ tag: lib.label, text: fillTpl(tpl, lib.pool, rnd) });
+    // 真实类别：theme 反向 → NEWS_CATS（取一个）
+    const possibleCats = themeToCats[themeKey] || [];
+    const cat = possibleCats.length ? pickOne(possibleCats, rnd) : (cats[0] || '');
+    // 在该 category 下随机抽一条 + 一条
+    const pool = cat ? (catPools[cat] || []) : [];
+    let sources = [];
+    if (pool.length >= 2) {
+      const a = pool[Math.floor(rnd() * pool.length)];
+      const b = pool[Math.floor(rnd() * pool.length)];
+      sources = [{ cat: a.category, titleZh: a.titleZh, title: a.title, source: a.source }];
+      if (b !== a) sources.push({ cat: b.category, titleZh: b.titleZh, title: b.title, source: b.source });
+    } else if (pool.length === 1) {
+      const a = pool[0];
+      sources = [{ cat: a.category, titleZh: a.titleZh, title: a.title, source: a.source }];
+    } else if (cat) {
+      sources = [{ cat, titleZh: '', title: '', source: '' }];
+    }
+    // voice：本地模板就用用户当前选的一个 voice 名，更贴近"风格"
+    const voiceId = (INSPIRE_STATE.voices && INSPIRE_STATE.voices[0]) || 'night';
+    const voiceObj = INSPIRE_VOICES.find(v => v.id === voiceId) || INSPIRE_VOICES[0];
+    items.push({ voice: voiceObj.name, text: fillTpl(tpl, lib.pool, rnd), sources });
   }
   return items;
 }
@@ -1171,12 +1387,15 @@ function newsCard(it) {
   const saved = isSaved(it.id);
   // 未翻译条目才显示"译"按钮（已有人话版的不需要）
   const hzBtn = !hasZh ? '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>' : '';
+  // "问 AI"按钮：把这条资讯作为上下文发给 AI（任何状态下都显示）
+  const askBtn = '<button class="nc-ask" type="button" data-ask="' + esc(it.id) + '" aria-label="就这条问 AI"><span data-icon="spark"></span>问 AI</button>';
   return '<div class="ncard">'
     + img
     + '<div class="nc-body">'
     + '<div class="nc-top"><span class="nc-src ' + srcClass(it.source) + '">' + esc(it.source) + '</span>'
     + '<span class="nc-date">' + esc(dateTxt) + '</span>'
     + hzBtn
+    + askBtn
     + '</div>'
     + '<h3 class="nc-title">' + esc(title) + (hasZh ? '' : ' <em class="nc-en">原文</em>') + '</h3>'
     + '<p class="nc-sum">' + esc(summary) + '</p>'
@@ -1198,6 +1417,26 @@ function copyText(it) {
   return '【' + (it.titleZh || it.title) + '】\n' + (it.summary || '')
     + (it.quote ? '\n原话：' + it.quote : '')
     + '\n来源：' + it.source + '\n原文：' + it.url;
+}
+function copyToClipboard(text) {
+  return new Promise(resolve => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => resolve(true)).catch(() => fallback());
+        return;
+      }
+    } catch (e) {}
+    fallback();
+    function fallback() {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.focus(); ta.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta); resolve(ok);
+      } catch (e) { resolve(false); }
+    }
+  });
 }
 function copySaved(x) {
   return x.title + (x.summary ? '\n' + x.summary : '') + '\n来源：' + x.source + (x.url ? '\n' + x.url : '');
@@ -1298,107 +1537,217 @@ function toggleOrig(orig) {
   btn.classList.toggle('open', open);
 }
 
-/* 渲染灵感列表（本地模板或 AI 结果都走这里） */
-function renderInspire(out, items, aiTag) {
-  out.innerHTML = items.map(it =>
-    '<div class="inspire-item">'
-    + (it.tag ? '<span class="inspire-tag">' + esc(it.tag) + '</span>' : '')
-    + '<span class="inspire-txt">' + esc(it.text) + '</span>'
-    + '<div class="inspire-item-act">'
-    + '<button class="inspire-fav" type="button" data-favtxt="' + esc(it.text) + '">收藏</button>'
-    + '<button class="inspire-copy" type="button" data-copy="' + esc(it.text) + '">复制</button>'
-    + '</div></div>'
-  ).join('') || '<div class="inspire-empty">换个类别试试</div>';
-  if (aiTag) {
-    const note = document.createElement('div');
-    note.className = 'inspire-note'; note.textContent = aiTag;
-    out.appendChild(note);
-  }
+/* 渲染灵感列表（本地模板或 AI 结果都走这里）
+   items: [{ voice?: string, text: string, tag?: string, sources?: [{cat,titleZh,title,source}], source?: { newsCount, voices, style, usedAt, sources } }] */
+function renderInspire(out, items, footerNote) {
+  if (!items || !items.length) { out.innerHTML = '<div class="inspire-empty">换个类别试试</div>'; return; }
+  const used = items[0] && items[0].source;
+  out.innerHTML = items.map((it, idx) => {
+    const voiceText = (it.voice || it.tag || '').trim();
+    // 1) 来源类别标签（夜行者/歌词体...是风格，区别开！）
+    const cats = (it.sources || []).map(s => s.cat).filter(Boolean);
+    const uniqueCats = [...new Set(cats)];
+    const catLabels = uniqueCats.map(c => CAT_LABEL[c] || c);
+    const catHtml = catLabels.length
+      ? '<span class="inspire-cat" title="灵感来源的真实资讯类别">' + esc(catLabels.join(' · ')) + '</span>'
+      : '';
+    // 2) 风格标签（仅当有 voice 时）
+    const styleHtml = voiceText
+      ? '<span class="inspire-tag" title="你选/AI 选中的写作风格">' + esc(voiceText) + '</span>'
+      : '';
+    // 3) 来源资讯展开区
+    const sources = it.sources || [];
+    const srcHtml = sources.length
+      ? '<div class="inspire-src" hidden>'
+        + sources.map(s => '<div class="inspire-src-row">'
+          + '<span class="inspire-src-cat">' + esc(CAT_LABEL[s.cat] || s.cat || '资讯') + '</span>'
+          + '<span class="inspire-src-tx">' + esc((s.titleZh || s.title || '').slice(0, 46)) + '</span>'
+          + '</div>').join('')
+        + '</div>'
+      : '';
+    const toggleBtn = sources.length
+      ? '<button class="inspire-src-toggle" type="button" data-toggle-src="' + idx + '">▾ 来源 ' + sources.length + ' 条</button>'
+      : '';
+    return (
+      '<div class="inspire-item">'
+      + '<div class="inspire-tags-row">'
+      + catHtml
+      + styleHtml
+      + '</div>'
+      + '<span class="inspire-txt">' + esc(it.text) + '</span>'
+      + toggleBtn
+      + srcHtml
+      + '<div class="inspire-item-act">'
+      + '<button class="inspire-fav" type="button" data-favtxt="' + esc(it.text) + '">收藏</button>'
+      + '<button class="inspire-copy" type="button" data-copy="' + esc(it.text) + '">复制</button>'
+      + '</div></div>'
+    );
+  }).join('');
+
+  // 展开 / 折叠 来源资讯
+  out.querySelectorAll('.inspire-src-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.inspire-item');
+      const box = item && item.querySelector('.inspire-src');
+      if (!box) return;
+      const open = box.hidden;
+      box.hidden = !open;
+      btn.classList.toggle('on', open);
+      btn.textContent = (open ? '▴ ' : '▾ ') + '来源 ' + box.querySelectorAll('.inspire-src-row').length + ' 条';
+    });
+  });
+
+  // 底部行：AI 来源 / 参考资讯条数 / 风格 / 剩余次数
+  const styleLbl = { boxed: '一条一框', passage: '段落', mixed: '自动' };
+  const meta = used ? (
+    (used.newsCount != null ? '参考 ' + used.newsCount + ' 条真实资讯 · ' : '')
+    + (used.voices && used.voices.length ? '风格：' + used.voices.join(' / ') + ' · ' : '')
+    + (used.style ? '格式：' + (styleLbl[used.style] || used.style) + ' · ' : '')
+    + (used.usedAt ? fmtTime(used.usedAt) : '')
+  ).replace(/ · $/, '') : '';
+  out.insertAdjacentHTML('beforeend',
+    '<div class="inspire-meta">' + esc(meta) + '</div>'
+    + (footerNote ? '<div class="inspire-note">' + esc(footerNote) + '</div>' : '')
+  );
 }
 
 /* 灵感清单：本地模板引擎即时生成（零网络、任何设备不失败） */
 function genInspire() {
   const btn = $('#inspireBtn'), out = $('#inspireOut');
   if (!btn || !out) return;
-  const cats = NEWS_SELECTED.length ? NEWS_SELECTED : [];
-  renderInspire(out, genLocalInspire(cats));
-  toast(cats.length ? '本地灵感已生成 · 按你勾选的类别' : '本地灵感已生成');
+  try {
+    const cats = NEWS_SELECTED.length ? NEWS_SELECTED : [];
+    const labels = cats.map(catLabel);
+    const items = genLocalInspire(cats);
+    if (!items.length) { renderInspire(out, []); return; }
+    renderInspire(out, items);
+    toast(labels.length ? '本地灵感已生成 · 跟「' + labels.join('、') + '」' : '本地灵感已生成 · 全主题');
+  } catch (e) {
+    console.error('genInspire 出错', e);
+    toast('本地灵感生成遇到问题，稍后重试');
+  }
 }
 
 /* ================= AI 深度生成 =================
-   双路径：① 用户 localStorage key 直连 DeepSeek（手机可用）
-          ② Cloudflare Worker 中转（你之前的 key 走的这条）
-          ③ 都失败时弹窗让用户填 key（存 localStorage） */
-const HS_KEY = 'ae_ds_key';   // 用户本地 DeepSeek Key（只存浏览器，从不进仓库）
-async function callDSUser({ messages, key, max_tokens }) {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 15000);
-  try {
-    const r = await fetch('https://api.deepseek.com/chat/completions', {
-      method: 'POST', signal: ctrl.signal,
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
-      body: JSON.stringify({ model: 'deepseek-chat', messages, temperature: 0.7, max_tokens: max_tokens || 700 }),
-    });
-    if (!r.ok) throw new Error('DeepSeek HTTP ' + r.status);
-    const d = await r.json();
-    return (d.choices && d.choices[0] && d.choices[0].message.content) || '';
-  } finally { clearTimeout(t); }
-}
-function askDeepSeekKey(cb) {
-  // 简单弹窗：让用户填 key（只存浏览器，不传任何地方）
-  const old = (localStorage.getItem(HS_KEY) || '').trim();
-  const k = window.prompt('填你的 DeepSeek Key（只存在你浏览器本地，不上传）：', old || '');
-  if (k && k.trim()) {
-    try { localStorage.setItem(HS_KEY, k.trim()); } catch (e) {}
-    toast('已存到你浏览器本地。点 AI 深度试试。');
-    cb && cb(k.trim());
-  }
-}
+   通过 Pages Functions（主通道）+ Cloudflare Worker（备用）双通道
+   限次/埋点都在服务端，前端只负责 UX */
 async function aiInspire() {
   const btn = $('#inspireAiBtn'), out = $('#inspireOut');
   if (!btn || !out) return;
   const orig = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<span class="ai-spin"></span>AI 生成中…';
+
+  // 选择的风格（用 id 取回完整 {name, desc} 发给后端）
+  const chosen = (INSPIRE_STATE.voices || []).map(id => INSPIRE_VOICES.find(v => v.id === id)).filter(Boolean);
+  if (!chosen.length) chosen.push(INSPIRE_VOICES[0]); // 至少有一个
+
   const tags = NEWS_SELECTED.length ? NEWS_SELECTED.map(catLabel) : ['文博', '华语流行音乐', '游戏人文', '现代诗歌'];
-  const aiPrompt = [
-    '你是灵感内容生成器。输出体裁：短句、现代小诗、歌单简介、文博感悟片段，简短碎片化文本，适配年轻人朋友圈氛围感。',
-    '禁止输出长篇新闻，禁止编造虚假资讯。',
-    '输入标签：【' + tags.join('、') + '】。',
-    '每次输出 4 条简短片段，每条用「」包裹，条与条之间换行。',
-    '每条不超过 30 字。',
-  ].join('\n');
+  // 抓真实资讯喂给 AI：跟随勾选类别；没勾就全量。每次随机抽 6 条，避免永远喂同一批导致雷同
+  const pool = (NEWS_SELECTED.length ? NEWS_ITEMS.filter(i => NEWS_SELECTED.includes(i.category)) : NEWS_ITEMS).slice();
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  // 取 6 条喂 AI；来源资讯（前端展示）：用新闻的精简快照 [{cat,titleZh,title,source}]
+  const news = pool.slice(0, 6).map(n => ({ titleZh: n.titleZh || '', title: n.title || '', summary: n.summary || '' }));
+  const newsSources = pool.slice(0, 6).map(n => ({ cat: n.category, titleZh: n.titleZh || '', title: n.title || '', source: n.source || '' }));
+
+  const devId = (window.AEAuth && window.AEAuth.getDev && window.AEAuth.getDev()) || '';
   let aiSuccess = false;
-  // 云端主通道（Cloudflare Pages Functions，国内可访问，key 在服务端）
   const endpoints = [PAGES_API + '/inspire', WORKER + '/inspire'];
   for (const ep of endpoints) {
     if (aiSuccess) break;
     try {
       const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 5000);
+      const t = setTimeout(() => ctrl.abort(), 8000);
       const r = await fetch(ep, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ tags }),
+        headers: { 'Content-Type': 'application/json', 'x-device-id': devId },
+        body: JSON.stringify({ tags, news, voices: chosen, style: INSPIRE_STATE.style }),
         signal: ctrl.signal,
       });
       clearTimeout(t);
       const d = await r.json();
-      if (d.ok && d.result) {
-        const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
-        renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自云端 · DeepSeek 深度生成');
+      // 主通道返回 {ok, items, voices, style, ms, used, left, limit}
+      if (d.ok && Array.isArray(d.items) && d.items.length) {
+        const source = {
+          newsCount: news.length,
+          voices: (d.voices && d.voices.length) ? d.voices : chosen.map(c => c.name),
+          style: d.style || INSPIRE_STATE.style,
+          usedAt: Date.now(),
+          sources: newsSources.slice(),
+        };
+        // 启发式匹配：让每条 item 优先挂载"它文本里出现过的来源"。
+        // 没匹配上的兜底挂一条随机来源，保证都能展开。
+        const fallback = newsSources[Math.floor(Math.random() * newsSources.length)] || null;
+        const list = d.items.map(it => {
+          const hit = newsSources.find(s => {
+            const k = (s.titleZh || s.title || '').slice(0, 6);
+            return k && it.text && it.text.indexOf(k) >= 0;
+          }) || fallback;
+          return {
+            voice: it.voice || source.voices[0] || '',
+            text: it.text,
+            sources: hit ? [hit, ...newsSources.filter(x => x !== hit)] : newsSources.slice(),
+            source,
+          };
+        });
+        renderInspire(out, list, '来自云端 · DeepSeek 深度生成');
         aiSuccess = true;
-        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'cloud' })); } catch (e) {}
+        if (typeof d.left === 'number') updateInspireQuota(d);
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: list.length, src: 'cloud', voices: source.voices, style: source.style })); } catch (e) {}
         showLastAi();
+      } else if (d.ok && d.result) {
+        // 备用 worker 通道回退（旧 items 字符串）
+        const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
+        const source = { newsCount: news.length, voices: chosen.map(c => c.name), style: INSPIRE_STATE.style, usedAt: Date.now(), sources: newsSources.slice() };
+        const list = lines.map(l => ({ voice: chosen[0].name, text: l.replace(/^「|」$/g, ''), sources: newsSources.slice(), source }));
+        renderInspire(out, list, '来自云端 · DeepSeek 深度生成');
+        aiSuccess = true;
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: list.length, src: 'cloud' })); } catch (e) {}
+        showLastAi();
+      } else if (d && d.limit) {
+        toast('今日 AI 灵感额度已用完（' + (d.max || 20) + ' 次/天），明天再来。');
+        btn.disabled = false; btn.innerHTML = orig;
+        return;
       }
     } catch (e) { /* 换下一个通道 */ }
   }
-  // 都没成功 → 友好提示（不弹窗、不要求输入 key；AI 能力在云端，网络受限时不可用）
   if (!aiSuccess) {
     btn.disabled = false; btn.innerHTML = orig;
     toast('AI 深度暂不可用：云端服务在当前网络下连接失败。本地灵感不受影响。');
+    return;
   }
   btn.disabled = false; btn.innerHTML = orig;
+}
+function updateInspireQuota(d) {
+  const tip = $('#inspireAiTip');
+  if (!tip) return;
+  if (typeof d.left === 'number' && d.left >= 0) {
+    tip.innerHTML = 'AI 灵感 · 今日还剩 <b>' + d.left + '</b>/' + (d.limit || 20) + ' 次';
+    tip.dataset.left = String(d.left);
+  }
+}
+/* 把"声音/格式"配置 chip 渲染并绑定（用户可多选 1-3 个声音） */
+function mountInspireCfg() {
+  const vBox = $('#voiceChips'); const sBox = $('#styleChips'); if (!vBox || !sBox) return;
+  vBox.innerHTML = INSPIRE_VOICES.map(v => '<button class="chip voice" type="button" data-vid="' + v.id + '" title="' + esc(v.desc) + '">' + esc(v.name) + '</button>').join('');
+  // 默认选中状态
+  const setActives = () => {
+    vBox.querySelectorAll('.voice').forEach(b => b.classList.toggle('on', (INSPIRE_STATE.voices || []).includes(b.dataset.vid)));
+    sBox.querySelectorAll('.chip').forEach(b => b.classList.toggle('on', b.dataset.style === INSPIRE_STATE.style));
+  };
+  setActives();
+  vBox.addEventListener('click', e => {
+    const b = e.target.closest('.voice'); if (!b) return;
+    const id = b.dataset.vid; const arr = INSPIRE_STATE.voices.slice();
+    const idx = arr.indexOf(id);
+    if (idx >= 0) { if (arr.length > 1) arr.splice(idx, 1); } else arr.push(id);
+    INSPIRE_STATE.voices = arr.slice(-3);
+    setActives();
+  });
+  sBox.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b || !b.dataset.style) return;
+    INSPIRE_STATE.style = b.dataset.style; setActives();
+  });
 }
 /* 显示"上次 AI 生成"时间，让用户看到 AI 真在工作 */
 function showLastAi() {
@@ -1411,6 +1760,168 @@ function showLastAi() {
     box.hidden = false;
     box.textContent = '上次 AI 生成：' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ' · ' + v.count + ' 条（来自 Cloudflare · DeepSeek）';
   } catch (e) { box.hidden = true; }
+}
+
+/* ================= AI 对话抽屉（基于单条资讯 / 当前栏目） =================
+   设计原则：聊天气泡式、固定右下角、能关掉；移动端可全屏。
+   上下文类型：
+     - 单条：点资讯卡片"问 AI" → openChatWithItem(it)
+     - 整组：栏目"就这些问 AI" → openChatWithCategory()
+   限次：服务端限 20 次/天（CHAT_LIMIT），会显示剩余次数。 */
+let chatDrawer = null;
+let chatState = { messages: [], context: null, sending: false, left: 20, limit: 20 };
+
+function ensureChatDrawer() {
+  if (chatDrawer) return chatDrawer;
+  const el = document.createElement('div');
+  el.className = 'chat-drawer';
+  el.id = 'chatDrawer';
+  el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = `
+    <div class="chat-head">
+      <div class="chat-tx">
+        <b id="chatTitle">AI 对话</b>
+        <span class="chat-sub" id="chatSub">就你勾选的资讯聊两句</span>
+      </div>
+      <div class="chat-meta">
+        <span class="chat-quota" id="chatQuota">剩余 20/20 次</span>
+        <button class="chat-close" id="chatClose" type="button" aria-label="关闭">✕</button>
+      </div>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <form class="chat-form" id="chatForm">
+      <input class="chat-inp" id="chatInp" type="text" maxlength="500" placeholder="问点什么…" autocomplete="off">
+      <button class="chat-send" id="chatSend" type="submit" disabled>发送</button>
+    </form>`;
+  document.body.appendChild(el);
+
+  $('#chatClose', el).onclick = () => toggleChatDrawer(false);
+  $('#chatForm', el).onsubmit = e => { e.preventDefault(); sendChat(); };
+  $('#chatInp', el).oninput = () => { $('#chatSend', el).disabled = !$('#chatInp', el).value.trim(); };
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && el.classList.contains('on')) toggleChatDrawer(false);
+  });
+  chatDrawer = el;
+  return el;
+}
+
+function toggleChatDrawer(on, ctx) {
+  const el = ensureChatDrawer();
+  if (ctx) {
+    chatState.context = ctx;
+    chatState.messages = [];
+  }
+  if (on) {
+    el.classList.add('on');
+    el.setAttribute('aria-hidden', 'false');
+    if (ctx && ctx.type === 'item' && ctx.item) {
+      $('#chatTitle', el).textContent = '问 AI · ' + ((ctx.item.titleZh || ctx.item.title || '').slice(0, 18));
+    } else if (ctx && ctx.type === 'category') {
+      $('#chatTitle', el).textContent = '就这些问 AI';
+    } else {
+      $('#chatTitle', el).textContent = 'AI 对话';
+    }
+    refreshChatQuota();
+    if (!chatState.messages.length) {
+      const open = ctx && ctx.type === 'item'
+        ? '我刚看了这条：\n「' + (ctx.item.titleZh || ctx.item.title || '') + '」\n你想问什么都可以。'
+        : '我看了你勾选栏目里最近的资讯，可以帮我总结、对比、挑一条最值得细读的吗？';
+      pushChatMsg('user', open);
+    }
+    renderChatBody();
+    setTimeout(() => { try { $('#chatInp', el).focus(); } catch (e) {} }, 80);
+  } else {
+    el.classList.remove('on');
+    el.setAttribute('aria-hidden', 'true');
+  }
+}
+
+function pushChatMsg(role, content) { chatState.messages.push({ role, content, ts: Date.now() }); }
+
+function renderChatBody() {
+  const el = ensureChatDrawer();
+  const body = $('#chatBody', el);
+  if (!body) return;
+  if (!chatState.messages.length) { body.innerHTML = '<div class="chat-empty">问点什么吧 ↑</div>'; return; }
+  body.innerHTML = chatState.messages.map(m =>
+    '<div class="chat-msg chat-' + m.role + '">'
+    + '<div class="chat-bub">' + esc(m.content).replace(/\n/g, '<br>') + '</div>'
+    + '<div class="chat-time">' + fmtTime(m.ts) + '</div>'
+    + '</div>'
+  ).join('');
+  body.scrollTop = body.scrollHeight;
+}
+
+async function refreshChatQuota() {
+  try {
+    const devId = (window.AEAuth && window.AEAuth.getDev && window.AEAuth.getDev()) || '';
+    const r = await fetch((window.PAGES_API || '/api') + '/me', { method: 'POST', headers: { 'content-type': 'application/json', 'x-device-id': devId }, body: '{}' });
+    const d = await r.json();
+    if (d && typeof d.chatLeft === 'number') {
+      chatState.left = d.chatLeft;
+      chatState.limit = d.limit || 20;
+      const el = ensureChatDrawer();
+      $('#chatQuota', el).textContent = '剩余 ' + chatState.left + '/' + chatState.limit + ' 次';
+    }
+  } catch (e) {}
+}
+
+async function sendChat() {
+  const el = ensureChatDrawer();
+  const inp = $('#chatInp', el);
+  const txt = (inp.value || '').trim();
+  if (!txt || chatState.sending) return;
+  pushChatMsg('user', txt);
+  inp.value = '';
+  $('#chatSend', el).disabled = true;
+  chatState.sending = true;
+  renderChatBody();
+  chatState.messages.push({ role: 'assistant', content: '正在翻这条资讯…', ts: Date.now(), _thinking: true });
+  renderChatBody();
+
+  try {
+    const devId = (window.AEAuth && window.AEAuth.getDev && window.AEAuth.getDev()) || '';
+    const body = {
+      username: (window.AEAuth && window.AEAuth.getState && window.AEAuth.getState().account) || undefined,
+      context: chatState.context,
+      messages: chatState.messages.filter(m => !m._thinking).map(m => ({ role: m.role, content: m.content })),
+    };
+    const r = await fetch((window.PAGES_API || '/api') + '/chat', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', 'x-device-id': devId },
+      body: JSON.stringify(body),
+    });
+    const d = await r.json();
+    chatState.messages = chatState.messages.filter(m => !m._thinking);
+    if (d.ok && d.answer) {
+      pushChatMsg('assistant', d.answer);
+      if (typeof d.left === 'number') { chatState.left = d.left; chatState.limit = d.limit || chatState.limit; $('#chatQuota', el).textContent = '剩余 ' + chatState.left + '/' + chatState.limit + ' 次'; }
+    } else if (d.limit) {
+      pushChatMsg('assistant', '今日 AI 对话额度已用完（' + (d.max || 20) + ' 次/天），明天再来。');
+    } else {
+      pushChatMsg('assistant', '暂不可用：' + (d.error || '网络不稳定，本地灵感不受影响。'));
+    }
+  } catch (e) {
+    chatState.messages = chatState.messages.filter(m => !m._thinking);
+    pushChatMsg('assistant', '网络出错了，稍后再试。');
+  } finally {
+    chatState.sending = false;
+    renderChatBody();
+  }
+}
+
+function openChatWithItem(it) {
+  const ctx = { type: 'item', item: { title: it.title, titleZh: it.titleZh, summary: it.summary } };
+  toggleChatDrawer(true, ctx);
+}
+function openChatWithCategory() {
+  const news = (NEWS_SELECTED.length
+    ? NEWS_ITEMS.filter(i => NEWS_SELECTED.includes(i.category))
+    : NEWS_ITEMS
+  ).slice(0, 8).map(n => ({ title: n.title, titleZh: n.titleZh, summary: n.summary }));
+  const cats = NEWS_SELECTED.length ? NEWS_SELECTED.map(catLabel) : ['全部'];
+  const ctx = { type: 'category', categories: cats, news };
+  toggleChatDrawer(true, ctx);
 }
 
 function renderNews() {
@@ -1436,7 +1947,8 @@ function renderNews() {
   $('#newsSrc').innerHTML = chips.map(c => {
     const on = (c.v === 'all' && !NEWS_SELECTED.length) || NEWS_SELECTED.includes(c.v);
     return '<button class="srcbtn catbtn' + (on ? ' on' : '') + (c.locked ? ' lock' : '') + '" type="button" data-cat="' + esc(c.v) + '"' + (c.locked ? ' disabled' : '') + '>' + esc(c.label) + (c.locked ? '<em class="cat-lock">待解锁</em>' : '') + '</button>';
-  }).join('');
+  }).join('')
+    + '<button class="srcbtn catbtn-ask" id="askTheseBtn" type="button" title="把你勾选的整组资讯喂给 AI，直接问"><span data-icon="spark"></span>就这些问 AI</button>';
   $$('#newsSrc [data-cat]').forEach(b => b.addEventListener('click', () => {
     const v = b.dataset.cat;
     if (b.disabled) { toast('这个类别还在接入数据源，先看已解锁的'); return; }
@@ -1448,6 +1960,8 @@ function renderNews() {
     try { localStorage.setItem(NEWS_PREFS_KEY, JSON.stringify(NEWS_SELECTED)); } catch (e) {}
     renderNews();
   }));
+  const askBtn = $('#askTheseBtn');
+  if (askBtn) askBtn.onclick = () => openChatWithCategory();
   if (!list.length) {
     grid.innerHTML = '<div class="news-empty"><div class="empty-ic" data-icon="inbox"></div>'
       + (NEWS_KEYS.length ? '没有匹配关注词的条目。<br>换个词，或删掉关注词再看看。' : '这一类别暂时没有条目。<br>点"全部"或换一个类别，或点"立即刷新"重新拉取。')
@@ -1456,6 +1970,13 @@ function renderNews() {
   }
   grid.innerHTML = list.map(newsCard).join('');
   paintIcons(grid);
+  // 单条 "问 AI" 按钮：把这条作为上下文
+  $$('#newsGrid .nc-ask').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault();
+    const id = b.dataset.ask;
+    const it = (NEWS_ITEMS || []).find(x => x.id === id);
+    if (it) openChatWithItem(it);
+  }));
   // 三段式卡片交互
   $$('#newsGrid .nc-orig-btn').forEach(b => b.addEventListener('click', e => {
     e.preventDefault(); e.stopPropagation(); toggleOrig(b.closest('.nc-orig'));
@@ -1619,6 +2140,7 @@ function boot() {
   // 灵感清单：按关注类别生成朋友圈碎片文字
   $('#inspireBtn').addEventListener('click', genInspire);
   const iai = $('#inspireAiBtn'); if (iai) iai.addEventListener('click', aiInspire);
+  mountInspireCfg();
   showLastAi();
   renderSaved();
   // 事件委托：灵感输出与摘抄本的动态按钮
@@ -1637,6 +2159,16 @@ function boot() {
     const sd = e.target.closest('.saved-del');
     if (sd) { setSaved(getSaved().filter(x => x.id !== sd.dataset.del)); renderSaved(); toast('已删除'); }
   });
+
+  // AI 对话 FAB：只在"灵感雷达"页出现（在雷达页直接带入勾选的资讯上下文）
+  const fabAsk = document.createElement('button');
+  fabAsk.className = 'fab-ask'; fabAsk.id = 'fabAsk'; fabAsk.type = 'button'; fabAsk.setAttribute('aria-label', 'AI 对话');
+  fabAsk.innerHTML = '<span data-icon="spark"></span><span>聊两句</span>';
+  fabAsk.onclick = () => openChatWithCategory();
+  document.body.appendChild(fabAsk);
+  ensureChatDrawer();
+  paintIcons(fabAsk);
+  updateChatFab();
 
   const d = keyToDate(TODAY);
   $('#sideDate').textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日';
@@ -1681,6 +2213,22 @@ function boot() {
     $('#bgmState').textContent = on ? 'ON' : 'OFF';
     toast(on ? '环境音已开启' : '环境音已关闭');
   });
+
+  // 音乐 BGM 专区（占位阶段：仅当播放器 DOM 存在时才接线）
+  if (document.getElementById('bgmPlayer')) {
+    renderMusic();
+    MusicPlayer.init();
+    $('#bgmToggle').addEventListener('click', () => MusicPlayer.toggle());
+    $('#bgmPrev').addEventListener('click', () => MusicPlayer.prev());
+    $('#bgmNext').addEventListener('click', () => MusicPlayer.next());
+    $('#bgmLoop').addEventListener('click', () => MusicPlayer.setMode());
+    $('#bgmVol').addEventListener('input', e => MusicPlayer.setVol(+e.target.value));
+    $('#bgmBar').parentElement.addEventListener('click', e => {
+      const a = MusicPlayer.audio; if (!a || !a.duration) return;
+      const r = e.currentTarget.getBoundingClientRect();
+      a.currentTime = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * a.duration;
+    });
+  }
   $('#resetLove').addEventListener('click', () => {
     askConfirm('重置全部记录？', '会清空所有"在意的人"记录并回到 0 / 20。这个操作不可撤销。', () => {
       S.loves = []; S.eggSeen = false; save(); renderLove(); toast('已重置为 0 / 20');

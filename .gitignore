@@ -1,0 +1,13 @@
+# 敏感凭据 - 绝不提交
+*.env
+.env.*
+wrangler.toml
+.wrangler/
+.cftok
+
+# 本地调试
+node_modules/
+out/
+*.log
+
+# 部署排除（Cloudflare Pages 用 .wranglerignore 控制）

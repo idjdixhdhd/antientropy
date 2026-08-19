@@ -38,15 +38,21 @@
     <nav class="nav" id="nav" aria-label="主导航"></nav>
 
     <div class="side-foot">
-      <button class="themebtn" id="themeBtn" type="button" aria-label="切换主题">
-        <span data-icon="palette"></span>
-        <span class="themebtn-tx">主题</span>
-        <span class="themedots" id="themeDots"></span>
-      </button>
-      <button class="bgmbtn" id="bgmBtn" type="button" aria-label="环境音开关">
-        <span class="bgm-dot"></span>
-        <span class="themebtn-tx">环境音</span>
-        <b class="bgm-state" id="bgmState">OFF</b>
+      <div class="side-foot-row">
+        <button class="themebtn" id="themeBtn" type="button" aria-label="切换主题">
+          <span data-icon="palette"></span>
+          <span class="themebtn-tx">主题</span>
+          <span class="themedots" id="themeDots"></span>
+        </button>
+        <button class="bgmbtn" id="bgmBtn" type="button" aria-label="环境音开关">
+          <span class="bgm-dot"></span>
+          <span class="themebtn-tx">环境音</span>
+          <b class="bgm-state" id="bgmState">OFF</b>
+        </button>
+      </div>
+      <button class="authbtn" id="authBtn" type="button" aria-label="账号">
+        <span data-icon="person"></span>
+        <span id="authTx">登录</span>
       </button>
       <div class="side-meta">
         <span id="sideDate">—</span>
@@ -66,6 +72,7 @@
     <button class="themebtn themebtn-sm" id="themeBtnM" type="button" aria-label="切换主题">
       <span data-icon="palette"></span>
     </button>
+    <button class="authbtn authbtn-m" id="authBtnM" type="button" aria-label="账号"><span data-icon="person"></span></button>
   </header>
 
   <!-- ============ 内容层 ============ -->
@@ -325,6 +332,27 @@
               <button class="btn btn-acc" id="inspireBtn" type="button"><span data-icon="spark"></span>生成灵感</button>
             </div>
           </div>
+
+          <!-- AI 风格：6 种声音 + 格式（前一轮只展示内容，现在让你真正能选）。
+               这里"声音"= 写法风格；卡片标签上会同时显示 写法风格 + 真实资讯类别 -->
+          <div class="inspire-cfg">
+            <div class="cfg-row">
+              <div class="cfg-l">风格</div>
+              <div class="cfg-r" id="voiceChips"></div>
+            </div>
+            <div class="cfg-row">
+              <div class="cfg-l">格式</div>
+              <div class="cfg-r" id="styleChips">
+                <button class="chip" type="button" data-style="boxed">一条一框</button>
+                <button class="chip" type="button" data-style="passage">段落</button>
+                <button class="chip" type="button" data-style="mixed">自动</button>
+              </div>
+            </div>
+            <div class="cfg-tip">
+              <span id="inspireAiTip">AI 灵感：基于真实资讯 + 选中的风格生成；每条卡片会标 "风格名 · 来源类别"（如"夜行者 · 文博人文"）。本地不限次</span>
+            </div>
+          </div>
+
           <div class="inspire-out" id="inspireOut">
             <div class="inspire-empty">点"生成灵感"，按你关注的类别写几句朋友圈碎片：短句、小诗、歌单简介、文博感悟。</div>
           </div>
@@ -335,6 +363,28 @@
           <div class="saved-list" id="savedList">
             <div class="inspire-empty">还没有收藏。看到喜欢的句子，点卡片或灵感上的"收藏"就会收进来。</div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- G. 音乐 BGM（AI 生成提示词 + 轻量播放器） ---------- -->
+    <section class="panel" data-view="music">
+      <div class="phead">
+        <div>
+          <h1 class="ptitle">音乐 BGM</h1>
+          <p class="psub">板块先留位，后续接入纯音乐播放与 AI 生成提示词。</p>
+        </div>
+        <div class="phead-meta">
+          <div class="bigmeta"><b>占位</b><span>建设中</span></div>
+          <span class="metalab" id="musicHint">敬请期待</span>
+        </div>
+      </div>
+
+      <div class="music-wrap">
+        <div class="card card-pad music-ph">
+          <div class="music-ph-ic"><span data-icon="music"></span></div>
+          <h2 class="ctitle">音乐 BGM · 占位</h2>
+          <p class="music-ph-tx">这一块先空着，后续再接入内容与播放器。</p>
         </div>
       </div>
     </section>
@@ -413,6 +463,10 @@
 </div>
 
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a09ec544095341bf91860fc1398fe7c1"}'></script>
+<!-- 可选：Cloudflare Turnstile 人机验证。启用时取消下一行注释并填入站点密钥，同时在 Pages 环境变量配 TURNSTILE_SECRET
+<script>window.AE_TURNSTILE_SITEKEY='';</script>
+-->
+<script src="auth.js?v=1"></script>
 <script src="app.js?v=17"></script>
 </body>
 </html>
