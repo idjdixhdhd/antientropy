@@ -729,9 +729,12 @@ svg{display:block}
 @media (max-width:720px){
   .inspire-wrap{grid-template-columns:1fr}
   .newsgrid{grid-template-columns:minmax(0,1fr);min-width:0}
-  .newsgrid .nc{min-width:0;max-width:100%}
-  .nc-h, .nc-t, .nc-sum, .nc-q{overflow-wrap:anywhere;word-break:break-word}
-  .nc-foot{flex-wrap:wrap}
+  .newsgrid .ncard{min-width:0;max-width:100%}
+  .ncard .nc-top{min-width:0;flex-wrap:wrap}
+  .ncard .nc-src{max-width:100%}
+  .ncard .nc-title,.ncard .nc-sum,.ncard .nc-orig{overflow-wrap:anywhere;word-break:break-word;min-width:0}
+  .ncard .nc-foot{flex-wrap:wrap}
+  .ncard .nc-date{margin-left:0;flex-shrink:0}
 }
 
 /* ============ v15 · 首次引导 onboarding ============ */
