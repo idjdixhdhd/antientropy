@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T07:10:14.203Z",
+  "fetchedAt": "2026-08-19T07:10:21.596Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -388,10 +388,16 @@
     {
       "id": "rsightinnationalsecurity",
       "title": "Strengthening democratic oversight in national security",
-      "titleZh": null,
-      "summary": "OpenAI launches an initiative to strengthen democratic oversight of AI in national security, supporting government institutions with tools, training, and expertise.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "OpenAI帮政府盯紧AI安全，民主监督不缺席",
+      "summary": "OpenAI最近启动了一个新项目，专门帮政府机构在国家安全领域用AI时，能更透明、更负责。这事跟你有关，因为AI用在国防或情报上，如果没人盯着，可能出大乱子。他们提供工具、培训和专家，让政府自己也能看懂AI在干嘛，而不是被技术牵着走。",
+      "quote": "OpenAI launches an initiative to strengthen democratic oversight of AI in national security, supporting government institutions with tools, training, and expertise.",
+      "terms": [
+        "民主监督=让公众和民选机构能检查、制衡权力，防止AI被滥用。",
+        "国家安全=保护国家免受外部威胁，包括军事、情报、网络等领域。",
+        "工具=这里指软件、数据接口或分析平台，帮政府评估AI风险。",
+        "培训=教政府人员理解AI原理和局限，避免盲信黑箱。",
+        "专业支持=OpenAI派出专家，帮政府设计监督流程或回答技术疑问。"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-18",
@@ -399,15 +405,21 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "ndexpartneringwithcodeai",
       "title": "Partnering with CodeAI to prepare the first AI generation",
-      "titleZh": null,
-      "summary": "OpenAI and CodeAI are partnering to help students build AI literacy, think critically about AI, and develop the skills to use and shape it responsibly.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "OpenAI联手CodeAI，帮高中生玩转AI时代",
+      "summary": "OpenAI和CodeAI合作推出新项目，专门教学生看懂AI、用对AI，还能自己动手改AI。这事儿跟你直接相关——以后写作业、做项目，甚至选大学专业都可能用得上。别怕AI太玄乎，这项目就是让高中生也能上手。",
+      "quote": "OpenAI and CodeAI are partnering to help students build AI literacy, think critically about AI, and develop the skills to use and shape it responsibly.",
+      "terms": [
+        "AI素养=理解AI怎么工作、能干什么、不能干什么的基本能力",
+        "批判性思考=不盲目相信AI输出，会提问、会验证、会找漏洞",
+        "负责任使用=知道AI的边界，不滥用、不抄袭、不泄露隐私",
+        "塑造AI=不只是用现成工具，还能参与设计、调整或改进AI功能",
+        "CodeAI=一个面向学生的编程学习平台，主打用项目实战教AI知识"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-18",
@@ -415,15 +427,21 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "lopmentcybercapabilities",
       "title": "Pacing model development in an era of cyber-critical capabilities",
-      "titleZh": null,
-      "summary": "OpenAI is strengthening monitoring, alignment, and security for frontier AI models. See how new safeguards are guiding the pace of model development.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "OpenAI给AI“踩刹车”：新安全措施管住模型开发速度",
+      "summary": "OpenAI最近在加强前沿AI模型的监控、对齐和安全防护，目的是让AI发展别太快、别失控。这些新措施会直接影响未来AI模型推出的节奏，也跟你以后用到的AI工具靠谱程度有关。简单说，就是给狂奔的AI套上缰绳，确保它跑得快但不出轨。",
+      "quote": "OpenAI is strengthening monitoring, alignment, and security for frontier AI models. See how new safeguards are guiding the pace of model development.（OpenAI正在加强对前沿AI模型的监控、对齐与安全防护，并展示新保障措施如何引导模型开发节奏。）",
+      "terms": [
+        "前沿AI模型=指能力最强、最先进的一批AI系统，比如GPT-4这类，它们可能带来更大风险",
+        "对齐=让AI的目标和行为符合人类意图，避免它“自作主张”做坏事",
+        "监控=持续观察AI运行表现，及时发现异常或危险行为",
+        "安全防护=一系列技术和管理手段，防止AI被滥用或产生意外后果",
+        "模型开发节奏=指AI从研发到发布的速度和步骤安排，现在需要被更谨慎地控制"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-18",
@@ -431,15 +449,21 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "icomindexchatgptforteens",
       "title": "Introducing ChatGPT for Teens: Built for learning, backed by protections",
-      "titleZh": null,
-      "summary": "ChatGPT for Teens helps teens learn, think critically, and use AI with confidence, with stronger built-in protections, healthy-use features, and additional controls for parents.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "ChatGPT推出青少年版，学习更安心",
+      "summary": "OpenAI专门给13到17岁的学生做了个ChatGPT版本，学习时能用上AI，但多了安全防护和家长控制。它帮你查资料、练批判性思维，同时减少乱用和上瘾的可能。简单说，就是给你一个更安全、更靠谱的AI学习工具。",
+      "quote": "ChatGPT for Teens helps teens learn, think critically, and use AI with confidence, with stronger built-in protections, healthy-use features, and additional controls for parents.",
+      "terms": [
+        "1. 批判性思维=不盲信答案，学会提问、比较、判断信息对不对的能力",
+        "2. 内置保护=系统自动过滤不合适内容，减少危险或误导信息出现",
+        "3. 健康使用功能=提醒休息、限制连续使用时长，防止沉迷",
+        "4. 家长控制=父母可以设置使用时间、查看聊天记录，管理孩子的AI使用",
+        "5. OpenAI=开发ChatGPT的公司，类似AI领域的“谷歌”"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-18",
@@ -447,15 +471,19 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "ibmresearchaltkevolvehmm",
       "title": "How Much Memory Does Your Agent Actually Need?",
-      "titleZh": null,
-      "summary": "",
-      "quote": null,
-      "terms": null,
+      "titleZh": "AI助手到底要多少内存才够用？",
+      "summary": "这篇研究告诉你，AI智能体（比如帮你订票、写代码的AI）工作时需要多少“记忆”才靠谱。不是越多越好，太多反而浪费算力，太少又会出错。对刚接触AI的你来说，这能帮你理解为什么有些AI聊天总“断片”，以及未来AI怎么变得更聪明。",
+      "quote": "“How Much Memory Does Your Agent Actually Need?”（你的AI智能体到底需要多少内存？）",
+      "terms": [
+        "智能体（Agent）= 能自己完成任务的AI程序，比如帮你查天气、订外卖的机器人",
+        "内存（Memory）= AI记住之前对话或任务信息的地方，类似人脑的短期记忆",
+        "算力（Compute）= 电脑处理信息的能力，越强跑得越快，但也更费电"
+      ],
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/blog",
       "publishedAt": "2026-08-18",
@@ -463,15 +491,21 @@
       "image": null,
       "tags": [],
       "category": "opensource",
-      "translated": false
+      "translated": true
     },
     {
       "id": "coblogmultivectorencoder",
       "title": "Multi-Vector (Late Interaction) Embedding Models with Sentence Transformers",
-      "titleZh": null,
-      "summary": "",
-      "quote": null,
-      "terms": null,
+      "titleZh": "多向量嵌入模型，让搜索更懂你",
+      "summary": "这是讲一种更聪明的AI搜索技术，叫“多向量后期交互模型”。以前搜东西，AI只把整段话变成一个“指纹”来比对，现在它把每个词都变成“指纹”，再在最后一步精准匹配，所以搜得更准。你平时用搜索引擎或AI查资料时，结果更相关，就是靠这个。",
+      "quote": "Multi-Vector (Late Interaction) Embedding Models with Sentence Transformers",
+      "terms": [
+        "嵌入模型=把文字变成一串数字，让AI能计算相似度",
+        "后期交互=先分别处理查询和文档，最后才做精细匹配",
+        "句子变换器=一种AI架构，专门把句子转成向量",
+        "向量=数学上的坐标点，用来衡量语义远近",
+        "相似度=两个文本在意思上的接近程度"
+      ],
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/blog",
       "publishedAt": "2026-08-18",
@@ -479,7 +513,7 @@
       "image": null,
       "tags": [],
       "category": "opensource",
-      "translated": false
+      "translated": true
     },
     {
       "id": "csstricks-darkmode",
