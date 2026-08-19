@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-19T07:10:08.712Z",
+  "fetchedAt": "2026-08-19T07:10:14.203Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -207,13 +207,13 @@
     {
       "id": "todocsthatdidntexist52bh",
       "title": "Two Junior Devs, One Expo Template, and 15 Hours Lost to Docs That Didn't Exist",
-      "titleZh": "两个新手开发，被不存在的文档坑了15小时",
-      "summary": "这篇文章记录了两名初级开发人员刚接触React Native时遇到的真实麻烦。他们用的是同一个Expo模板，之前只写过网页React，没碰过移动端。结果因为文档缺失或过时，两人白白浪费了15小时。这件事提醒我们，新手入坑移动开发时，光靠官方文档远远不够，实际踩坑经验才是关键。",
-      "quote": "Two Junior Devs, One Expo Template, and 15 Hours Lost to Docs That Didn't Exist.",
+      "titleZh": "新手用Expo做App，光查文档就浪费15小时",
+      "summary": "这篇文章记录了两个刚入行的开发者，用同一个Expo模板开发React Native应用时遇到的坑。他们之前只写过网页React，没碰过移动端，结果光在文档上就耗了15小时。这事跟你有关，因为如果你以后想用React Native做App，很可能也会踩同样的雷。",
+      "quote": "Two Junior Devs, One Expo Template, and 15 Hours Lost to Docs That Didn't Exist",
       "terms": [
-        "Expo = 一个帮你快速搭建React Native项目的工具包，省去很多配置麻烦",
-        "Onboarding = 带新人上手的过程，包括熟悉代码、工具和流程",
-        "Docs = 文档，就是教你怎么用某个工具或框架的说明书"
+        "Expo = 一个帮React Native开发者省去配置环境的工具包，相当于“开箱即用”的App开发脚手架",
+        "Junior Dev = 刚入行、经验尚浅的初级开发者",
+        "Onboarding = 新人入职后的上手培训过程"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -227,15 +227,15 @@
     {
       "id": "nphelhotaahaiv2phiks4ofp",
       "title": "ऑप्शंस बायर ML: एक मॉडल क्यों फेल होता है (V2 फिक्स)",
-      "titleZh": "期权预测模型为何翻车？V2修复思路揭秘",
-      "summary": "这是一个关于期权买方预测系统的真实重建记录，不吹嘘赚钱，只讲技术架构怎么修复V1版本的长期毛病。V1用XGBoost模型直接问“买看涨还是看跌”，结果太笼统，容易出错。V2改进了模型设计，让预测更精准，对想搞量化交易的高中生来说，能看懂AI模型怎么一步步变靠谱。",
-      "quote": "V1 asked a big fuzzy question to an XGBoost model: \"CE or PE?\" — directly on raw CE/PE premi. （V1向XGBoost模型抛了个模糊的大问题：“买看涨还是看跌？”——直接基于原始看涨/看跌期权费。）",
+      "titleZh": "期权预测模型为何翻车？V2修复方案全解析",
+      "summary": "这是一个用机器学习预测期权价格的系统，第一版模型因为问的问题太模糊而频繁出错。现在第二版专门修复了这些老毛病，没有吹嘘赚钱效果，只讲技术架构怎么改进。对想学量化交易的高中生来说，能看懂AI模型设计中的常见坑。",
+      "quote": "V1 asked a big fuzzy question to an XGBoost model: \"CE or PE?\" — directly on raw CE/PE premi. （第一版用XGBoost模型问了个模糊的大问题：“看涨还是看跌？”——直接基于原始期权权利金数据。）",
       "terms": [
-        "XGBoost=一种常用的机器学习算法，擅长处理表格数据，但问得太笼统就会答不准",
-        "CE=看涨期权，赌价格涨的金融合约",
-        "PE=看跌期权，赌价格跌的金融合约",
-        "期权费=买期权合约要付的“门票钱”，价格会波动",
-        "模型架构=AI模型的内部结构设计，好比房子的骨架怎么搭"
+        "XGBoost=一种常用的机器学习算法，擅长处理表格数据，像“智能打分器”能根据历史数据预测结果",
+        "期权=一种金融合约，给你在约定时间以约定价格买卖资产的权利，但没义务",
+        "CE/PE=看涨期权和看跌期权，分别押注价格上涨或下跌的合约类型",
+        "权利金=买期权时支付的价格，相当于“入场费”",
+        "模型架构=AI系统的整体设计框架，决定数据怎么输入、怎么处理、怎么输出结果"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -249,15 +249,15 @@
     {
       "id": "ndedupusingtocleanit100f",
       "title": "Why pasted text keeps breaking search and formatting (and the regexes I ended up using to clean it)",
-      "titleZh": "粘贴文本总出乱子？正则表达式来救场",
-      "summary": "你从网页、PDF或聊天软件复制文字，粘到表格或代码里，有时会发现搜索找不到、换行乱掉，看起来正常却暗藏“隐形字符”。这篇文章分享了一套正则表达式，专门用来清理这些捣乱的格式问题，让你粘贴后不再手忙脚乱。",
+      "titleZh": "粘贴文本总出乱子？用正则一招搞定",
+      "summary": "你从网页或文档复制文字，粘到表格、代码或后台时，经常会出现搜索不到、换行错乱、格式变怪的问题。这其实是因为文本里藏着看不见的“隐形字符”。这篇文章分享了几条正则表达式，能帮你快速清理这些脏数据，让粘贴内容恢复正常。",
       "quote": "Why pasted text keeps breaking search and formatting (and the regexes I ended up using to clean it)",
       "terms": [
-        "正则表达式=一种文本模式匹配工具，用来快速查找或替换特定格式的字符",
-        "CMS=内容管理系统，像WordPress这类用来发布和管理网站内容的软件",
-        "隐形字符=看不见但影响文本行为的符号，如零宽空格或特殊换行符",
-        "调试=找出并修复程序或数据中错误的过程",
-        "格式化=让文本按预期显示，如换行、缩进或对齐"
+        "正则表达式=一种文本模式匹配工具，用来查找或替换特定格式的字符组合",
+        "隐形字符=肉眼看不见但会影响文本处理的符号，如零宽空格、软换行等",
+        "CMS=内容管理系统，用来发布和管理网站内容的软件",
+        "换行符=表示文本换行的特殊字符，在不同系统里写法不同",
+        "调试=找出并修复程序或数据中错误的过程"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -271,15 +271,15 @@
     {
       "id": "rmsolutionpgpmanager2b9d",
       "title": "I was tired of clunky PGP tools, so i built my own cross-platform solution: PGP Manager",
-      "titleZh": "嫌PGP工具太难用，17岁少年自己写了个跨平台神器",
-      "summary": "有个开发者受够了在不同电脑上装不同PGP软件，自己动手写了个叫PGP Manager的新工具，能同时在Linux、Mac和Windows上跑。这事跟你有关是因为，以后加密文件或邮件可能不用再学一堆复杂命令，一个工具全搞定。",
-      "quote": "“I was tired of clunky PGP tools, so i built my own cross-platform solution: PGP Manager” —— 我受够了笨重的PGP工具，所以自己做了个跨平台方案：PGP管理器。",
+      "titleZh": "嫌PGP工具难用，17岁少年自己写了个跨平台管理器",
+      "summary": "有个开发者觉得市面上的PGP加密工具又笨又难用，干脆自己写了一个叫PGP Manager的跨平台软件。这东西能在Linux、Mac和Windows上统一使用，不用再为每个系统装不同工具。对刚接触加密的你来说，这代表以后学PGP可能有个更顺手、更统一的上手选择。",
+      "quote": "I was tired of clunky PGP tools, so I built my own cross-platform solution: PGP Manager.",
       "terms": [
-        "PGP=一种加密技术，把你的消息或文件变成别人看不懂的乱码，只有收件人能用密钥解开",
-        "跨平台=同一个软件能在不同操作系统（如Windows、Mac、Linux）上运行，不用换电脑就换工具",
-        "Kleopatra=Windows上常用的PGP图形界面软件，但操作繁琐，新手容易懵",
-        "密钥=一串像密码一样的数字，用来加密和解密，分公钥（给别人）和私钥（自己留）",
-        "命令行=在黑色窗口里敲英文指令来操作电脑，比点图标难学但更强大"
+        "PGP=一种加密技术，用来给邮件或文件“上锁”，只有收件人能用钥匙打开。",
+        "跨平台=同一个软件能在不同操作系统（如Windows、Mac、Linux）上运行。",
+        "加密=把信息变成乱码，没有密码的人看不懂。",
+        "密钥=一串像密码一样的数字，用来加密或解密信息。",
+        "Kleopatra=Windows上常用的PGP图形界面工具，但操作不友好。"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -293,12 +293,13 @@
     {
       "id": "turingconsiderations58h4",
       "title": "65% Mechanical Keyboard PCB: Design, Layout, and Manufacturing Considerations",
-      "titleZh": "65%机械键盘PCB怎么设计？小白也能看懂的入门指南",
-      "summary": "这篇文章讲的是65%机械键盘的电路板（PCB）该怎么设计、怎么布局、怎么制造。65%键盘比60%多了独立方向键，所以既小巧又实用，是很多人的首选。如果你自己想做一把键盘，或者想搞懂键盘内部结构，这篇就是给你打基础的。",
-      "quote": "The 65% mechanical keyboard has become a popular format for people who want a compact keyboard without giving up the dedicated arrow keys.",
+      "titleZh": "65%机械键盘PCB怎么设计？一篇讲透布局与制造要点",
+      "summary": "这篇文章讲的是65%机械键盘的电路板（PCB）该怎么设计、怎么布局、怎么生产。65%键盘比60%多了独立方向键，所以既小巧又方便日常用。对想自己组键盘或学硬件设计的高中生来说，这是入门PCB设计的好例子。",
+      "quote": "The 65% mechanical keyboard has become a popular format for people who want a compact keyboard without giving up the dedicated arrow keys. Compared with a 60% keyboard, a typical 65% layout adds an arrow-key cluster and usually includes a s...",
       "terms": [
-        "PCB=印刷电路板，键盘里所有按键信号都要通过它来传输，相当于键盘的“神经系统”",
-        "Layout=键盘按键的排列方式，比如哪些键在哪个位置，决定你手指怎么放"
+        "PCB=印刷电路板，就是键盘里那块绿色的板子，上面焊着所有按键的开关和线路",
+        "65%键盘=只有标准键盘约65%大小的键盘，去掉了数字区，但保留了方向键",
+        "layout=布局，指键盘上每个按键的位置排列方式"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -365,15 +366,15 @@
     {
       "id": "ptadsexpandsacrosseurope",
       "title": "ChatGPT Ads expands across Europe",
-      "titleZh": "ChatGPT广告进军欧洲31国",
-      "summary": "OpenAI的ChatGPT现在开始在欧洲31个国家投放广告了。这意味着广告主可以在用户使用ChatGPT时，根据他们正在探索、比较或做决定的内容来展示相关广告。对你来说，以后用ChatGPT查资料或问问题时，可能会看到更贴合你需求的广告内容。",
+      "titleZh": "ChatGPT广告杀到欧洲31国，商家新招数来了",
+      "summary": "ChatGPT现在开始在欧洲31个国家卖广告了。以后你问它“买啥手机好”或“哪家餐厅靠谱”，它可能会在回答里夹带商家推广。对咱们普通用户来说，这意味着AI回答不再纯“中立”，但对商家来说，这是精准触达顾客的新机会。",
       "quote": "ChatGPT Ads is expanding to 31 European markets. Learn how advertisers can reach people as they explore, compare options, and make decisions.",
       "terms": [
-        "广告投放=广告主花钱把广告展示给特定人群的过程",
-        "市场=这里指不同的国家或地区，比如法国、德国等",
-        "触达=让目标用户看到或接触到广告信息",
-        "探索/比较/决策=用户在使用ChatGPT时可能处于的不同阶段，比如搜资料、对比产品、最终下单",
-        "OpenAI=开发ChatGPT的人工智能公司"
+        "广告主=花钱在平台上推广自己产品或服务的人",
+        "精准触达=只把广告展示给可能感兴趣的用户，减少浪费",
+        "中立回答=不带商业倾向、客观给出的信息",
+        "决策场景=用户正在犹豫选哪个、买什么的关键时刻",
+        "市场扩展=把业务从原有地区推广到新国家或地区"
       ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
