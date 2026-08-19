@@ -1060,6 +1060,20 @@ function renderKeyTags() {
   }));
 }
 
+/* 首页"我的雷达"摘要卡：按已选类别取最新 4 条，点击进雷达页 */
+function renderHomeRadar() {
+  const box = $('#homeRadar'); if (!box) return;
+  if (!NEWS_ITEMS.length) { box.innerHTML = '<div class="homeradar-empty">资讯正在路上，稍后刷新看看。</div>'; return; }
+  const list = NEWS_SELECTED.length ? NEWS_ITEMS.filter(i => NEWS_SELECTED.includes(i.category)) : NEWS_ITEMS;
+  box.innerHTML = list.slice(0, 4).map(it => {
+    const t = (it.titleZh && it.titleZh !== it.title) ? it.titleZh : it.title;
+    return '<div class="homeradar-item" data-go-radar role="button">'
+      + '<span class="hr-cat">' + esc(catLabel(it.category || '')) + '</span>'
+      + '<span class="hr-title">' + esc(t) + '</span>'
+      + '<span class="hr-src">' + esc(it.source) + '</span></div>';
+  }).join('');
+}
+
 function showNewsStat(msg, on) {
   const el = $('#newsStat');
   if (!on || !msg) { el.hidden = true; el.textContent = ''; return; }
@@ -1091,6 +1105,7 @@ function applyNews(data, status) {
   NEWS_FETCHED = data.fetchedAt || '';
   showNewsStat(status === 'cache' ? '本次联网未成功，正在显示上一次成功抓取的缓存。' : '', status === 'cache');
   renderNews();
+  renderHomeRadar();
 }
 
 function loadNews() {
@@ -1142,6 +1157,12 @@ function boot() {
 
   // 灵感雷达：真实资讯流
   loadNews();
+  renderHomeRadar();
+  // 事件委托：覆盖动态渲染的"进雷达"入口（首页雷达卡等）
+  document.addEventListener('click', e => {
+    const t = e.target.closest('[data-go-radar]');
+    if (t) go('radar');
+  });
   $('#newsRefresh').addEventListener('click', refreshNews);
   $('#keyForm').addEventListener('submit', e => {
     e.preventDefault();
