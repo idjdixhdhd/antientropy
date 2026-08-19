@@ -143,6 +143,36 @@ function seedBody() {
   }
   return recs;
 }
+
+/* 自定义习惯：localStorage 存储，未设置则用 HABITS 默认 */
+const HABITS_KEY = 'ae_habits_v2';
+function getHabits() {
+  try {
+    const list = JSON.parse(localStorage.getItem(HABITS_KEY) || 'null');
+    if (Array.isArray(list) && list.length) return list;
+  } catch (e) {}
+  return HABITS.slice();
+}
+function setHabits(list) { try { localStorage.setItem(HABITS_KEY, JSON.stringify(list)); } catch (e) {} }
+function addHabit() {
+  const name = (window.prompt('新习惯名称（如：睡够 8 小时 / 走 5000 步 / 不点外卖）') || '').trim();
+  if (!name) return;
+  const sub = (window.prompt('简短描述（可选，如：不吃甜食）') || '').trim();
+  const list = getHabits();
+  list.push({ id: 'h' + Date.now().toString(36), name, sub });
+  setHabits(list);
+  toast('已添加：' + name);
+  renderBody();
+}
+function delHabit(id) {
+  if (!window.confirm('删除这条习惯？今日已存入的也会一起清掉。')) return;
+  const list = getHabits().filter(h => h.id !== id);
+  setHabits(list);
+  const today = S.body[TODAY] || (S.body[TODAY] = []);
+  if (today.length) { S.body[TODAY] = today.filter(x => x !== id); save(); }
+  toast('已删除');
+  renderBody();
+}
 /* 演示数据：示例动作而非关系（克制身份），用模糊代词替代"妈妈/妹妹/同桌"等明指 */
 const LOVE_SEED = [
   ['把手机里三年的照片备份出来了', '她说怕哪天丢。'],
@@ -544,7 +574,7 @@ function renderTasks() {
   ul.innerHTML = S.tasks.map(t =>
     '<li class="taski' + (t.done ? ' done' : '') + '" data-id="' + t.id + '">'
     + '<button class="tk-box" type="button" data-toggle aria-label="切换完成">' + ico('check', 12) + '</button>'
-    + '<span class="tk-tx">' + esc(t.text) + '</span>'
+    + '<span class="tk-tx" data-edit title="双击修改">' + esc(t.text) + '</span>'
     + '<button class="tk-del" type="button" data-del aria-label="删除">' + ico('trash', 14) + '</button></li>'
   ).join('');
   $$('.taski', ul).forEach(li => {
@@ -552,6 +582,11 @@ function renderTasks() {
     $('[data-toggle]', li).addEventListener('click', () => { t.done = !t.done; save(); renderTasks(); });
     $('[data-del]', li).addEventListener('click', () => {
       S.tasks = S.tasks.filter(x => x.id !== t.id); save(); renderTasks(); toast('已删除');
+    });
+    const tx = $('[data-edit]', li);
+    if (tx) tx.addEventListener('dblclick', () => {
+      const nv = window.prompt('修改这条任务', t.text);
+      if (nv && nv.trim()) { t.text = nv.trim(); save(); renderTasks(); }
     });
   });
 }
@@ -611,7 +646,8 @@ function renderBody() {
   }
 
   const today = S.body[TODAY] || [];
-  $('#habitList').innerHTML = HABITS.map(h => {
+  const HABITS_USER = getHabits();   // 用本地自定义习惯（未设置则用 HABITS 默认）
+  $('#habitList').innerHTML = HABITS_USER.map(h => {
     const on = today.indexOf(h.id) >= 0;
     return '<li class="habiti' + (on ? ' on' : '') + '" data-h="' + h.id + '">'
       + '<span class="tk-box' + (on ? ' hb-on' : '') + '" style="'
@@ -619,18 +655,27 @@ function renderBody() {
       + ico('check', 12) + '</span>'
       + '<span class="hb-tx">' + h.name + '<span class="hb-sub">' + h.sub + '</span></span>'
       + '<button class="btn btn-sm hb-btn' + (on ? ' btn-ghost' : ' btn-acc') + '" type="button" data-t>'
-      + (on ? '撤回' : '存入') + '</button></li>';
-  }).join('');
+      + (on ? '撤回' : '存入') + '</button>'
+      + '<button class="hb-del" type="button" data-d aria-label="删除">×</button></li>';
+  }).join('') + '<li class="habiti habiti-add" data-add>'
+    + '<span class="hb-add-tx">+ 添加新习惯</span></li>';
+
   $$('.habiti').forEach(li => {
-    $('[data-t]', li).addEventListener('click', () => {
-      const id = li.dataset.h;
-      const arr = S.body[TODAY] || (S.body[TODAY] = []);
-      const i = arr.indexOf(id);
-      if (i >= 0) { arr.splice(i, 1); toast('已撤回'); }
-      else { arr.push(id); toast('存入身体账户 +1'); }
-      if (!arr.length) delete S.body[TODAY];
-      save(); renderBody();
-    });
+    if (li.dataset.add) li.addEventListener('click', addHabit);
+    else {
+      $('[data-t]', li).addEventListener('click', e => {
+        e.stopPropagation();
+        const id = li.dataset.h;
+        const arr = S.body[TODAY] || (S.body[TODAY] = []);
+        const i = arr.indexOf(id);
+        if (i >= 0) { arr.splice(i, 1); toast('已撤回'); }
+        else { arr.push(id); toast('存入身体账户 +1'); }
+        if (!arr.length) delete S.body[TODAY];
+        save(); renderBody();
+      });
+      const dl = $('[data-d]', li);
+      if (dl) dl.addEventListener('click', e => { e.stopPropagation(); delHabit(li.dataset.h); });
+    }
   });
 
   const dow = (keyToDate(TODAY).getDay() + 6) % 7;
@@ -640,7 +685,7 @@ function renderBody() {
     const k = shiftKey(TODAY, -(dow - i));
     const c = i <= dow ? (S.body[k] || []).length : 0;
     wd += '<div class="wd' + (i === dow ? ' today' : '') + '"><div class="wd-bar">'
-      + '<i style="height:' + (c / HABITS.length * 100).toFixed(0) + '%"></i></div>'
+      + '<i style="height:' + (c / HABITS_USER.length * 100).toFixed(0) + '%"></i></div>'
       + '<span class="wd-lab">' + names[i] + '</span></div>';
   }
   $('#weekDots').innerHTML = wd;
@@ -1266,41 +1311,96 @@ function genInspire() {
   toast(cats.length ? '本地灵感已生成 · 按你勾选的类别' : '本地灵感已生成');
 }
 
-/* 灵感清单：AI 深度生成（走 Cloudflare Worker，5s 超时，失败不影响本地版） */
-function aiInspire() {
+/* ================= AI 深度生成 =================
+   双路径：① 用户 localStorage key 直连 DeepSeek（手机可用）
+          ② Cloudflare Worker 中转（你之前的 key 走的这条）
+          ③ 都失败时弹窗让用户填 key（存 localStorage） */
+const HS_KEY = 'ae_ds_key';   // 用户本地 DeepSeek Key（只存浏览器，从不进仓库）
+async function callDSUser({ messages, key, max_tokens }) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 15000);
+  try {
+    const r = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST', signal: ctrl.signal,
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+      body: JSON.stringify({ model: 'deepseek-chat', messages, temperature: 0.7, max_tokens: max_tokens || 700 }),
+    });
+    if (!r.ok) throw new Error('DeepSeek HTTP ' + r.status);
+    const d = await r.json();
+    return (d.choices && d.choices[0] && d.choices[0].message.content) || '';
+  } finally { clearTimeout(t); }
+}
+function askDeepSeekKey(cb) {
+  // 简单弹窗：让用户填 key（只存浏览器，不传任何地方）
+  const old = (localStorage.getItem(HS_KEY) || '').trim();
+  const k = window.prompt('填你的 DeepSeek Key（只存在你浏览器本地，不上传）：', old || '');
+  if (k && k.trim()) {
+    try { localStorage.setItem(HS_KEY, k.trim()); } catch (e) {}
+    toast('已存到你浏览器本地。点 AI 深度试试。');
+    cb && cb(k.trim());
+  }
+}
+async function aiInspire() {
   const btn = $('#inspireAiBtn'), out = $('#inspireOut');
   if (!btn || !out) return;
   const orig = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = '<span class="ai-spin"></span>AI 生成中…';
-  const tags = NEWS_SELECTED.length
-    ? NEWS_SELECTED.map(catLabel)
-    : ['文博', '华语流行音乐', '游戏人文', '现代诗歌'];
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 5000);   // 5s 超时，避免手机上无限 pending
-  fetch(WORKER + '/inspire', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tags }),
-    signal: ctrl.signal,
-  })
-    .then(r => r.json())
-    .then(d => {
+  const tags = NEWS_SELECTED.length ? NEWS_SELECTED.map(catLabel) : ['文博', '华语流行音乐', '游戏人文', '现代诗歌'];
+  const aiPrompt = [
+    '你是灵感内容生成器。输出体裁：短句、现代小诗、歌单简介、文博感悟片段，简短碎片化文本，适配年轻人朋友圈氛围感。',
+    '禁止输出长篇新闻，禁止编造虚假资讯。',
+    '输入标签：【' + tags.join('、') + '】。',
+    '每次输出 4 条简短片段，每条用「」包裹，条与条之间换行。',
+    '每条不超过 30 字。',
+  ].join('\n');
+  let aiSuccess = false;
+  // 路径 1：用户本地 key（手机也能用，最快）
+  const userKey = (localStorage.getItem(HS_KEY) || '').trim();
+  if (userKey) {
+    try {
+      const text = await callDSUser({ messages: [{ role: 'user', content: aiPrompt }], key: userKey, max_tokens: 500 });
+      const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
+      if (lines.length) {
+        renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自你本地 DeepSeek Key');
+        aiSuccess = true;
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'local' })); } catch (e) {}
+        showLastAi();
+      }
+    } catch (e) {
+      toast('本地 AI 调用未成功（' + (e.message || e) + '），正在试云端 Worker...');
+    }
+  }
+  // 路径 2：Cloudflare Worker 中转
+  if (!aiSuccess) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 5000);
+      const r = await fetch(WORKER + '/inspire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tags }),
+        signal: ctrl.signal,
+      });
+      clearTimeout(t);
+      const d = await r.json();
       if (d.ok && d.result) {
         const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
         renderInspire(out, lines.map(l => ({ tag: 'AI 深度', text: l.replace(/^「|」$/g, '') })), '来自 Cloudflare · DeepSeek 深度生成');
-        toast('AI 深度灵感已生成');
-        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length })); } catch (e) {}
+        aiSuccess = true;
+        try { localStorage.setItem('ae_last_ai', JSON.stringify({ ts: Date.now(), count: lines.length, src: 'worker' })); } catch (e) {}
         showLastAi();
-      } else {
-        toast('AI 深度生成未完成：' + ((d && d.error) || 'Worker 未就绪') + '。本地灵感仍在可用。');
       }
-    })
-    .catch((e) => {
-      const msg = (e && e.name === 'AbortError') ? '手机连不上 Worker（5s 超时）' : '网络失败';
-      toast('AI 深度生成未完成：' + msg + '。本地灵感不受影响。');
-    })
-    .finally(() => { clearTimeout(t); btn.disabled = false; btn.innerHTML = orig; });
+    } catch (e) { /* 吞掉，往下走 */ }
+  }
+  // 路径 3：都没成功，弹窗让你填 key 走本地直连
+  if (!aiSuccess) {
+    btn.disabled = false; btn.innerHTML = orig;
+    toast('AI 深度需要联网：手机可能连不上 Worker。点"确定"填你的 Key 存到本地再用。');
+    askDeepSeekKey();
+    return;
+  }
+  btn.disabled = false; btn.innerHTML = orig;
 }
 /* 显示"上次 AI 生成"时间，让用户看到 AI 真在工作 */
 function showLastAi() {
