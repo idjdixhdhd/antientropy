@@ -9,7 +9,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<link rel="stylesheet" href="style.css?v=14">
+<link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
 
@@ -53,7 +53,7 @@
         <span class="dot-sep">·</span>
         <span id="sideCycle">—</span>
       </div>
-      <div class="side-ver" id="sideVer">v14</div>
+      <div class="side-ver" id="sideVer">v15</div>
     </div>
   </aside>
 
@@ -400,7 +400,24 @@
   </div>
 </div>
 
+<!-- ---------- 首次引导（onboarding） ---------- -->
+<div class="onboard" id="onboard" data-layer="fx" aria-hidden="true">
+  <div class="onboard-card">
+    <div class="onboard-mark"><span data-icon="trend"></span></div>
+    <h1 class="onboard-title">欢迎来到<br><b>逆熵工作台</b></h1>
+    <p class="onboard-sub">记录 → 累积 → 复利。这里的一切，都从你真实记录开始。</p>
+    <ol class="onboard-steps">
+      <li><b>主线复利</b>两条线，每条每天记一次，曲线才长出来</li>
+      <li><b>今日必须完成</b>写下要做的事，完成就勾掉</li>
+      <li><b>微光</b>记下为别人做的小事，攒满 20 件有彩蛋</li>
+      <li><b>灵感雷达 / 清单</b>看世界在发生什么，也生成你自己的文字</li>
+    </ol>
+    <button class="btn btn-acc btn-w" id="onboardGo" type="button"><span data-icon="check"></span>开始使用</button>
+    <p class="onboard-foot">示例可删可改，随时替换成你自己的。</p>
+  </div>
+</div>
+
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "a09ec544095341bf91860fc1398fe7c1"}'></script>
-<script src="app.js?v=14"></script>
+<script src="app.js?v=15"></script>
 </body>
 </html>
