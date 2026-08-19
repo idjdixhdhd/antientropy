@@ -160,11 +160,11 @@ function freshState() {
     tracks: {
       study: {
         id: 'study', name: '学习线', icon: 'book', unit: '分钟',
-        goal: '把看不懂的题，变成能落笔的分',
+        goal: '把想学的、想懂的，变成真的会',
         recs: seedRecs(SEED + 1, 26, 55, 168, 0, 1.0),
         cycleStart: shiftKey(TODAY, -21),
         lastTs: NOW - 2 * 3600e3,
-        plans: { tomorrow: '物理必修二第三章公式自己推一遍', week: '把三年真题的力学部分刷完一轮' },
+        plans: { tomorrow: '把最近卡住的一个问题弄明白', week: '完成一件一直拖着的小事' },
       },
       craft: {
         id: 'craft', name: '创造线', icon: 'code', unit: '分钟',
@@ -172,14 +172,14 @@ function freshState() {
         recs: seedRecs(SEED + 2, 13, 22, 115, 1, 1.55),
         cycleStart: shiftKey(TODAY, -8),
         lastTs: NOW - 30 * 3600e3,
-        plans: { tomorrow: '把身体账户的水位动效调顺', week: '逆熵工作台上线，发给三个朋友试用' },
+        plans: { tomorrow: '把今天冒出来的一个想法记下来', week: '把手里的小作品打磨到能拿出手' },
       },
     },
     tasks: [
-      { id: 't1', text: '物理必修二第三章的公式，自己推一遍', done: true },
-      { id: 't2', text: '英语默写昨天错的 20 个词', done: true },
-      { id: 't3', text: '整理化学方程式速记表', done: false },
-      { id: 't4', text: '逆熵工作台：把身体账户做完', done: true },
+      { id: 't1', text: '把今天最重要的一件事做完', done: true },
+      { id: 't2', text: '整理一下最近学到的东西', done: true },
+      { id: 't3', text: '给明天留一件具体的待办', done: false },
+      { id: 't4', text: '把身体账户的水位填一填', done: true },
       { id: 't5', text: '给三个朋友发一下站点链接', done: false },
       { id: 't6', text: '23 点前放下手机', done: false },
     ],
