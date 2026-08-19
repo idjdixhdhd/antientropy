@@ -730,3 +730,31 @@ svg{display:block}
   .newsgrid{grid-template-columns:1fr}
   .nc-foot{flex-wrap:wrap}
 }
+
+/* ============ v15 · 首次引导 onboarding ============ */
+.onboard{
+  position:fixed;inset:0;z-index:99;display:flex;align-items:center;justify-content:center;
+  background:rgba(8,10,11,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  opacity:0;pointer-events:none;transition:opacity .45s ease;
+}
+.onboard.show{opacity:1;pointer-events:auto}
+.onboard-card{
+  width:min(88vw,420px);max-height:86vh;overflow:auto;padding:34px 30px 28px;border-radius:24px;
+  background:var(--panel-1);border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.5);
+  text-align:center;
+}
+.onboard-mark{
+  width:56px;height:56px;margin:0 auto 16px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--g1),var(--g2));color:#fff;
+}
+.onboard-mark span[data-icon]{width:26px;height:26px}
+.onboard-title{font-size:24px;line-height:1.35;color:var(--tx);margin:0 0 6px;font-weight:400}
+.onboard-title b{font-weight:700;background:linear-gradient(120deg,var(--g1),var(--g2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.onboard-sub{font-size:13px;line-height:1.7;color:var(--tx-2);margin:0 0 18px}
+.onboard-steps{list-style:none;margin:0 0 20px;padding:0;text-align:left;display:flex;flex-direction:column;gap:10px}
+.onboard-steps li{
+  font-size:12.5px;line-height:1.6;color:var(--tx-2);padding:10px 12px;border-radius:12px;
+  background:var(--panel-2);border:1px solid var(--line);
+}
+.onboard-steps li b{color:var(--tx);display:block;font-size:13px;margin-bottom:2px}
+.onboard-foot{font-size:10.5px;color:var(--tx-3);margin:14px 0 0;letter-spacing:.04em}
