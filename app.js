@@ -872,6 +872,8 @@ const NEWS_CATS = [
   { v: 'frontend', label: '前端设计' },
   { v: 'science', label: '科学科普' },
   { v: 'philosophy', label: '哲学哲思' },
+  { v: 'museum', label: '文博人文' },
+  { v: 'game', label: '游戏人文' },
   { v: 'hardware', label: '科技数码' },
   { v: 'code', label: '编程开发' },
   { v: 'study', label: '学习效率', locked: true },
@@ -917,6 +919,10 @@ const LAST_CACHE = {
     { id: 'hn-cursor-origin', title: 'Cursor launches Origin, GitHub alternative', titleZh: 'Cursor 推出 Origin：要做 GitHub 的替代品', summary: 'AI 代码编辑器 Cursor 推出代码托管服务 Origin，直接对标 GitHub。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-17', url: 'https://cursor.com/changelog/origin-code-hosting', image: null, tags: ['AI', '代码托管', 'Cursor'], category: 'code', translated: true },
     { id: 'hn-memory-prices', title: 'Memory prices climb 500% in 12 months', titleZh: '内存价格一年暴涨 500%：128GB DDR5 卖到 3399 美元', summary: 'Tom\'s Hardware：DDR5 内存过去一年涨价 500%，高端型号涨幅 10 倍。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-17', url: 'https://www.tomshardware.com/pc-components/ram/memory-prices-climb-500-percent-in-12-months-up-to-10x-the-lowest-ever-tracked-prices-128gb-of-ddr5-now-usd3-399', image: null, tags: ['硬件', '内存', '价格'], category: 'hardware', translated: true },
     { id: 'hn-moon-satellite', title: 'Tiny satellite will use the dark side of the Moon as a shield', titleZh: '用月球背面当"屏蔽罩"的小卫星：去偷听早期宇宙的低语', summary: '剑桥大学新发射一颗小卫星，靠月球背面挡住地球无线电干扰，监听早期宇宙的低频信号。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-19', url: 'https://www.cam.ac.uk/research/news/tiny-satellite-will-use-the-dark-side-of-the-moon-to-eavesdrop-on-whispers-from-the-early-universe', image: null, tags: ['天文', '卫星', '前沿'], category: 'science', translated: true },
+    { id: 'yys-oddgame', title: '一款“刮鱼鳞”的游戏上线前，数百万人已经玩过它的山寨版', titleZh: '一款“刮鱼鳞”的游戏上线前，数百万人已玩过它的山寨版', summary: '游研社人文故事：创意可以被抄走，但精神不会。一款小众独立游戏的山寨版先火了——讲的是原创与模仿背后的游戏文化。', source: '游研社', sourceUrl: 'https://www.yystv.cn/', publishedAt: '2026-08-19', url: 'https://www.yystv.cn/p/14282', image: null, tags: ['游戏', '人文', '独立游戏'], category: 'game', translated: true },
+    { id: 'yys-sega', title: '世嘉在中国：30年、7家公司，与一次新的归来', titleZh: '世嘉在中国：30 年、7 家公司，与一次新的归来', summary: '从街机、主机到 VCD，再到 PC、网游与旗舰店——世嘉在中国的 30 年，就是一部中国游戏玩家记忆的编年史。', source: '游研社', sourceUrl: 'https://www.yystv.cn/', publishedAt: '2026-08-18', url: 'https://www.yystv.cn/p/14276', image: null, tags: ['游戏', '历史', '人文'], category: 'game', translated: true },
+    { id: 'dpm-forum', title: '故宫博物院举办第五届故宫学与古代建筑营造讲习班', titleZh: '故宫举办第五届故宫学与古代建筑营造讲习班', summary: '故宫官方资讯：第五届故宫学与古代建筑营造讲习班开讲，古代建筑怎么造、怎么修复——文博爱好者的干货。', source: '故宫博物院', sourceUrl: 'https://www.dpm.org.cn/', publishedAt: '2026-08-13', url: 'https://www.dpm.org.cn/classify_detail/379498.html', image: null, tags: ['文博', '古建', '故宫'], category: 'museum', translated: true },
+    { id: 'dpm-bag', title: '2026年“故宫小书包”暑期公益活动在故宫博物院举办', titleZh: '2026 年“故宫小书包”暑期公益活动在故宫举办', summary: '故宫官方资讯：面向孩子的“故宫小书包”暑期公益活动，把传统文化装进书包——文博教育的日常模样。', source: '故宫博物院', sourceUrl: 'https://www.dpm.org.cn/', publishedAt: '2026-08-11', url: 'https://www.dpm.org.cn/activity/education/379429.html', image: null, tags: ['文博', '教育', '故宫'], category: 'museum', translated: true },
   ],
 };
 
