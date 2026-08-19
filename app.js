@@ -1017,20 +1017,19 @@ function fillTpl(tpl, pool, rnd) {
     return p && p.length ? pickOne(p, rnd) : m;
   });
 }
-/* 本地生成灵感：选 1-2 个类别，每类不同模板，5 条不重复 */
+/* 本地生成灵感：从候选类均衡随机（每条按概率从所有选中类里抽），5 条不重复模板 */
 function genLocalInspire(cats) {
   const rnd = Math.random;
-  let want = (cats && cats.length ? cats.filter(c => INSPIRE_LIB[c]) : ['museum', 'music', 'game', 'poetry']);
+  const want = (cats && cats.length ? cats.filter(c => INSPIRE_LIB[c]) : Object.keys(INSPIRE_LIB));
   if (!want.length) want = ['poetry'];
-  const chosen = want.slice(0, 2);
   const count = 4 + Math.floor(rnd() * 2);   // 4-5 条
   const items = [];
-  const used = {};                            // 防同模板
+  const used = {};
   let tries = 0;
-  while (items.length < count && tries < 40) {
+  while (items.length < count && tries < 50) {
     tries++;
-    const lib = INSPIRE_LIB[pickOne(chosen, rnd)];
-    const tpl = pickOne(lib.patterns, r);
+    const lib = INSPIRE_LIB[pickOne(want, rnd)];
+    const tpl = pickOne(lib.patterns, rnd);
     const key = lib.label + ':' + tpl;
     if (used[key]) continue;
     used[key] = 1;
