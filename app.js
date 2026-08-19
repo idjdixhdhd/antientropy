@@ -206,31 +206,24 @@ function freshState() {
     tracks: {
       study: {
         id: 'study', name: '学习线', icon: 'book', unit: '分钟',
-        goal: '把想学的、想懂的，变成真的会的',
-        recs: seedRecs(SEED + 1, 26, 55, 168, 0, 1.0),
-        cycleStart: shiftKey(TODAY, -21),
-        lastTs: NOW - 2 * 3600e3,
-        plans: { tomorrow: '把最近卡住的那个问题弄明白', week: '完成一件一直放着的小事' },
+        goal: '把想学的、想懂的，变成真的会',
+        recs: {},                        // 无示例数据：真实记录才长曲线
+        cycleStart: TODAY,
+        lastTs: null,
+        plans: { tomorrow: '', week: '' },
       },
       craft: {
         id: 'craft', name: '创造线', icon: 'code', unit: '分钟',
         goal: '把脑子里的东西，真的做出来',
-        recs: seedRecs(SEED + 2, 13, 22, 115, 1, 1.55),
-        cycleStart: shiftKey(TODAY, -8),
-        lastTs: NOW - 30 * 3600e3,
-        plans: { tomorrow: '把今天冒出来的一个想法记下来', week: '把手里的小作品打磨到能拿出手' },
+        recs: {},
+        cycleStart: TODAY,
+        lastTs: null,
+        plans: { tomorrow: '', week: '' },
       },
     },
-    tasks: [
-      { id: 't1', text: '把今天最重要的一件事做完', done: true },
-      { id: 't2', text: '整理一下最近学到的东西', done: true },
-      { id: 't3', text: '给明天留一件具体的待办', done: false },
-      { id: 't4', text: '把身体账户的水位填一填', done: true },
-      { id: 't5', text: '给三个朋友发一下站点链接', done: false },
-      { id: 't6', text: '今天做点让自己放松的事', done: false },
-    ],
-    body: seedBody(),
-    loves: seedLoves(),
+    tasks: [],                          // 无示例任务
+    body: {},                           // 无示例身体记录
+    loves: [],                          // 无示例微光
     eggSeen: false,
   };
 }
@@ -1139,7 +1132,7 @@ function fmtFetched(iso) {
 }
 function srcClass(src) { return 'src-' + String(src).toLowerCase().replace(/[^a-z]/g, ''); }
 
-/* 三段式卡片：标题（大白话）+ 摘要（详细解释）+ 折叠的原文引用/术语词典 */
+/* 三段式卡片（v14 清爽版）：来源·日期 · 标题 · 摘要 · 展开原话 · 底部操作 */
 function newsCard(it) {
   const hasZh = !!(it.titleZh && it.titleZh !== it.title);
   const title = hasZh ? it.titleZh : it.title;
@@ -1147,9 +1140,7 @@ function newsCard(it) {
   const img = it.image
     ? '<div class="nc-img" style="background-image:url(\'' + it.image + '\')"></div>'
     : '<div class="nc-img nc-ph ' + srcClass(it.source) + '"><span data-icon="radar"></span><b>' + esc(it.source) + '</b></div>';
-  const tags = (it.tags || []).map(t => '<i class="nc-tag">' + esc(t) + '</i>').join('');
-  const dateTxt = (it.publishedAt || '').slice(0, 10);
-  // 原文区（默认折叠）：原文关键句 + 术语词典
+  const dateTxt = (it.publishedAt || '').slice(5).replace('-', '/');
   const hasQuote = !!(it.quote || (it.title && it.title !== it.titleZh));
   const orig = hasQuote
     ? '<div class="nc-orig">'
@@ -1161,22 +1152,20 @@ function newsCard(it) {
       + '</div></div>'
     : '';
   const saved = isSaved(it.id);
-  // 人话服务：经 Cloudflare Worker（key 在服务端加密），卡片可"译"改写
-  const hzBtn = '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>';
+  // 未翻译条目才显示"译"按钮（已有人话版的不需要）
+  const hzBtn = !hasZh ? '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>' : '';
   return '<div class="ncard">'
     + img
     + '<div class="nc-body">'
     + '<div class="nc-top"><span class="nc-src ' + srcClass(it.source) + '">' + esc(it.source) + '</span>'
-    + (it.category ? '<span class="nc-cat">' + esc(catLabel(it.category)) + '</span>' : '')
     + '<span class="nc-date">' + esc(dateTxt) + '</span>'
     + hzBtn
     + '</div>'
     + '<h3 class="nc-title">' + esc(title) + (hasZh ? '' : ' <em class="nc-en">原文</em>') + '</h3>'
     + '<p class="nc-sum">' + esc(summary) + '</p>'
-    + (tags ? '<div class="nc-tags">' + tags + '</div>' : '')
     + orig
     + '<div class="nc-foot">'
-    + '<button class="nc-copy" type="button" data-copy="' + esc(copyText(it)) + '">复制全文</button>'
+    + '<button class="nc-copy" type="button" data-copy="' + esc(copyText(it)) + '">复制</button>'
     + '<button class="nc-fav' + (saved ? ' on' : '') + '" type="button" data-fav="' + esc(it.id) + '">' + (saved ? '已收藏' : '收藏') + '</button>'
     + '<a class="nc-open" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">打开原文 <span data-icon="arrow"></span></a>'
     + '</div>'
@@ -1395,12 +1384,10 @@ async function aiInspire() {
       }
     } catch (e) { /* 吞掉，往下走 */ }
   }
-  // 路径 3：都没成功，弹窗让你填 key 走本地直连
+  // 路径 3：都没成功 → 友好提示（不弹窗、不要求输入 key；AI 能力在云端，手机网络受限时不可用）
   if (!aiSuccess) {
     btn.disabled = false; btn.innerHTML = orig;
-    toast('AI 深度需要联网：手机可能连不上 Worker。点"确定"填你的 Key 存到本地再用。');
-    askDeepSeekKey();
-    return;
+    toast('AI 深度暂不可用：云端服务在当前网络下连接失败。本地灵感不受影响。');
   }
   btn.disabled = false; btn.innerHTML = orig;
 }
