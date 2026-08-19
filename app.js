@@ -872,8 +872,8 @@ const NEWS_CATS = [
   { v: 'frontend', label: '前端设计' },
   { v: 'science', label: '科学科普' },
   { v: 'philosophy', label: '哲学哲思' },
-  { v: 'hardware', label: '科技数码', locked: true },
-  { v: 'code', label: '编程开发', locked: true },
+  { v: 'hardware', label: '科技数码' },
+  { v: 'code', label: '编程开发' },
   { v: 'study', label: '学习效率', locked: true },
   { v: 'ai101', label: 'AI 科普', locked: true },
   { v: 'growth', label: '个人成长', locked: true },
@@ -912,6 +912,11 @@ const LAST_CACHE = {
     { id: 'quanta-rivers', title: 'Why Are Rivers So Mathematical?', titleZh: '为什么河流如此数学？', summary: '一条简单的尺度定律让混乱的水流、岩石和泥沙有了秩序。新发现把这条定律推得更远——自然界里的数学之美。', source: 'Quanta Magazine', sourceUrl: 'https://www.quantamagazine.org', publishedAt: '2026-08-10', url: 'https://www.quantamagazine.org/why-are-rivers-so-mathematical-20260810/', image: 'https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia-River-Fractals-cr-Ada-Zejun-Shen-Default.webp', tags: ['数学', '自然', '规律'], category: 'science', translated: true },
     { id: 'aeon-zealotry', title: 'In praise of zealotry', titleZh: '赞颂狂热：为什么被边缘化的人需要"不礼貌"的辩论', summary: '思想史散文：早期女权主义者（如 Mary Astell）拒绝在辩论里保持"礼貌"，因为礼貌的框架本身就带着特权。关于辩论伦理、思想自由与发声方式的哲学反思。', source: 'Aeon', sourceUrl: 'https://aeon.co', publishedAt: '2026-08-18', url: 'https://aeon.co/essays/polite-debate-has-privilege-the-marginalised-need-zealotry', image: null, tags: ['哲学', '伦理', '思辨'], category: 'philosophy', translated: true },
     { id: 'aeon-stereotyping', title: 'How we meet the future', titleZh: '我们如何遇见未来：刻板印象何时是工具、何时是罪', summary: '哲学散文：刻板印象不全是坏事——有时候它是快速理解世界的"工具"，有时候却变成偏见与伤害的"罪"。探讨它到底该何时用、何时该停下。', source: 'Aeon', sourceUrl: 'https://aeon.co', publishedAt: '2026-08-10', url: 'https://aeon.co/essays/when-is-stereotyping-a-handy-tool-and-when-is-it-a-sin', image: null, tags: ['哲学', '认知', '思辨'], category: 'philosophy', translated: true },
+    { id: 'devto-framework-recover', title: 'Recover a Bricked Framework 13 with a DIY USB Flash', titleZh: '用自制 U 盘救活一台砖掉的 Framework 13 笔记本', summary: '开发者实战：笔记本刷 BIOS 失败变砖，靠自己做的 U 盘引导工具 + Bash/Python 脚本救回来。动手党可以学思路。', source: 'DEV Community', sourceUrl: 'https://dev.to/', publishedAt: '2026-08-19', url: 'https://dev.to/robust_true_try/recover-a-bricked-framework-13-with-a-diy-usb-flash-9li', image: null, tags: ['编程', '硬件', '实战'], category: 'code', translated: true },
+    { id: 'devto-airreview', title: 'The AI Review Trap: Why 9 Out of 10 Models Just Parrot Your Docs', titleZh: 'AI 代码评审陷阱：90% 模型只是在复读你的代码库', summary: '工程师评测发现：90% 的 AI 代码评审模型只是把测试文档复读一遍——并没有真正"理解"代码。', source: 'DEV Community', sourceUrl: 'https://dev.to/', publishedAt: '2026-08-19', url: 'https://dev.to/insight105/the-ai-review-trap-why-9-out-of-10-models-just-parrot-your-docs-d67', image: null, tags: ['AI', '测试', '评测'], category: 'code', translated: true },
+    { id: 'hn-cursor-origin', title: 'Cursor launches Origin, GitHub alternative', titleZh: 'Cursor 推出 Origin：要做 GitHub 的替代品', summary: 'AI 代码编辑器 Cursor 推出代码托管服务 Origin，直接对标 GitHub。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-17', url: 'https://cursor.com/changelog/origin-code-hosting', image: null, tags: ['AI', '代码托管', 'Cursor'], category: 'code', translated: true },
+    { id: 'hn-memory-prices', title: 'Memory prices climb 500% in 12 months', titleZh: '内存价格一年暴涨 500%：128GB DDR5 卖到 3399 美元', summary: 'Tom''s Hardware：DDR5 内存过去一年涨价 500%，高端型号涨幅 10 倍。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-17', url: 'https://www.tomshardware.com/pc-components/ram/memory-prices-climb-500-percent-in-12-months-up-to-10x-the-lowest-ever-tracked-prices-128gb-of-ddr5-now-usd3-399', image: null, tags: ['硬件', '内存', '价格'], category: 'hardware', translated: true },
+    { id: 'hn-moon-satellite', title: 'Tiny satellite will use the dark side of the Moon as a shield', titleZh: '用月球背面当"屏蔽罩"的小卫星：去偷听早期宇宙的低语', summary: '剑桥大学新发射一颗小卫星，靠月球背面挡住地球无线电干扰，监听早期宇宙的低频信号。', source: 'Hacker News', sourceUrl: 'https://news.ycombinator.com/', publishedAt: '2026-08-19', url: 'https://www.cam.ac.uk/research/news/tiny-satellite-will-use-the-dark-side-of-the-moon-to-eavesdrop-on-whispers-from-the-early-universe', image: null, tags: ['天文', '卫星', '前沿'], category: 'science', translated: true },
   ],
 };
 
