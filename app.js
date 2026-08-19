@@ -885,6 +885,7 @@ let NEWS_SELECTED = [];            // 多选：空数组 = 看全部；否则只
 let newsTimer = null;
 const NEWS_PREFS_KEY = 'ae_news_cats';
 const NEWS_KEYS_KEY = 'ae_news_keys';
+const HS_KEY = 'ae_ds_key';        // 人话服务 Key：只存用户本地浏览器，不进仓库
 let NEWS_KEYS = [];                // 个人关注词：自己输入，按词过滤
 function catLabel(v) { const c = NEWS_CATS.find(x => x.v === v); return c ? c.label : v; }
 
@@ -932,16 +933,56 @@ function newsCard(it) {
     : '<div class="nc-img nc-ph ' + srcClass(it.source) + '"><span data-icon="radar"></span><b>' + esc(it.source) + '</b></div>';
   const tags = (it.tags || []).map(t => '<i class="nc-tag">' + esc(t) + '</i>').join('');
   const dateTxt = (it.publishedAt || '').slice(0, 10);
+  // 人话服务：只有用户自己填过 Key（存本地）才显示"译"按钮
+  const hasDs = !!((localStorage.getItem(HS_KEY) || '').trim());
+  const hzBtn = hasDs ? '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>' : '';
   return '<a class="ncard" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">'
     + img
     + '<div class="nc-body">'
     + '<div class="nc-top"><span class="nc-src ' + srcClass(it.source) + '">' + esc(it.source) + '</span>'
     + (it.category ? '<span class="nc-cat">' + esc(catLabel(it.category)) + '</span>' : '')
+    + hzBtn
     + '<span class="nc-date">' + esc(dateTxt) + '</span></div>'
     + '<h3 class="nc-title">' + esc(title) + (hasZh ? '' : ' <em class="nc-en">原文</em>') + '</h3>'
     + '<p class="nc-sum">' + esc(summary) + '</p>'
     + '<div class="nc-tags">' + tags + '</div>'
     + '</div></a>';
+}
+
+/* 人话服务：用用户自己浏览器里存的 DeepSeek Key，把单条资讯改写成大白话 */
+async function humanizeCard(it, cardEl) {
+  const key = (localStorage.getItem(HS_KEY) || '').trim();
+  if (!key) { toast('先在上方"人话服务"输入 DeepSeek Key'); return; }
+  if (!it) return;
+  const src = (it.titleZh || it.title || '') + ' ' + (it.summary || '');
+  const prompt = '你是给17岁高中新手写中文科技资讯的编辑。把下面这条资讯改写成新手能看懂的大白话，不编造事实。只输出两行：\n标题：一行直白标题（15字内）\n摘要：一行直白解释（50字内）\n\n资讯：' + src;
+  const btn = cardEl.querySelector('.nc-hz');
+  if (btn) btn.textContent = '改写中';
+  try {
+    const resp = await fetch('https://api.deepseek.com/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 260 })
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    const text = (data.choices && data.choices[0] && data.choices[0].message.content) || '';
+    if (text) {
+      const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
+      const t = (lines[0] || '').replace(/^标题[:：]/, '').trim();
+      const s = (lines[1] || '').replace(/^摘要[:：]/, '').trim() || text.trim();
+      const body = cardEl.querySelector('.nc-body');
+      if (body) {
+        const tt = body.querySelector('.nc-title'); if (tt && t) tt.textContent = t;
+        const ss = body.querySelector('.nc-sum'); if (ss && s) ss.textContent = s;
+      }
+    }
+    if (btn) btn.textContent = '已译';
+  } catch (e) {
+    console.error(e);
+    toast('人话改写失败：' + (e.message || '检查 Key 或网络'));
+    if (btn) btn.textContent = '译';
+  }
 }
 
 function renderNews() {
@@ -987,6 +1028,12 @@ function renderNews() {
   }
   grid.innerHTML = list.map(newsCard).join('');
   paintIcons(grid);
+  // 人话服务：绑定单卡"译"按钮（Key 在用户自己浏览器，直连 DeepSeek）
+  $$('#newsGrid .nc-hz').forEach(b => b.addEventListener('click', e => {
+    e.preventDefault(); e.stopPropagation();
+    const it = NEWS_ITEMS.find(x => x.id === b.dataset.hz);
+    if (it) humanizeCard(it, b.closest('.ncard'));
+  }));
 }
 
 function renderKeyTags() {
@@ -1092,6 +1139,22 @@ function boot() {
     $('#keyInp').value = '';
     try { localStorage.setItem(NEWS_KEYS_KEY, JSON.stringify(NEWS_KEYS)); } catch (e) {}
     renderKeyTags(); renderNews();
+  });
+
+  // 人话服务：Key 只存本地浏览器，不进仓库
+  const hsVal = (localStorage.getItem(HS_KEY) || '').trim();
+  $('#hsState').textContent = hsVal ? '已启用' : '未设置';
+  $('#hsState').classList.toggle('on', !!hsVal);
+  $('#hsForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const k = $('#hsKey').value.trim();
+    if (!k) { toast('请输入 DeepSeek Key'); return; }
+    try { localStorage.setItem(HS_KEY, k); } catch (err) { toast('无法保存，浏览器存储受限'); return; }
+    $('#hsState').textContent = '已启用';
+    $('#hsState').classList.add('on');
+    $('#hsKey').value = '';
+    renderNews();
+    toast('已存到你本地浏览器，卡片上出现"译"按钮');
   });
 
   const d = keyToDate(TODAY);
