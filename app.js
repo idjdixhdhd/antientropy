@@ -887,7 +887,7 @@ let NEWS_SELECTED = [];            // 多选：空数组 = 看全部；否则只
 let newsTimer = null;
 const NEWS_PREFS_KEY = 'ae_news_cats';
 const NEWS_KEYS_KEY = 'ae_news_keys';
-const HS_KEY = 'ae_ds_key';        // 人话服务 Key：只存用户本地浏览器，不进仓库
+const WORKER = 'https://antientropy-api.3353367139.workers.dev';   // Cloudflare 轻后端（key 在服务端）
 let NEWS_KEYS = [];                // 个人关注词：自己输入，按词过滤
 function catLabel(v) { const c = NEWS_CATS.find(x => x.v === v); return c ? c.label : v; }
 
@@ -944,9 +944,8 @@ function newsCard(it) {
     : '<div class="nc-img nc-ph ' + srcClass(it.source) + '"><span data-icon="radar"></span><b>' + esc(it.source) + '</b></div>';
   const tags = (it.tags || []).map(t => '<i class="nc-tag">' + esc(t) + '</i>').join('');
   const dateTxt = (it.publishedAt || '').slice(0, 10);
-  // 人话服务：只有用户自己填过 Key（存本地）才显示"译"按钮
-  const hasDs = !!((localStorage.getItem(HS_KEY) || '').trim());
-  const hzBtn = hasDs ? '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>' : '';
+  // 人话服务：经 Cloudflare Worker（key 在服务端加密），始终显示"译"按钮
+  const hzBtn = '<button class="nc-hz" type="button" data-hz="' + esc(it.id) + '" aria-label="译成人话">译</button>';
   return '<a class="ncard" href="' + esc(it.url) + '" target="_blank" rel="noopener noreferrer">'
     + img
     + '<div class="nc-body">'
@@ -960,40 +959,67 @@ function newsCard(it) {
     + '</div></a>';
 }
 
-/* 人话服务：用用户自己浏览器里存的 DeepSeek Key，把单条资讯改写成大白话 */
+/* 人话服务：经 Cloudflare Worker 调用 DeepSeek（key 在服务端），把单条资讯改写成大白话 */
 async function humanizeCard(it, cardEl) {
-  const key = (localStorage.getItem(HS_KEY) || '').trim();
-  if (!key) { toast('先在上方"人话服务"输入 DeepSeek Key'); return; }
   if (!it) return;
-  const src = (it.titleZh || it.title || '') + ' ' + (it.summary || '');
-  const prompt = '你是给17岁高中新手写中文科技资讯的编辑。把下面这条资讯改写成新手能看懂的大白话，不编造事实。只输出两行：\n标题：一行直白标题（15字内）\n摘要：一行直白解释（50字内）\n\n资讯：' + src;
   const btn = cardEl.querySelector('.nc-hz');
   if (btn) btn.textContent = '改写中';
   try {
-    const resp = await fetch('https://api.deepseek.com/chat/completions', {
+    const resp = await fetch(WORKER + '/humanize', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
-      body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], temperature: 0.7, max_tokens: 260 })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ item: { title: it.titleZh || it.title || '', summary: it.summary || '' } })
     });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
     const data = await resp.json();
-    const text = (data.choices && data.choices[0] && data.choices[0].message.content) || '';
-    if (text) {
-      const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
-      const t = (lines[0] || '').replace(/^标题[:：]/, '').trim();
-      const s = (lines[1] || '').replace(/^摘要[:：]/, '').trim() || text.trim();
-      const body = cardEl.querySelector('.nc-body');
-      if (body) {
-        const tt = body.querySelector('.nc-title'); if (tt && t) tt.textContent = t;
-        const ss = body.querySelector('.nc-sum'); if (ss && s) ss.textContent = s;
-      }
+    if (!data.ok || !data.result) throw new Error((data && data.error) || '改写失败');
+    const text = data.result;
+    const lines = text.split('\n').map(s => s.trim()).filter(Boolean);
+    const t = (lines[0] || '').replace(/^标题[:：]/, '').trim();
+    const s = (lines[1] || '').replace(/^摘要[:：]/, '').trim() || text.trim();
+    const body = cardEl.querySelector('.nc-body');
+    if (body) {
+      const tt = body.querySelector('.nc-title'); if (tt && t) tt.textContent = t;
+      const ss = body.querySelector('.nc-sum'); if (ss && s) ss.textContent = s;
     }
     if (btn) btn.textContent = '已译';
   } catch (e) {
     console.error(e);
-    toast('人话改写失败：' + (e.message || '检查 Key 或网络'));
+    toast('人话改写失败：' + (e.message || 'Worker 未就绪'));
     if (btn) btn.textContent = '译';
   }
+}
+
+/* 灵感清单：按关注的类别生成朋友圈碎片文字（经 Cloudflare Worker） */
+function genInspire() {
+  const btn = $('#inspireBtn'), out = $('#inspireOut');
+  if (!btn || !out) return;
+  btn.disabled = true; btn.textContent = '生成中…';
+  const tags = NEWS_SELECTED.length
+    ? NEWS_SELECTED.map(catLabel)
+    : ['文博', '华语流行音乐', '游戏人文', '现代诗歌'];
+  fetch(WORKER + '/inspire', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tags })
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.ok && d.result) {
+        const lines = d.result.split('\n').map(s => s.trim()).filter(Boolean);
+        out.innerHTML = lines.map(l => {
+          const txt = l.replace(/^「|」$/g, '');
+          return '<div class="inspire-item"><span class="inspire-txt">' + esc(txt) + '</span>'
+            + '<button class="inspire-copy" type="button" data-copy="' + esc(txt) + '">复制</button></div>';
+        }).join('') || '<div class="inspire-empty">没有生成内容，换个类别试试</div>';
+        $$('#inspireOut .inspire-copy').forEach(b => b.addEventListener('click', () => {
+          try { navigator.clipboard.writeText(b.dataset.copy); toast('已复制，可发朋友圈'); } catch (e) {}
+        }));
+      } else {
+        out.innerHTML = '<div class="inspire-empty">' + esc((d && d.error) || '生成失败') + '</div>';
+      }
+    })
+    .catch(() => { out.innerHTML = '<div class="inspire-empty">网络失败，稍后再试</div>'; })
+    .finally(() => { btn.disabled = false; btn.textContent = '生成灵感'; });
 }
 
 function renderNews() {
@@ -1173,21 +1199,11 @@ function boot() {
     renderKeyTags(); renderNews();
   });
 
-  // 人话服务：Key 只存本地浏览器，不进仓库
-  const hsVal = (localStorage.getItem(HS_KEY) || '').trim();
-  $('#hsState').textContent = hsVal ? '已启用' : '未设置';
-  $('#hsState').classList.toggle('on', !!hsVal);
-  $('#hsForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const k = $('#hsKey').value.trim();
-    if (!k) { toast('请输入 DeepSeek Key'); return; }
-    try { localStorage.setItem(HS_KEY, k); } catch (err) { toast('无法保存，浏览器存储受限'); return; }
-    $('#hsState').textContent = '已启用';
-    $('#hsState').classList.add('on');
-    $('#hsKey').value = '';
-    renderNews();
-    toast('已存到你本地浏览器，卡片上出现"译"按钮');
-  });
+  // 人话服务：已通过 Cloudflare Worker 接入（key 在服务端加密）
+  $('#hsState').textContent = '已接入';
+  $('#hsState').classList.add('on');
+  // 灵感清单：按关注类别生成朋友圈碎片文字
+  $('#inspireBtn').addEventListener('click', genInspire);
 
   const d = keyToDate(TODAY);
   $('#sideDate').textContent = (d.getMonth() + 1) + '月' + d.getDate() + '日';
