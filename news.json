@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-22T08:01:54.999Z",
+  "fetchedAt": "2026-08-22T09:01:44.163Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -404,6 +404,106 @@
       "translated": true
     },
     {
+      "id": "houtburningouthumans1mlf",
+      "title": "Agentic AI That Survives the Enterprise, Part 5: Humans in the Loop Without Burning Out Humans",
+      "titleZh": "AI干活人把关，别把人累垮",
+      "summary": "这篇讲的是企业里用AI干活时，不能全靠机器，关键步骤还得有人盯着。但“人盯着”如果设计得不好，就成了走形式——人只是机械地点“同意”，既累又没用。文章说的是怎么让“人机配合”真正有效，而不是把人变成按钮机器。",
+      "quote": "For critical workflows the final safety net is a human. But \"human in the loop\" has a dirty secret. Badly designed, it's theater.",
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/ankk98/agentic-ai-that-survives-the-enterprise-part-5-humans-in-the-loop-without-burning-out-humans-1mlf",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "oringengineeringwins4p44",
+      "title": "Agentic AI That Survives the Enterprise, Part 4: Boring Engineering Wins",
+      "titleZh": "AI智能体落地企业，靠的是“无聊工程”",
+      "summary": "这篇资讯讲的是，AI智能体（能自己干活的人工智能）从演示到真正在企业里稳定运行，靠的不是酷炫技术，而是大量枯燥但关键的工程细节。比如记录每一步操作、防止出错、确保安全。这些细节决定了系统能不能长期可靠工作，也直接关系到你未来实习或工作时会不会被AI系统坑到。",
+      "quote": "The production checklist Trace everything. （生产环境检查清单：追踪一切操作。）",
+      "terms": [
+        "Agentic AI=能自主决策并执行任务的AI系统，像虚拟员工",
+        "Checklist=检查清单，确保每个环节不漏掉的步骤列表",
+        "Trace=记录系统每一步操作，方便事后查问题",
+        "Demo=演示版本，只展示功能，不保证稳定"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/ankk98/agentic-ai-that-survives-the-enterprise-part-4-boring-engineering-wins-4p44",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "ntheytalktoeachother377l",
+      "title": "What Coding Agents Say When They Talk to Each Other",
+      "titleZh": "编程智能体互相聊天，科学家偷听了五天",
+      "summary": "科学家把两个AI编程助手放在一起干活，录下它们五天里互发的179条消息，发现它们聊得还挺像人。这项研究不是瞎猜，而是先观察再实验，所有消息都经过两人独立标注，分歧也如实记录。你以后用AI写代码，背后可能就有这种“AI社交”在悄悄发生。",
+      "quote": "An observational study on a five-day corpus — 179 messages between parallel coding sessions — followed by an experiment built from what the corpus said.",
+      "terms": [
+        "语料库=一堆真实文本的集合，用来分析语言规律",
+        "并行编程会话=多个AI同时各自写代码，互相不干扰",
+        "独立编码=两个人分别给同一段消息贴标签，避免主观偏见",
+        "分歧报告=把两人标注不一致的地方如实写出来，不藏着",
+        "观察研究=只看不干预，像偷看日记一样记录自然行为"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/javieraguilarai/what-coding-agents-say-when-they-talk-to-each-other-377l",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "agentwithcredentials1fl0",
+      "title": "Agentic AI That Survives the Enterprise, Part 3: The Agent With Credentials",
+      "titleZh": "AI智能体泄露数据，比项目失败更可怕",
+      "summary": "这篇文章讲的是企业里用AI智能体时，最要命的隐患不是技术不行，而是数据泄露——比如把A客户的信息错给B客户。对新手来说，理解这点很重要，因为以后你做AI应用，安全设计是基本功，不是加分项。文章提醒你，给AI接上工具和数据后，风险会成倍放大。",
+      "quote": "This part is about the failure mode that ends careers, not just projects: your agent leaking one tenant's data to another.",
+      "terms": [
+        "- Agentic AI=能自己调用工具、做决策的AI系统，像“有手有脚”的AI助手",
+        "- Tenant=租户，这里指使用同一套系统的不同客户或部门，数据要互相隔离",
+        "- LLM=大语言模型，像ChatGPT背后的技术，能生成文字但不懂安全边界"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/ankk98/agentic-ai-that-survives-the-enterprise-part-3-the-agent-with-credentials-1fl0",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "erbuyingintelligence1lao",
+      "title": "Agentic AI That Survives the Enterprise, Part 2: You Are Overbuying Intelligence",
+      "titleZh": "别为简单任务买最贵AI，省钱又够用",
+      "summary": "很多公司在用AI干活时，总爱选最贵、最聪明的模型，但很多任务其实用便宜模型就能搞定。这不是技术问题，而是选型思路出了问题。对高中生来说，以后做项目或学编程，选AI工具也要先想清楚任务难度，别盲目追求“最强”。",
+      "quote": "Teams default to the biggest model because it feels safest, but that’s often overbuying intelligence for routine work.",
+      "terms": [
+        "模型选型=根据任务难度挑合适大小的AI，不盲目选最贵的",
+        "前沿价格=最顶级AI服务的高昂收费，通常只用于复杂推理",
+        "任务复杂度=任务本身需要多少思考量，简单任务用便宜模型就够",
+        "过度购买=花了超出实际需要的钱或资源，这里指AI能力用不上"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/ankk98/agentic-ai-that-survives-the-enterprise-part-2-you-are-overbuying-intelligence-1lao",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
       "id": "sformanagingblockedusers",
       "title": "Better tools for managing blocked users",
       "titleZh": "拉黑名单更好管了，找人更快更省事",
@@ -568,10 +668,16 @@
     {
       "id": "ergithubiobloghelloworld",
       "title": "Rust Glancer: Rust LSP using 100x less RAM",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
+      "titleZh": "Rust编程助手内存狂降100倍",
+      "summary": "这是给Rust程序员用的智能代码提示工具，叫Glancer。它比同类工具省内存得多，原来要占很大内存，现在只用百分之一。对写代码的你和同学来说，电脑不卡了，开再多项目也不怕。",
+      "quote": "Rust Glancer: Rust LSP using 100x less RAM（Rust Glancer：一个内存占用减少100倍的Rust语言服务器）",
+      "terms": [
+        "LSP=语言服务器协议，是编辑器跟编程工具沟通的通用接口，让代码提示、跳转更智能",
+        "RAM=内存，电脑临时存放正在运行程序的地方，越大越流畅",
+        "Rust=一种系统编程语言，注重安全和性能，常用于底层开发",
+        "内存占用=程序运行时占用的内存空间，越小越好",
+        "语言服务器=专门为某语言提供代码分析、补全的后台程序"
+      ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-21",
@@ -579,7 +685,7 @@
       "image": null,
       "tags": [],
       "category": "hardware",
-      "translated": false
+      "translated": true
     },
     {
       "id": "ndexintroducingaifutures",
@@ -882,96 +988,6 @@
         "深色模式"
       ],
       "category": "frontend",
-      "translated": true
-    },
-    {
-      "id": "quanta-fluids",
-      "title": "Theory of Fluids Enters the 21st Century",
-      "titleZh": "流体理论迈入 21 世纪",
-      "summary": "从 19 世纪到 21 世纪初，物理学家一直用同一套理论理解流体。现在借助一个现代洞见，他们从底层重新定义了流体的理论——物理前沿的科普。",
-      "source": "Quanta Magazine",
-      "sourceUrl": "https://www.quantamagazine.org",
-      "publishedAt": "2026-08-17",
-      "url": "https://www.quantamagazine.org/theory-of-fluids-enters-the-21st-century-20260817/",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Slow-mo-paint-cr-DepositPhotos_Alamy-Default.webp",
-      "tags": [
-        "物理",
-        "流体",
-        "前沿"
-      ],
-      "category": "science",
-      "translated": true
-    },
-    {
-      "id": "hn-cursor-origin",
-      "title": "Cursor launches Origin, GitHub alternative",
-      "titleZh": "Cursor 推出 Origin：要做 GitHub 的替代品",
-      "summary": "AI 代码编辑器 Cursor 推出代码托管服务 Origin，直接对标 GitHub。AI 时代的代码托管正在被重新发明，开发者可以关注。",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-17",
-      "url": "https://cursor.com/changelog/origin-code-hosting",
-      "image": null,
-      "tags": [
-        "AI",
-        "代码托管",
-        "Cursor"
-      ],
-      "category": "code",
-      "translated": true
-    },
-    {
-      "id": "hn-memory-prices",
-      "title": "Memory prices climb 500% in 12 months",
-      "titleZh": "内存价格一年暴涨 500%：128GB DDR5 卖到 3399 美元",
-      "summary": "Tom's Hardware 报道：DDR5 内存过去一年涨价 500%，高端型号涨幅 10 倍。装机党/低配党直接看——你升级电脑的成本涨了多少心里有数。",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-17",
-      "url": "https://www.tomshardware.com/pc-components/ram/memory-prices-climb-500-percent-in-12-months-up-to-10x-the-lowest-ever-tracked-prices-128gb-of-ddr5-now-usd3-399",
-      "image": null,
-      "tags": [
-        "硬件",
-        "内存",
-        "价格"
-      ],
-      "category": "hardware",
-      "translated": true
-    },
-    {
-      "id": "hf-state-open-models",
-      "title": "State of Open Models: Summer 2026 Observations",
-      "titleZh": "开源模型现状：2026 夏季观察",
-      "summary": "Hugging Face 的夏季观察：中国实验室在开放大模型的参数规模上持续领先，Qwen 成长为社区基石模型（衍生超 15 万仓库）；Agent 首次成为 Hub 第一大用户；本地推理（llama.cpp 等）仍是部署主力。配图为真实数据。",
-      "source": "Hugging Face",
-      "sourceUrl": "https://huggingface.co/blog",
-      "publishedAt": "2026-08-14",
-      "url": "https://huggingface.co/blog/state-of-open-models-summer-2026",
-      "image": "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/blog/state-of-open-models-summer-2026/dataset-growth.png",
-      "tags": [
-        "开源",
-        "Agent",
-        "趋势"
-      ],
-      "category": "opensource",
-      "translated": true
-    },
-    {
-      "id": "quanta-aging",
-      "title": "Why Aging May Be a Program, Not a Breakdown",
-      "titleZh": "衰老可能是程序设定，而不是自然损耗",
-      "summary": "科学家通过解密数百万小鼠细胞的分子特征，发现衰老更像一场“细胞社会的重组”，而不是随机磨损——这个视角正在改变衰老研究。",
-      "source": "Quanta Magazine",
-      "sourceUrl": "https://www.quantamagazine.org",
-      "publishedAt": "2026-08-14",
-      "url": "https://www.quantamagazine.org/why-aging-may-be-a-program-not-a-breakdown-20260814/",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Junyue-Cao-cr-Karan-Dias-Default.webp",
-      "tags": [
-        "生物",
-        "衰老",
-        "研究"
-      ],
-      "category": "science",
       "translated": true
     }
   ]
