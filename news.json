@@ -1,20 +1,19 @@
 {
-  "fetchedAt": "2026-08-22T01:05:46.766Z",
+  "fetchedAt": "2026-08-22T01:05:51.563Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
     {
       "id": "otegertuconocimiento3e3l",
       "title": "¿La IA está sobrescribiendo tus notas? Tres capas de ownership para proteger tu conocimiento",
-      "titleZh": "AI偷偷覆盖你的笔记？三层所有权保护你的知识",
-      "summary": "你辛辛苦苦整理了几个小时的笔记，结果AI在后台悄悄把它覆盖了，就像你从没写过一样。如果你用大语言模型来管理知识库，这个问题很常见。现在有人提出用三层“所有权”机制来保护你的内容，确保你的劳动成果不被AI随意改动。",
-      "quote": "Did you ever refine a note for hours—redacting, polishing, structuring—and a later ingest silently overwrote it, as if your hours never existed? 译文：你是否曾花数小时精炼一条笔记——删改、润色、结构化——而之后的一次导入却悄悄覆盖了它，仿佛你的时间从未存在过？",
+      "titleZh": "AI偷偷覆盖你的笔记？三层所有权保护知识",
+      "summary": "你花几小时精心打磨的笔记，可能被AI在后台悄悄覆盖，就像从未存在过。这背后是知识库管理中“谁拥有内容”的问题。对用AI整理学习资料的高中生来说，理解三层所有权能防止你的努力白费。",
+      "quote": "Did you ever refine a note for hours—drafting, polishing, structuring—and a later ingest silently overwrote it, as if your hours never existed?",
       "terms": [
-        "术语=所有权机制：指明确谁拥有、控制、修改数据的规则和权限，防止AI擅自变更用户内容。",
-        "术语=知识库：系统化存储和管理信息的数据库，供AI检索和引用。",
-        "术语=覆盖：新数据替换旧数据的过程，若未加保护，用户修改会被自动丢弃。",
-        "术语=大语言模型（LLM）：能理解和生成文本的AI，如ChatGPT，常用于处理笔记和文档。",
-        "术语=导入（ingest）：将外部数据引入系统的操作，可能触发AI对现有内容的自动更新。"
+        "ingest=数据摄取，指AI系统自动读取并合并新信息的过程",
+        "ownership=所有权，指对内容控制权的层级划分，决定谁能修改或删除",
+        "overwrite=覆盖，新数据直接替换旧数据，导致原内容丢失",
+        "LLM=大型语言模型，如ChatGPT这类能理解和生成文本的AI系统"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -28,15 +27,14 @@
     {
       "id": "inthewayyouwouldexpect27",
       "title": "Leveling up OpenCode... and not in the way you would expect.",
-      "titleZh": "OpenCode升级了，但升级方式有点意外",
-      "summary": "OpenCode是个挺受欢迎的AI编程工具，界面干净、用起来顺手，也不搞偷偷摸摸的AI小动作。但作者发现它有个地方不太对劲，这次升级不是功能变强，而是“升级”在了别的地方——具体是什么，得往下看。",
+      "titleZh": "OpenCode悄悄升级，这波操作有点意外",
+      "summary": "OpenCode是个干净、简洁、好用的AI编程工具，作者一直在用，觉得挺顺手。但这次升级有点特别，不是那种常见的功能增强，而是有点出乎意料。对刚接触编程的你来说，这工具值得关注，因为它在AI编程工具里算比较靠谱的。",
       "quote": "Leveling up OpenCode... and not in the way you would expect.",
       "terms": [
-        "OpenCode=一个开源的AI编程助手，能帮你在终端里写代码、改代码",
-        "AI工具=用人工智能帮你干活的应用，比如自动补全代码、回答问题",
-        "终端=电脑上那个黑底白字的命令行窗口，程序员常用它敲命令",
-        "开源=代码公开，谁都能看、能改、能用的软件",
-        "升级=软件更新版本，通常指加新功能或修bug"
+        "OpenCode=一个开源的AI编程助手，能帮你写代码、改代码，像有个AI搭档",
+        "AI编程工具=用人工智能帮你写代码的软件，省时省力但也要会用",
+        "Minimal=极简风格，界面干净不花哨，用起来不累赘",
+        "Effective=高效，能真正解决问题，不是摆样子"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -50,13 +48,14 @@
     {
       "id": "oreyoutrustthenumber19ek",
       "title": "How to Review AI-Generated SQL Before You Trust the Number",
-      "titleZh": "AI写的SQL，别急着信，五步验真伪",
-      "summary": "AI十秒就能帮你写好一段数据库查询代码，跑出来的数字看起来也很正常，但它可能算错了。这篇文章教你五个快速检查方法，大约花两分钟就能确认结果靠不靠谱，避免拿错误数据做决策。",
+      "titleZh": "AI写SQL别急着信，五步检查保数字靠谱",
+      "summary": "AI十秒就能帮你写SQL查询，跑出来的数字看着也挺合理，但真不一定对。这篇内容教你在用这个数字做决定前，花两分钟做五个检查，确保它没算错。对刚学数据库的你来说，这是防止被AI带偏的关键习惯。",
       "quote": "An AI assistant will write you a query in ten seconds, the query will run, and the number that comes back will look completely reasonable. This page gives you the five checks that tell you whether that number is right.",
       "terms": [
-        "SQL=一种专门用来从数据库里取数和算数的电脑语言，相当于跟数据库对话的“普通话”",
-        "Query=一段让数据库干活的具体指令，比如“把上个月所有订单金额加起来”",
-        "AI assistant=能自动生成代码的智能工具，比如ChatGPT这类，你提需求它写代码"
+        "SQL=结构化查询语言，用来从数据库里取数、算数的标准工具",
+        "Query=查询，就是你让数据库“按条件找出并计算某些数据”的指令",
+        "AI assistant=AI助手，能自动生成代码或文本的智能工具",
+        "Aggregation=聚合，把多行数据汇总成一个值，比如求和、平均值"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -70,13 +69,14 @@
     {
       "id": "iceaiforinboundcalls2hpk",
       "title": "how to build voice ai for inbound calls",
-      "titleZh": "零代码搭建语音AI，自动接电话约会议",
-      "summary": "现在你可以用现成工具，让AI替你接听所有来电，还能主动问问题筛选客户，最后自动把客户转到日历软件约好会议时间。整个过程不用写一行电话系统代码，对新手特别友好，适合想快速体验语音AI的17岁高中生。",
+      "titleZh": "零代码搭建AI接听电话，自动筛选客户并约会议",
+      "summary": "这是讲怎么用Vapi平台给公司装一个语音AI“前台”，能自动接听所有来电、问几个关键问题判断对方是不是潜在客户，然后直接对接Calendly预约系统把会议时间定下来。整个过程不用写一行电话系统代码，对高中生来说，就是让你看到现在AI已经能独立完成电话销售的第一步了。",
       "quote": "You can have a Vapi agent answer every inbound call, ask qualifying questions, and hand the prospect off to Calendly to lock in a meeting - all without writing a single line of custom telephony code.",
       "terms": [
-        "Vapi=一个语音AI平台，能帮你搭建自动接电话的AI助手",
-        "inbound call=打进来的电话，比如客户主动联系你的电话",
-        "Calendly=在线预约工具，能自动安排会议时间"
+        "Vapi=一个专门用来构建语音AI的在线平台，提供现成的接听、对话、转接功能，不用自己搭服务器。",
+        "inbound call=呼入电话，指客户主动打进来的电话，区别于公司主动打出去的销售电话。",
+        "Calendly=一个在线预约工具，能自动显示空闲时间并让客户选定会议时间，省去来回发邮件确认。",
+        "voice AI=语音人工智能，能听懂人说话并自动回复，这里特指用于电话场景的智能语音助手。"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -90,15 +90,15 @@
     {
       "id": "omationfirstbusiness38jh",
       "title": "The best free AI models 2026 for an automation-first business",
-      "titleZh": "2026年免费AI模型哪家强？自动化企业白嫖指南",
-      "summary": "这篇文章盘点了2026年最适合自动化业务的免费AI模型，重点不是“免费试用”，而是“生产级质量”——也就是能直接用在真实业务里，且月底不给你寄账单。比如Groq的超低延迟、Google Gemini的100万token免费额度、Meta的LLaMA 2可自己部署，这些对想省钱又不想牺牲性能的高中生或小团队来说，是值得关注的选项。",
+      "titleZh": "2026年免费AI模型，小企业也能用上顶级工具",
+      "summary": "这篇文章讲的是2026年最适合自动化业务的免费AI模型，重点推荐了三款：Groq的低延迟模型、谷歌Gemini的100万token免费额度，以及Meta的LLaMA 2自托管方案。这些模型能帮你处理客服、数据分析等重复工作，不用花一分钱。对高中生来说，了解这些工具能让你提前掌握未来职场的“免费生产力技能”，写作业、做项目也能用上。",
       "quote": "The best free AI models 2026 are the ones that give you production-grade quality without a bill at the end of the month. In practice that means using Groq's ultra-low-latency mix, Google Gemini's 1 M-token free quota, Meta's LLaMA 2 (self-hosting).",
       "terms": [
-        "token=AI处理文字时的最小单位，一个token大约等于一个英文单词或半个汉字，100万token约等于一本厚书的文字量",
-        "生产级质量=指模型稳定、速度快、能扛住真实业务流量，不是实验室里跑个demo就完事",
-        "超低延迟=从你发出请求到AI回复，时间极短，适合自动化流程里需要秒级响应的场景",
-        "自托管=把模型下载到自己服务器上运行，数据不出门，隐私可控，但需要一定技术能力",
-        "免费额度=厂商给的试用上限，超过后可能收费或限速，用之前要看清细则"
+        "生产级质量=指模型稳定、快速、能直接用在真实业务里，不是实验室玩具",
+        "延迟=从你发出指令到AI回复之间的等待时间，越低越流畅",
+        "Token=AI处理文字的最小单位，1个token约等于0.75个英文单词或0.5个汉字",
+        "自托管=把AI模型下载到自己的服务器上运行，不依赖第三方平台，数据更安全",
+        "免费额度=平台每月给你的免费使用量，用超了才收费"
       ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
@@ -234,14 +234,15 @@
     {
       "id": "bandarlabsgithubioCobalt",
       "title": "Kobo can run apps now",
-      "titleZh": "Kobo电子书阅读器现在能装App了",
-      "summary": "Kobo阅读器以前只能看书，现在官方开放了装应用的功能，相当于给阅读器装了个“应用商店”。这意味着你除了看书，还能用一些简单工具或扩展功能，但别指望它能像手机一样跑大型游戏。对高中生来说，如果你手头有Kobo，以后可以自己折腾点小插件，但主流体验还是以阅读为主。",
-      "quote": "Kobo can run apps now（Kobo现在可以运行应用程序了。）",
+      "titleZh": "Kobo阅读器也能装App了，你的电纸书要变聪明",
+      "summary": "以前Kobo电纸书只能看书，现在官方开放了应用支持，你可以像用手机一样装些小工具。这意味着你的阅读器不再只是“电子纸”，能顺手处理笔记、同步文件这些事。对爱折腾的高中生来说，等于给学习设备免费升了个级。",
+      "quote": "Kobo can run apps now — the company has opened its platform to third-party applications, starting with a few productivity tools.",
       "terms": [
-        "- 电子书阅读器=专门用来读书的平板设备，屏幕像纸，不伤眼，但功能单一",
-        "- 应用商店=手机或设备里下载软件的官方平台，比如苹果App Store",
-        "- 固件更新=设备系统升级，就像手机系统从旧版本升到新版本",
-        "- 开放平台=允许第三方开发者给设备做额外功能，类似安卓手机能装各种来源的App"
+        "电纸书=用电子墨水屏做成的阅读器，省电不伤眼，但刷新慢",
+        "第三方应用=不是设备自带、由其他开发者做的软件，比如词典、笔记App",
+        "固件=设备里烧死的系统程序，控制硬件怎么工作，类似电脑的BIOS",
+        "开放平台=官方允许别人在自家系统上做东西，像苹果允许App上架",
+        "效率工具=帮人省时间的小软件，比如待办清单、文件传输器"
       ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
@@ -269,22 +270,6 @@
       "translated": false
     },
     {
-      "id": "iggest2dmapoftheuniverse",
-      "title": "Scientists release biggest 2D map of the universe",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-21",
-      "url": "https://newscenter.lbl.gov/2026/08/10/scientists-release-biggest-2d-map-of-the-universe/",
-      "image": null,
-      "tags": [],
-      "category": "hardware",
-      "translated": false
-    },
-    {
       "id": "epsinmymaturationprocess",
       "title": "Three important steps in my maturation process",
       "titleZh": null,
@@ -295,6 +280,22 @@
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-21",
       "url": "https://thomasdullien.github.io/posts/2026-08-21-three-important-steps-in-my-maturation-process/",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": false
+    },
+    {
+      "id": "iggest2dmapoftheuniverse",
+      "title": "Scientists release biggest 2D map of the universe",
+      "titleZh": null,
+      "summary": "Comments",
+      "quote": null,
+      "terms": null,
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-21",
+      "url": "https://newscenter.lbl.gov/2026/08/10/scientists-release-biggest-2d-map-of-the-universe/",
       "image": null,
       "tags": [],
       "category": "hardware",
