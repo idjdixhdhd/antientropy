@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-22T04:02:46.631Z",
+  "fetchedAt": "2026-08-22T08:01:54.999Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -276,6 +276,134 @@
       "translated": true
     },
     {
+      "id": "newsarticlescvgvyy4x2mvo",
+      "title": "Canada will match US tariffs &#x27;dollar for dollar&#x27; as trade talks break down",
+      "titleZh": "加拿大要对美国关税“以牙还牙”，贸易谈崩了",
+      "summary": "美国和加拿大的贸易谈判没谈拢，加拿大说美国加多少税，它就加多少税，一分不让。这事跟你有关是因为，如果两国互相加税，以后买进口东西可能更贵，连带着全球物价都可能受影响。简单说，就是两个大国在“斗气”，但账单可能落到普通人头上。",
+      "quote": "Canada will match US tariffs 'dollar for dollar' as trade talks break down.",
+      "terms": [
+        "关税=国家对外国商品进入本国时收的税，加税会让外国货变贵。",
+        "贸易谈判=国家之间坐下来商量怎么买卖东西、怎么定规则的过程。",
+        "对等回击=你对我加多少税，我也对你加多少税，不占便宜也不吃亏。",
+        "贸易战=国家之间互相加税、互相限制，像打仗一样，但用的是经济手段。",
+        "美元对美元=按同样金额回应，不加码也不减码，完全对等。"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://www.bbc.com/news/articles/cvgvyy4x2mvo",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "uceencryptisarchived1m3k",
+      "title": "Automatic HTTPS on Kestrel in 2026, now that LettuceEncrypt is archived",
+      "titleZh": "Kestrel自动HTTPS新方案，LettuceEncrypt停更后怎么办",
+      "summary": "如果你用ASP.NET Core直接跑Kestrel，没挂nginx或云负载均衡，想搞个正经的TLS证书一直很麻烦。以前大家都用LettuceEncrypt这个库来自动申请和续期Let's Encrypt证书，但它在2026年已经停止维护了。现在你需要知道新的替代方案，否则你的网站可能没法自动加密。",
+      "quote": "Automatic HTTPS on Kestrel in 2026, now that LettuceEncrypt is archived. If you run an ASP.NET Core app directly on Kestrel, with no nginx or cloud load balancer in front, getting a real TLS certificate has always been the awkward part.",
+      "terms": [
+        "Kestrel=ASP.NET Core自带的跨平台Web服务器，直接跑你的网站代码，不需要额外装IIS或Apache",
+        "TLS证书=给网站加锁的电子凭证，让浏览器地址栏出现小锁头，数据在传输中不被偷看",
+        "负载均衡=把访问流量分到多台服务器的设备，通常在网站前面挡着，也能帮你处理证书，但直接跑Kestrel时没有它"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/jhenderson1992/automatic-https-on-kestrel-in-2026-now-that-lettuceencrypt-is-archived-1m3k",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "withoutcallingamodel3ofl",
+      "title": "How to fix punctuation in speech-to-text and LLM output without calling a model",
+      "titleZh": "语音转文字没标点？教你一招不调模型也能补全",
+      "summary": "很多高中生做语音识别或AI对话项目时，会发现转出来的文字没有标点，读起来很费劲。这篇文章讲了一种不用额外调用大模型、纯靠规则就能给文本加回标点的方法。你不需要懂深度学习，也能在代码里直接实现，特别适合新手做小工具或作业项目。",
+      "quote": "If you've ever wired up the Web Speech API and rendered the result straight to the page, you've seen this: const recognition = new ( window . SpeechRecognition || window . webkitSpeechRecognition )() recognition . lang = ' en-US ' recogniti",
+      "terms": [
+        "LLM = 大型语言模型，像ChatGPT那种，但本文不靠它，只用规则处理",
+        "标点恢复 = 给没有标点的文本自动加上句号、逗号等，让句子更易读",
+        "规则引擎 = 用预设的语法或模式来匹配文本，而不是靠AI学习，速度快且不耗资源"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/sheikaminul/how-to-fix-punctuation-in-speech-to-text-and-llm-output-without-calling-a-model-3ofl",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "rockwithawsappconfig48bn",
+      "title": "Swap Your LLM Without a Deploy: Dynamic Model Routing on Bedrock with AWS AppConfig",
+      "titleZh": "换AI模型不用改代码？AWS新招让模型随时切换",
+      "summary": "现在用AI大模型，经常要换新版本，但每次换都要改代码重新部署，很麻烦。AWS新功能让你像换手机卡一样，在后台直接切换模型，不用动代码。这对做AI应用的同学来说，以后升级模型省事多了，不用再熬夜改代码。",
+      "quote": "Bedrock model IDs have a short shelf life. New Claude, Nova, and Llama versions land every few months, pricing changes, and yesterday's best pick becomes today's legacy model. If the model ID is hardcoded in your Lambda, every swap is a cod（e change）。",
+      "terms": [
+        "模型ID=给每个AI模型起的唯一名字，比如“claude-3-5-sonnet”，换模型就是换这个名字",
+        "硬编码=把配置直接写死在代码里，想改就得动代码重新部署",
+        "Lambda=亚马逊的无服务器计算服务，就是跑代码的小盒子，不用管服务器",
+        "路由=在多个模型之间自动选择用哪个，像导航选路一样",
+        "AppConfig=AWS的配置管理工具，可以在不重启程序的情况下改设置"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/maruchin_tech_555/swap-your-llm-without-a-deploy-dynamic-model-routing-on-bedrock-with-aws-appconfig-48bn",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "apihereswhatilearned14ok",
+      "title": "I built a GitHub repository intelligence API — here's what I learned",
+      "titleZh": "我给GitHub装了个“智能管家”，专治烂摊子",
+      "summary": "很多开源项目的维护者都头疼一个问题：GitHub上的issue（问题反馈）又乱又没人管，有的没写清楚，有的没打标签，有的挂了8个月没人理，新手一接就踩坑。有人就做了个API（接口工具），能自动把这些乱糟糟的信息整理清楚。这跟你有什么关系？如果你以后想参与开源项目，这种工具能帮你少踩坑、更快找到真正能做的事。",
+      "quote": "Their GitHub issues are a mess. Missing descriptions. No labels. Tickets open for 8 months with zero activity.",
+      "terms": [
+        "- API = 一个让不同软件之间“对话”的接口，相当于给程序开个门，别人能通过这个门来调用它的功能",
+        "- issue = 项目里的“问题单”，大家在这里报告bug、提建议或认领任务",
+        "- 开源项目 = 代码公开、任何人都能看、能改、能帮忙做的软件项目",
+        "- 维护者 = 负责管理项目、审核代码、处理问题的人",
+        "- 标签（label） = 给issue贴的“分类贴纸”，比如“bug”“新手友好”，方便快速筛选"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/kingdavid9999/i-built-a-github-repository-intelligence-api-heres-what-i-learned-14ok",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "ettheobjectshaperightjj0",
+      "title": "MCP's Tasks Extension Lets a Tool Call Run in the Background — If You Get the Object Shape Right",
+      "titleZh": "MCP新招：工具调用可后台跑，但格式得对",
+      "summary": "MCP（模型上下文协议）最近悄悄加了个“任务扩展”，解决一个所有服务器都会撞上的问题：当工具调用要花30秒甚至更久，总不能干等着吧？现在你可以让它在后台跑，但前提是你得把“对象形状”写对，不然不生效。简单说，就是给AI工具加了个“后台运行”开关，但开关的钥匙得配好。",
+      "quote": "MCP's Tasks Extension Lets a Tool Call Run in the Background — If You Get the Object Shape Right",
+      "terms": [
+        "MCP=一种让AI模型和外部工具“对话”的通用规则，相当于AI世界的USB接口。",
+        "工具调用=AI请求某个软件或服务干活，比如查天气、算数据。",
+        "对象形状=代码里定义的数据结构格式，就像填表格，格子填错就交不了。",
+        "后台运行=任务不占着前台，AI可以先去干别的，等结果好了再回来拿。",
+        "服务器=提供服务的电脑程序，这里指MCP的服务器端。"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/ethan_5b3022150e2c07a4030/mcps-tasks-extension-lets-a-tool-call-run-in-the-background-if-you-get-the-object-shape-right-jj0",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
       "id": "sformanagingblockedusers",
       "title": "Better tools for managing blocked users",
       "titleZh": "拉黑名单更好管了，找人更快更省事",
@@ -436,6 +564,22 @@
       "tags": [],
       "category": "hardware",
       "translated": true
+    },
+    {
+      "id": "ergithubiobloghelloworld",
+      "title": "Rust Glancer: Rust LSP using 100x less RAM",
+      "titleZh": null,
+      "summary": "Comments",
+      "quote": null,
+      "terms": null,
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-21",
+      "url": "https://rust-glancer.github.io/blog/hello-world/",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": false
     },
     {
       "id": "ndexintroducingaifutures",
@@ -826,132 +970,6 @@
         "生物",
         "衰老",
         "研究"
-      ],
-      "category": "science",
-      "translated": true
-    },
-    {
-      "id": "openai-ultrafast",
-      "title": "Previewing Ultrafast mode: GPT-5.6 Sol at up to 14X the speed",
-      "titleZh": "预览 Ultrafast 模式：GPT-5.6 Sol 速度最高提升 14 倍",
-      "summary": "OpenAI 预览 GPT-5.6 的 Ultrafast（极速）模式 Sol：在尽量不降质量的前提下，把推理速度提到最高 14 倍，适合对延迟敏感的生产场景。简单说，就是让模型“想得更快”。",
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/news",
-      "publishedAt": "2026-08-13",
-      "url": "https://openai.com/index/previewing-ultrafast/",
-      "image": null,
-      "tags": [
-        "模型",
-        "推理",
-        "速度"
-      ],
-      "category": "ai",
-      "translated": true
-    },
-    {
-      "id": "openai-gpt56-guide",
-      "title": "The builder's guide to GPT-5.6",
-      "titleZh": "GPT-5.6 构建者指南",
-      "summary": "OpenAI 给开发者的 GPT-5.6 上手指南：讲清新模型的推理、工具调用（让 AI 用外部工具）、Agent 编排能力，以及落地到生产环境的最佳实践。想用 AI 做产品的人值得看。",
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/news",
-      "publishedAt": "2026-08-13",
-      "url": "https://openai.com/index/builders-guide-to-gpt-5-6/",
-      "image": null,
-      "tags": [
-        "模型",
-        "工具调用",
-        "上手"
-      ],
-      "category": "ai",
-      "translated": true
-    },
-    {
-      "id": "dpm-forum",
-      "title": "故宫博物院举办第五届故宫学与古代建筑营造讲习班",
-      "titleZh": "故宫举办第五届故宫学与古代建筑营造讲习班",
-      "summary": "故宫官方资讯：第五届故宫学与古代建筑营造讲习班开讲，古代建筑怎么造、怎么修复——文博爱好者的干货。",
-      "source": "故宫博物院",
-      "sourceUrl": "https://www.dpm.org.cn/",
-      "publishedAt": "2026-08-13",
-      "url": "https://www.dpm.org.cn/classify_detail/379498.html",
-      "image": null,
-      "tags": [
-        "文博",
-        "古建",
-        "故宫"
-      ],
-      "category": "museum",
-      "translated": true
-    },
-    {
-      "id": "quanta-fractal",
-      "title": "Graduate Student Proves a Quantum Uncertainty Principle for Fractals",
-      "titleZh": "研究生证明分形的量子不确定性原理",
-      "summary": "一位研究生把混沌、量子理论和无限复杂的分形结构结合，证明了一个被称为“基础性成果”的新不确定性原理——数学物理的突破。",
-      "source": "Quanta Magazine",
-      "sourceUrl": "https://www.quantamagazine.org",
-      "publishedAt": "2026-08-12",
-      "url": "https://www.quantamagazine.org/graduate-student-proves-the-fractal-uncertainty-principle-20260812/",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Fractal-Uncertainty-cr-Ada-Zejun-Shen-Default.webp",
-      "tags": [
-        "数学",
-        "量子",
-        "突破"
-      ],
-      "category": "science",
-      "translated": true
-    },
-    {
-      "id": "smashing-lottie",
-      "title": "Building Tactile UX: Honoring Intentional Design With Lottie",
-      "titleZh": "用 Lottie 做“有质感”的交互：不用物理引擎也好看",
-      "summary": "Smashing Magazine：用 Lottie 做出“触觉感”的前端动效——靠 DOM、CSS 变量和移动端性能优化，不引入重型物理引擎，也能让界面有质感。适合你追求视觉的站点。",
-      "source": "Smashing Magazine",
-      "sourceUrl": "https://www.smashingmagazine.com/",
-      "publishedAt": "2026-08-11",
-      "url": "https://smashingmagazine.com/2026/08/building-tactile-ux-honoring-intentional-design-lottie/",
-      "image": null,
-      "tags": [
-        "前端",
-        "动效",
-        "设计"
-      ],
-      "category": "frontend",
-      "translated": true
-    },
-    {
-      "id": "dpm-bag",
-      "title": "2026年“故宫小书包”暑期公益活动在故宫博物院举办",
-      "titleZh": "2026 年“故宫小书包”暑期公益活动在故宫举办",
-      "summary": "故宫官方资讯：面向孩子的“故宫小书包”暑期公益活动，把传统文化装进书包——文博教育的日常模样。",
-      "source": "故宫博物院",
-      "sourceUrl": "https://www.dpm.org.cn/",
-      "publishedAt": "2026-08-11",
-      "url": "https://www.dpm.org.cn/activity/education/379429.html",
-      "image": null,
-      "tags": [
-        "文博",
-        "教育",
-        "故宫"
-      ],
-      "category": "museum",
-      "translated": true
-    },
-    {
-      "id": "quanta-rivers",
-      "title": "Why Are Rivers So Mathematical?",
-      "titleZh": "为什么河流如此数学？",
-      "summary": "一条简单的尺度定律让混乱的水流、岩石和泥沙有了秩序。新发现把这条定律推得更远——自然界里的数学之美。",
-      "source": "Quanta Magazine",
-      "sourceUrl": "https://www.quantamagazine.org",
-      "publishedAt": "2026-08-10",
-      "url": "https://www.quantamagazine.org/why-are-rivers-so-mathematical-20260810/",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2026/08/Qualia-River-Fractals-cr-Ada-Zejun-Shen-Default.webp",
-      "tags": [
-        "数学",
-        "自然",
-        "规律"
       ],
       "category": "science",
       "translated": true
