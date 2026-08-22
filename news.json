@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-22T01:05:51.563Z",
+  "fetchedAt": "2026-08-22T04:00:41.475Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -108,6 +108,162 @@
       "tags": [],
       "category": "code",
       "translated": true
+    },
+    {
+      "id": "httpsdanluucomperfopt",
+      "title": "There&#x27;s no reason for software to be slow anymore",
+      "titleZh": "软件慢？没借口了！新方法让电脑提速百倍",
+      "summary": "以前软件卡顿，大家总怪电脑太旧或网络太差。但现在科学家搞出了一种新技术，能让程序跑得飞快，连老电脑也能“起飞”。这项研究不是画大饼，而是已经做出实际测试，效果惊人。简单说，以后你打游戏、写作业、刷视频，可能再也不用盯着转圈圈发呆了。",
+      "quote": "There's no reason for software to be slow anymore.（软件再也没有理由变慢了。）",
+      "terms": [
+        "- 性能优化=让程序运行得更快、更省资源，就像给汽车换更好的发动机",
+        "- 编译器=把人类写的代码翻译成电脑能懂的语言，相当于“翻译官”",
+        "- 延迟=从你点击到电脑反应之间的等待时间，越短越流畅",
+        "- 基准测试=用统一标准测量电脑跑得快不快，像体育比赛的秒表",
+        "- 硬件加速=让显卡等专门部件干活，减轻CPU负担，相当于请个专业助手"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://danluu.com/perf-opt/",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "heneOS117136278553665985",
+      "title": "Initial focus for our partnership with Motorola is a regular non-folding device",
+      "titleZh": "摩托罗拉合作首款手机，不是折叠屏",
+      "summary": "摩托罗拉和一家科技公司刚宣布合作，第一款产品是普通直板手机，不是大家猜的折叠屏。这说明他们想先稳住主流市场，再考虑玩新花样。对想换手机的你来说，未来可能多一个性价比或拍照更强的选择。",
+      "quote": "Initial focus for our partnership with Motorola is a regular non-folding device.",
+      "terms": [
+        "合作研发=两家公司共同出技术、出钱，一起做新产品",
+        "直板手机=屏幕不能折叠的传统长方形手机，目前最主流",
+        "折叠屏=屏幕可弯折的手机，展开后像平板，价格通常更贵",
+        "主流市场=大多数普通用户会买的产品区间，不是高端或小众款"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://grapheneos.social/@GrapheneOS/117136278553665985",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "nancestorsdietsugarcarbs",
+      "title": "Early Humans Likely Ate Carbs and Sugary Foods",
+      "titleZh": "远古人类也爱吃糖和碳水",
+      "summary": "科学家发现，早期人类可能经常吃含淀粉和糖分的食物，不是只靠吃肉活命。这项研究改变了我们对古人饮食的老印象，也说明咱们身体天生就适应碳水，跟现在减肥戒碳水的人想的不太一样。",
+      "quote": "Early humans likely consumed starchy and sugary foods, not just meat. 早期人类很可能摄入淀粉类和含糖食物，而不仅仅是肉类。",
+      "terms": [
+        "碳水=碳水化合物，是米面、水果、根茎类食物里的主要能量来源",
+        "淀粉=一种复杂碳水，在土豆、谷物里很多，消化后会变成糖",
+        "糖分=甜味食物里的简单碳水，比如水果和蜂蜜里的天然糖",
+        "早期人类=指几万到几十万年前，还没有农业时代的祖先人群",
+        "饮食结构=一个人或一个群体长期吃的东西种类和比例"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://www.history.com/articles/early-human-ancestors-diet-sugar-carbs",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "thingforthecommunity5a85",
+      "title": "I Got AWS Credits. So I Built Something for the Community.",
+      "titleZh": "我用AWS免费额度，给社区做了个活动管理工具",
+      "summary": "有个开发者成了AWS社区建设者，拿到免费云资源后，没拿来自己玩，而是给社区做了个叫eventinary.com的完全免费的活动管理软件。这事跟你有关的地方在于——如果你也想用云服务做点东西，但怕花钱，可以看看别人怎么用免费额度起步。它证明了：不烧钱也能做出能用的工具，关键是想法和动手。",
+      "quote": "I Got AWS Credits. So I Built Something for the Community. / A Completely free event management software.",
+      "terms": [
+        "AWS=亚马逊的云计算平台，提供服务器、存储等网络服务，按用量收费，但会给开发者发免费额度试用。",
+        "Free credits=免费额度，云厂商送给新用户或特定项目的一笔虚拟金额，用来抵扣真实使用费用。"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/aws-builders/i-got-aws-credits-so-i-built-something-for-the-community-5a85",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "hatsnextvitevsnextjs2608",
+      "title": "Create React App is Dead. What’s Next? (Vite vs. Next.js)",
+      "titleZh": "React官方脚手架退役，新手该用什么？",
+      "summary": "以前学React，大家都用`create-react-app`一键建项目，但现在它被官方“判了死刑”，不再维护了。这直接影响所有刚入门的React新手——以后建项目不能再依赖它，得换工具。现在主流替代方案是Vite和Next.js，一个更轻快，一个功能更全，选哪个取决于你要做简单网页还是完整网站。",
+      "quote": "Create React App is Dead. What’s Next? (Vite vs. Next.js) —— “For years, npx create-react-app my-app was the undisputed starting point for almost every React developer.”（多年来，`npx create-react-app my-app`几乎是每个React开发者公认的起点。）",
+      "terms": [
+        "Vite = 一个超快的项目构建工具，启动和刷新速度比老工具快好几倍，适合做轻量级应用",
+        "Next.js = 一个功能更全的React框架，自带页面路由和服务器渲染，适合做完整网站或需要SEO的项目",
+        "Webpack = 老牌打包工具，把所有代码和资源整理成浏览器能读的文件，但配置复杂，CRA曾帮你隐藏了它",
+        "Babel = 一个转换器，把新语法（比如JSX）转成老浏览器能识别的代码，CRA也替你包好了它"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/dixonaws/create-react-app-is-dead-whats-next-vite-vs-nextjs-2608",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "evelopersdifferently1eo3",
+      "title": "The Best Engineering Teams Use AI and Junior Developers Differently",
+      "titleZh": "AI时代，工程团队怎么用新人？答案变了",
+      "summary": "这篇文章讲的是，现在很多工程团队用AI工具（比如GitHub Copilot或Claude）后，效率确实提升了，但大家开始纠结一个问题：既然AI能写代码，那刚入行的初级程序员还有啥用？作者观察了一年，发现顶级团队的做法不是让AI替代新人，而是让AI帮新人干杂活，把新人解放出来去学更难的东西。这对你来说意味着，如果你现在开始学编程，别怕被AI抢饭碗，反而要想想怎么用它当你的“加速器”。",
+      "quote": "Over the past year, I've watched a lot of engineering teams go through the same adoption pattern with AI tools. They start using GitHub Copilot or Claude. Productivity goes up. And then someone in a meeting asks the question: \"Do we still need junior developers?\"（过去一年，我看到很多工程团队用AI工具时都走同样的路子：先上Copilot或Claude，效率涨了，然后会上有人问：“我们还需要初级程序员吗？”）",
+      "terms": [
+        "Claude=另一款AI助手，能读代码、改代码、解释代码，类似一个随叫随到的编程导师。",
+        "Productivity=生产力，指单位时间内能完成的工作量，AI让这个数字变高。"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/thomaslanghorst/the-best-engineering-teams-use-ai-and-junior-developers-differently-1eo3",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "csfordevopsengineers3ml9",
+      "title": "Kubernetes Basics for DevOps Engineers",
+      "titleZh": null,
+      "summary": "Introduction: Kubernetes can feel overwhelming when you first hear terms like Pods, Services, and Deployments thrown around. In this first post of my Kubernetes series, I’ll break down the fundamentals — what Kubernetes actually solves, and",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/tejas_kp/kubernetes-basics-for-devops-engineers-3ml9",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
+    },
+    {
+      "id": "edthemethodnotthemap4k3n",
+      "title": "I pentested my own AI hub and shipped the method, not the map",
+      "titleZh": null,
+      "summary": "I ran a penetration test on my own infrastructure last week. No Burp Suite, no exploit fired at production, no CVE popped. The whole engagement came down to one habit: refusing to believe a control was working until I had watched it work. T",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/mk023/i-pentested-my-own-ai-hub-and-shipped-the-method-not-the-map-4k3n",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
     },
     {
       "id": "sformanagingblockedusers",
@@ -264,54 +420,6 @@
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-21",
       "url": "https://www.felonybench.com/",
-      "image": null,
-      "tags": [],
-      "category": "hardware",
-      "translated": false
-    },
-    {
-      "id": "epsinmymaturationprocess",
-      "title": "Three important steps in my maturation process",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-21",
-      "url": "https://thomasdullien.github.io/posts/2026-08-21-three-important-steps-in-my-maturation-process/",
-      "image": null,
-      "tags": [],
-      "category": "hardware",
-      "translated": false
-    },
-    {
-      "id": "iggest2dmapoftheuniverse",
-      "title": "Scientists release biggest 2D map of the universe",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-21",
-      "url": "https://newscenter.lbl.gov/2026/08/10/scientists-release-biggest-2d-map-of-the-universe/",
-      "image": null,
-      "tags": [],
-      "category": "hardware",
-      "translated": false
-    },
-    {
-      "id": "tpskagicomchangelog11296",
-      "title": "Kagi added a setting for removing paywalled links from search results",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-21",
-      "url": "https://kagi.com/changelog#11296",
       "image": null,
       "tags": [],
       "category": "hardware",
@@ -818,95 +926,6 @@
         "规律"
       ],
       "category": "science",
-      "translated": true
-    },
-    {
-      "id": "aeon-stereotyping",
-      "title": "How we meet the future",
-      "titleZh": "我们如何遇见未来：刻板印象何时是工具、何时是罪",
-      "summary": "哲学散文：刻板印象不全是坏事——有时候它是快速理解世界的“工具”，有时候却变成偏见与伤害的“罪”。探讨它到底该何时用、何时该停下。",
-      "source": "Aeon",
-      "sourceUrl": "https://aeon.co",
-      "publishedAt": "2026-08-10",
-      "url": "https://aeon.co/essays/when-is-stereotyping-a-handy-tool-and-when-is-it-a-sin",
-      "image": null,
-      "tags": [
-        "哲学",
-        "认知",
-        "思辨"
-      ],
-      "category": "philosophy",
-      "translated": true
-    },
-    {
-      "id": "smashing-baseline",
-      "title": "How Baseline Can Help Ship Less JavaScript",
-      "titleZh": "用 Baseline 少写 JavaScript：浏览器原生能力就够了",
-      "summary": "Smashing Magazine 实战：用 Baseline、Intl、Fetch、<dialog>、CSS 锚点定位这些浏览器原生能力，少依赖第三方包，包体积更小、加载更快。对你做网站很实用。",
-      "source": "Smashing Magazine",
-      "sourceUrl": "https://www.smashingmagazine.com/",
-      "publishedAt": "2026-08-07",
-      "url": "https://smashingmagazine.com/2026/08/how-baseline-can-help-ship-less-javascript/",
-      "image": null,
-      "tags": [
-        "前端",
-        "性能",
-        "实战"
-      ],
-      "category": "frontend",
-      "translated": true
-    },
-    {
-      "id": "github-copilot-review-mcp",
-      "title": "Copilot code review: Agent skills and MCP now generally available",
-      "titleZh": "Copilot 代码审查：Agent Skills 与 MCP 正式可用",
-      "summary": "GitHub 宣布 Copilot 代码审查对 Agent skills（自定义技能）和 MCP 服务器（让 AI 调用外部工具的标准）正式可用。简单理解：AI 写代码、审代码，现在能接更多外部能力了。",
-      "source": "GitHub",
-      "sourceUrl": "https://github.blog/changelog/",
-      "publishedAt": "2026-07-29",
-      "url": "https://github.blog/changelog/2026-07-29-copilot-code-review-agent-skills-and-mcp-now-generally-available/",
-      "image": null,
-      "tags": [
-        "Agent",
-        "MCP",
-        "工具调用"
-      ],
-      "category": "ai",
-      "translated": true
-    },
-    {
-      "id": "google-gemini-35-flash",
-      "title": "Gemini 3.5 Flash",
-      "titleZh": "Gemini 3.5 Flash",
-      "summary": "Google 在 I/O 2026 发布 Gemini 3.5 Flash：首个把“前沿智能”和“行动力”结合的系列模型，编码和 Agent 基准上超过上一代 Pro，且成本更低。适合长周期任务。",
-      "source": "Google",
-      "sourceUrl": "https://blog.google/technology/ai/",
-      "publishedAt": "2026-05-20",
-      "url": "https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/",
-      "image": null,
-      "tags": [
-        "模型",
-        "Agent"
-      ],
-      "category": "ai",
-      "translated": true
-    },
-    {
-      "id": "google-gemini-omni",
-      "title": "Gemini Omni: any input, any output",
-      "titleZh": "Gemini Omni：从任意输入生成任意输出的多模态模型",
-      "summary": "Google 发布 Gemini Omni：可从任意输入生成任意输出（先从视频起步），融合物理理解和 Gemini 知识，生成的视频带 SynthID 水印。轻量版 Omni Flash 已向订阅用户和创作者开放。",
-      "source": "Google",
-      "sourceUrl": "https://blog.google/technology/ai/",
-      "publishedAt": "2026-05-20",
-      "url": "https://blog.google/innovation-and-ai/technology/ai/google-io-2026-all-our-announcements/",
-      "image": null,
-      "tags": [
-        "模型",
-        "视频",
-        "图像"
-      ],
-      "category": "ai",
       "translated": true
     }
   ]
