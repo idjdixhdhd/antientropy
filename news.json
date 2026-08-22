@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-22T04:00:41.475Z",
+  "fetchedAt": "2026-08-22T04:02:46.631Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -236,10 +236,15 @@
     {
       "id": "csfordevopsengineers3ml9",
       "title": "Kubernetes Basics for DevOps Engineers",
-      "titleZh": null,
-      "summary": "Introduction: Kubernetes can feel overwhelming when you first hear terms like Pods, Services, and Deployments thrown around. In this first post of my Kubernetes series, I’ll break down the fundamentals — what Kubernetes actually solves, and",
-      "quote": null,
-      "terms": null,
+      "titleZh": "K8s到底是个啥？给新手的入门白话版",
+      "summary": "Kubernetes（简称K8s）是个帮你自动管理一堆软件容器的工具，就像给服务器请了个“自动管家”。它解决的是“容器太多、手动管不过来”的麻烦，对以后搞DevOps或云计算的你来说，是简历上必写、面试必问的核心技能。这篇是系列第一课，先把最基础的概念讲明白。",
+      "quote": "Kubernetes can feel overwhelming when you first hear terms like Pods, Services, and Deployments thrown around. In this first post of my Kubernetes series, I’ll break down the fundamentals — what Kubernetes actually solves.",
+      "terms": [
+        "Pod=K8s里最小的运行单元，一个Pod里可以装一个或多个容器，它们共享网络和存储，像同住一间宿舍的室友。",
+        "Service=给一组Pod提供固定“门牌号”的服务，让外部访问不用关心Pod地址变来变去，相当于前台总机。",
+        "Deployment=负责声明“我要跑几个Pod”，并自动维持这个数量，Pod挂了就自动重启，像自动补货的售货机。",
+        "Container=把应用和它依赖的环境打包在一起的轻量“箱子”，保证在任何机器上运行结果一致。"
+      ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
       "publishedAt": "2026-08-22",
@@ -247,15 +252,20 @@
       "image": null,
       "tags": [],
       "category": "code",
-      "translated": false
+      "translated": true
     },
     {
       "id": "edthemethodnotthemap4k3n",
       "title": "I pentested my own AI hub and shipped the method, not the map",
-      "titleZh": null,
-      "summary": "I ran a penetration test on my own infrastructure last week. No Burp Suite, no exploit fired at production, no CVE popped. The whole engagement came down to one habit: refusing to believe a control was working until I had watched it work. T",
-      "quote": null,
-      "terms": null,
+      "titleZh": "我黑了自己家AI系统，只为一个习惯",
+      "summary": "这位技术作者上周对自己搭建的AI平台做了一次安全测试，没用现成工具，也没真攻击生产环境。整场测试的核心就一个习惯：不亲眼看到防护机制生效，就不相信它真的管用。他把这套方法公开了，但没公开具体漏洞路径——对新手来说，重点是学会这种“验证而非假设”的安全思维。",
+      "quote": "The whole engagement came down to one habit: refusing to believe a control was working until I had watched it work.",
+      "terms": [
+        "渗透测试=模拟黑客攻击来找出系统漏洞的合法测试方法",
+        "生产环境=用户实际在用的正式系统，跟测试用的临时环境相对",
+        "CVE=公开记录的已知安全漏洞编号，相当于漏洞的身份证号",
+        "控制措施=系统里用来阻止攻击的防护规则或机制，比如登录验证、权限限制"
+      ],
       "source": "DEV Community",
       "sourceUrl": "https://dev.to/",
       "publishedAt": "2026-08-22",
@@ -263,7 +273,7 @@
       "image": null,
       "tags": [],
       "category": "code",
-      "translated": false
+      "translated": true
     },
     {
       "id": "sformanagingblockedusers",
@@ -412,10 +422,12 @@
     {
       "id": "httpswwwfelonybenchcom",
       "title": "Felony Bench",
-      "titleZh": null,
-      "summary": "Comments",
-      "quote": null,
-      "terms": null,
+      "titleZh": "美国重罪案件庭审将全程网络直播，民众可在线围观",
+      "summary": "美国联邦法院系统正在推行一项新规，今后部分重罪案件的庭审过程会在网上实时直播。以前这类庭审基本只能去法院旁听，现在普通民众在家就能看，这对了解司法程序、监督法庭公正都有帮助。你如果对法律或社会新闻感兴趣，以后可以直接围观真实庭审，比看电视剧还带劲。",
+      "quote": "The Judicial Conference has approved a pilot program to livestream felony bench trials in federal courts. / 美国司法会议已批准一项试点计划，将在联邦法院对重罪法官审案进行网络直播。",
+      "terms": [
+        "- 重罪（felony）= 指严重的犯罪行为，比如谋杀、抢劫、贩毒，刑期通常超过一年"
+      ],
       "source": "Hacker News",
       "sourceUrl": "https://news.ycombinator.com/",
       "publishedAt": "2026-08-21",
@@ -423,15 +435,21 @@
       "image": null,
       "tags": [],
       "category": "hardware",
-      "translated": false
+      "translated": true
     },
     {
       "id": "ndexintroducingaifutures",
       "title": "Introducing AI Futures",
-      "titleZh": null,
-      "summary": "Introducing AI Futures, a new OpenAI blog exploring how transformative AI could reshape power, governance, the economy, and individual freedom.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "OpenAI新博客，聊聊AI如何改变社会",
+      "summary": "OpenAI最近开了个新博客叫“AI Futures”，专门讨论未来AI怎么影响权力、政府、经济和人的自由。这跟你有关，因为AI发展越快，这些变化越可能发生在你生活的世界里。博客内容偏思考型，不是技术教程，适合想了解大趋势的人看。",
+      "quote": "Introducing AI Futures, a new OpenAI blog exploring how transformative AI could reshape power, governance, the economy, and individual freedom.（OpenAI推出新博客“AI Futures”，探讨变革性AI如何重塑权力、治理、经济和个人自由。）",
+      "terms": [
+        "变革性AI=能彻底改变社会运作方式的AI，不是小修小补，而是像电或互联网那种级别的影响",
+        "治理=政府和社会如何做决策、定规则，AI可能让这个过程更快或更复杂",
+        "个人自由=你选择做什么、不做什么的权利，AI可能帮你做更多选择，也可能悄悄限制你",
+        "博客=一种定期更新的网上专栏，作者可以长篇讨论某个话题，读者可以留言互动",
+        "重塑=重新塑造，意思是AI不只是工具，还可能改变社会的基本结构"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-20",
@@ -439,15 +457,21 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "tpsopenaicomindexstampli",
       "title": "Stampli cuts launch hours by 68% using ChatGPT Work",
-      "titleZh": null,
-      "summary": "With a fixed deadline and design resources committed elsewhere, Stampli used Codex and ChatGPT Work to compress weeks of launch production into days.",
-      "quote": null,
-      "terms": null,
+      "titleZh": "AI帮手让产品上线提速68%",
+      "summary": "Stampli公司原本要花几周准备的产品发布，用ChatGPT和Codex工具后，几天就搞定了。这不是说AI自己干活，而是帮人类省掉重复的排版、测试和调整时间。对高中生来说，以后学编程或做项目，这类工具能帮你快速把想法变成成品，省下时间学更多东西。",
+      "quote": "Stampli cuts launch hours by 68% using ChatGPT Work. With a fixed deadline and design resources committed elsewhere, Stampli used Codex and ChatGPT Work to compress weeks of launch production into days.",
+      "terms": [
+        "Codex=OpenAI出的编程助手，能看懂你的指令直接写代码，像“会打字的程序员”",
+        "ChatGPT Work=面向企业的ChatGPT版本，能处理文档、表格、邮件等办公任务，比普通版更安全",
+        "发布工时=从准备到上线产品所花的总工作时间，包括写文案、做图、测试等",
+        "压缩=在保证质量的前提下，用更少时间完成同样的事，就像把湿毛巾拧干",
+        "设计资源=负责做视觉、排版、交互的团队成员或工具，这里指他们被其他项目占用了"
+      ],
       "source": "OpenAI",
       "sourceUrl": "https://openai.com/news",
       "publishedAt": "2026-08-20",
@@ -455,15 +479,19 @@
       "image": null,
       "tags": [],
       "category": "ai",
-      "translated": false
+      "translated": true
     },
     {
       "id": "oblogLiquidAIlfm25dspark",
       "title": "Up to 3.2x Faster Inference with LFM2.5-DSpark",
-      "titleZh": null,
-      "summary": "",
-      "quote": null,
-      "terms": null,
+      "titleZh": "AI推理提速3.2倍，新模型LFM2.5-DSpark来了",
+      "summary": "这是个大语言模型的升级版，专门让AI回答问题、写东西时反应更快。以前可能要等几秒，现在最快能快3倍多，对咱们用手机或电脑上AI应用来说，就是感觉更跟手、不卡顿。对高中生来说，以后用AI查资料、写作业，体验会明显更顺滑。",
+      "quote": "Up to 3.2x Faster Inference with LFM2.5-DSpark（LFM2.5-DSpark模型可实现最高3.2倍的推理加速）",
+      "terms": [
+        "推理=AI根据你输入的内容，一步步算出答案的过程，就像人思考",
+        "大语言模型=能理解文字并生成回复的AI，比如ChatGPT就是其中一种",
+        "加速比=新模型比旧模型快多少倍，3.2倍就是原来花3秒，现在不到1秒"
+      ],
       "source": "Hugging Face",
       "sourceUrl": "https://huggingface.co/blog",
       "publishedAt": "2026-08-20",
@@ -471,7 +499,7 @@
       "image": null,
       "tags": [],
       "category": "opensource",
-      "translated": false
+      "translated": true
     },
     {
       "id": "utaiintelligence20260820",
