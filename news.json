@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-22T09:01:44.163Z",
+  "fetchedAt": "2026-08-22T14:00:34.218Z",
   "status": "live",
   "note": "全品类自动抓取（v3 Cron）。新增条目已由 DeepSeek 三段式翻译；未译保留英文。",
   "items": [
@@ -504,6 +504,195 @@
       "translated": true
     },
     {
+      "id": "queofsorrybyjustinbieber",
+      "title": "A Kantian Critique of \"Sorry\" by Justin Bieber",
+      "titleZh": "用康德哲学拆解比伯的《对不起》",
+      "summary": "这篇学术文章拿康德伦理学当尺子，去量贾斯汀·比伯那首《对不起》到底道没道成歉。康德认为道歉得真心认错、尊重对方，不是光说句“sorry”就完事。你看完会明白，流行歌里的道歉，跟哲学上的“真道歉”差多远。",
+      "quote": "A Kantian Critique of \"Sorry\" by Justin Bieber — 用康德哲学视角批判比伯的《对不起》，分析其歌词中的道歉是否合乎康德式道德要求。",
+      "terms": [
+        "康德伦理学=强调动机纯正、把人当目的而非手段的道德理论",
+        "道歉=对过错承担责任的言语行为，康德要求必须出于义务感",
+        "道德义务=不是被逼的，而是理性自主要求自己做的事",
+        "流行文化批判=用严肃理论拆解大众娱乐产品里的价值信息"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://decodingvibes.com/blog/a-kantian-critique-of-sorry-by-justin-bieber/",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "httpsmunderdifflin",
+      "title": "Munder Difflin – Agent harness to run an office of your clones",
+      "titleZh": "克隆人替你上班？这个AI工具让办公室全是“你”",
+      "summary": "这是一个叫Munder Difflin的AI工具，能让你同时操控多个“数字分身”去处理不同任务，相当于你一个人开了一家全是自己的公司。对高中生来说，它展示了未来工作可能不再需要“亲自到场”，但前提是你得学会怎么给分身写清楚指令。它现在还在早期阶段，但已经能看出AI协作的新方向。",
+      "quote": "Munder Difflin – Agent harness to run an office of your clones",
+      "terms": [
+        "Clone=数字分身，按你的指令和风格复制出的虚拟执行者"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://munderdiffl.in/",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "02106096234021yJTvlRLmhi",
+      "title": "Z80–The 1970s Microprocessor Still Alive",
+      "titleZh": "50岁的Z80芯片，今天还在你身边干活",
+      "summary": "Z80是1970年代发明的老式电脑处理器，跟现在手机里的芯片完全不是一回事。但它特别皮实、省电、便宜，所以到今天还在电梯、打印机、游戏机里默默工作。你家里那些“老古董”电器，说不定里面就藏着一颗Z80。",
+      "quote": "Z80–The 1970s Microprocessor Still Alive（Z80——这颗1970年代的微处理器依然活着）",
+      "terms": [
+        "微处理器=电脑的“大脑”，负责算数和发指令",
+        "嵌入式系统=藏在机器内部、专门干一件事的小电脑",
+        "寄存器=处理器内部临时存数据的小格子",
+        "时钟频率=处理器每秒“心跳”次数，越高算得越快",
+        "指令集=处理器能听懂的基本命令清单"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://www.computer.org/csdl/magazine/mi/2021/06/09623402/1yJTvlRLmhi",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "anadaustradenegotiations",
+      "title": "Canada suspends trade negotiations with USA and match tariffs dollar for dollar",
+      "titleZh": "加拿大对美反制，暂停贸易谈判",
+      "summary": "加拿大宣布暂停与美国的贸易谈判，并对美国商品实施同等金额的关税反制。这意味着两国贸易关系进一步紧张，可能影响你买到的进口商品价格。对高中生来说，这解释了为什么国际新闻里的“关税”会悄悄影响你的零花钱和家庭消费。",
+      "quote": "Canada suspends trade negotiations with USA and match tariffs dollar for dollar.",
+      "terms": [
+        "关税=一国对进口商品征收的税，提高关税会让外国货变贵",
+        "贸易谈判=两国商量买卖规则和税率的过程，谈崩了就可能互相加税",
+        "反制=对方加税，我也加税，用同样手段回应",
+        "等额=金额一模一样，不加多也不减少",
+        "暂停谈判=暂时停止商量，不代表彻底结束，但短期内关系更僵"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://www.pm.gc.ca/en/news/statements/2026/08/21/statement-prime-minister-carney-canada-us-trade-negotiations",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "metatrialchildrenprivacy",
+      "title": "Hook, hold, harvest and hide: Meta&#x27;s alleged strategy laid out in first week",
+      "titleZh": "Meta内部文件曝光：先钩住你，再藏起真相",
+      "summary": "这是Meta（脸书母公司）在法庭上被公开的一份内部策略文件，讲的是他们怎么让用户上瘾、留住用户、收割数据，最后把风险藏起来。这事跟你直接相关——因为你每天刷的Instagram和Facebook，可能就是这么设计出来的。文件只披露了第一周的内容，但已经够让人细思极恐。",
+      "quote": "The documents allege Meta's strategy of \"hook, hold, harvest and hide\" — designed to maximize user engagement while concealing harms.",
+      "terms": [
+        "钩住（Hook）= 用点赞、通知、无限下滑等设计，让你忍不住一直刷",
+        "收割（Harvest）= 收集你的位置、喜好、社交关系等数据，用来精准投放广告",
+        "隐藏（Hide）= 明知产品可能伤害青少年心理健康，却对外隐瞒研究结果"
+      ],
+      "source": "Hacker News",
+      "sourceUrl": "https://news.ycombinator.com/",
+      "publishedAt": "2026-08-22",
+      "url": "https://www.theguardian.com/technology/2026/aug/22/meta-trial-children-privacy",
+      "image": null,
+      "tags": [],
+      "category": "hardware",
+      "translated": true
+    },
+    {
+      "id": "pelineacrosseveryportani",
+      "title": "App Hardening: One Obfuscation Pipeline Across Every Port",
+      "titleZh": "给App“加密混淆”，一个流程管住所有平台",
+      "summary": "很多跨平台App只给安卓版做混淆，但苹果、网页、电脑版全漏了，等于白做。现在有个叫Codename One的工具，能在App还没分成各个平台版本之前，先统一做一次“加固”，这样所有平台都自带防护。对开发者来说，不用每个平台单独搞，省事又安全。",
+      "quote": "Obfuscating only the Android artifact is a poor security model for a cross-platform application. Codename One App Hardening transforms the merged application before it splits into Android, iOS, JavaScript, Windows, Linux, and desktop builds.",
+      "terms": [
+        "混淆=把代码里的变量名、函数名改成乱码，让黑客看不懂逻辑，但功能不变",
+        "跨平台=写一次代码，能同时生成安卓、苹果、电脑等多个系统的App",
+        "构建=把写好的代码打包成能安装运行的最终文件的过程",
+        "加固=在发布前给App加一层防护，防止被反编译或篡改",
+        "产物=构建出来的那个安装包文件，比如安卓的.apk或苹果的.ipa"
+      ],
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/codenameone/app-hardening-one-obfuscation-pipeline-across-every-port-ani",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": true
+    },
+    {
+      "id": "leinflutterexactcode4cf7",
+      "title": "Convert Image URL to File in Flutter — Exact Code",
+      "titleZh": null,
+      "summary": "So, in this article, I will be showing you how you can convert an image URL to a File in Flutter. The situation comes up more often than you would think. You download an avatar, a product photo, or an attachment, and you need a real file on",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/mryadavgulshan/convert-image-url-to-file-in-flutter-exact-code-4cf7",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
+    },
+    {
+      "id": "brienjobhuntwithabot56g3",
+      "title": "Job Hunt With a Bot?",
+      "titleZh": null,
+      "summary": "Hi everyone. Unfortunately I am now in a position where I need to look for a job. I do not want to go into the whys. I want to show you how I am searching for a job in times like this. The Job Hunt bot I created a Job Hunt bot on Grok Bot. ",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/debs_obrien/job-hunt-with-a-bot-56g3",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
+    },
+    {
+      "id": "ontrolitintradingbotso1k",
+      "title": "Polymarket Slippage: How to Control It in Trading Bots",
+      "titleZh": null,
+      "summary": "Slippage can quietly destroy a profitable Polymarket trading strategy. Your signal may correctly identify a YES token as undervalued, but that does not mean you can actually buy the required position at the price used by your model. If the ",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/nagi777/polymarket-slippage-how-to-control-it-in-trading-bots-o1k",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
+    },
+    {
+      "id": "filesizeinthebrowser12ha",
+      "title": "Compressing an image to an exact file size, in the browser",
+      "titleZh": null,
+      "summary": "\"Make this photo under 100 KB\" is one of the most common things people need from an image tool, and one of the few things almost no image editor exposes directly. Photoshop gives you a quality slider. cwebp gives you -q . The canvas API giv",
+      "quote": null,
+      "terms": null,
+      "source": "DEV Community",
+      "sourceUrl": "https://dev.to/",
+      "publishedAt": "2026-08-22",
+      "url": "https://dev.to/textmachine/compressing-an-image-to-an-exact-file-size-in-the-browser-12ha",
+      "image": null,
+      "tags": [],
+      "category": "code",
+      "translated": false
+    },
+    {
       "id": "sformanagingblockedusers",
       "title": "Better tools for managing blocked users",
       "titleZh": "拉黑名单更好管了，找人更快更省事",
@@ -814,181 +1003,6 @@
       "tags": [],
       "category": "game",
       "translated": false
-    },
-    {
-      "id": "sblueprintsmilanimations",
-      "title": "Timing Charts: A Blueprint For SMIL Animations",
-      "titleZh": null,
-      "summary": "Discover SMIL, the often-overlooked way to animate SVGs that works inside ` ` tags and can fully animate everything in an SVG without JavaScript.",
-      "quote": null,
-      "terms": null,
-      "source": "Smashing Magazine",
-      "sourceUrl": "https://www.smashingmagazine.com/",
-      "publishedAt": "2026-08-20",
-      "url": "https://smashingmagazine.com/2026/08/timing-charts-blueprint-smil-animations/",
-      "image": null,
-      "tags": [],
-      "category": "frontend",
-      "translated": false
-    },
-    {
-      "id": "devto-framework-recover",
-      "title": "Recover a Bricked Framework 13 with a DIY USB Flash",
-      "titleZh": "用自制 U 盘救活一台砖掉的 Framework 13 笔记本",
-      "summary": "开发者实战：笔记本刷 BIOS 失败变砖，靠自己做的 U 盘引导工具 + Bash/Python 脚本救回来。动手党可以学思路，普通用户可以了解笔记本底层修复怎么玩。",
-      "source": "DEV Community",
-      "sourceUrl": "https://dev.to/",
-      "publishedAt": "2026-08-19",
-      "url": "https://dev.to/robust_true_try/recover-a-bricked-framework-13-with-a-diy-usb-flash-9li",
-      "image": null,
-      "tags": [
-        "编程",
-        "硬件",
-        "实战"
-      ],
-      "category": "code",
-      "translated": true
-    },
-    {
-      "id": "devto-airreview",
-      "title": "The AI Review Trap: Why 9 Out of 10 Models Just Parrot Your Docs",
-      "titleZh": "AI 代码评审陷阱：90% 模型只是在复读你的代码库",
-      "summary": "工程师评测发现：90% 的 AI 代码评审模型只是把测试文档复读一遍——并没有真正\"理解\"代码。搞 AI 自动化的人值得看，别被\"AI 评审\"假象骗了。",
-      "source": "DEV Community",
-      "sourceUrl": "https://dev.to/",
-      "publishedAt": "2026-08-19",
-      "url": "https://dev.to/insight105/the-ai-review-trap-why-9-out-of-10-models-just-parrot-your-docs-d67",
-      "image": null,
-      "tags": [
-        "AI",
-        "测试",
-        "评测"
-      ],
-      "category": "code",
-      "translated": true
-    },
-    {
-      "id": "hn-moon-satellite",
-      "title": "Tiny satellite will use the dark side of the Moon as a shield",
-      "titleZh": "用月球背面当\"屏蔽罩\"的小卫星：去偷听早期宇宙的低语",
-      "summary": "剑桥大学新发射一颗小卫星，靠月球背面挡住地球无线电干扰，专门监听早期宇宙的低频信号——天文学的脑洞玩法。",
-      "source": "Hacker News",
-      "sourceUrl": "https://news.ycombinator.com/",
-      "publishedAt": "2026-08-19",
-      "url": "https://www.cam.ac.uk/research/news/tiny-satellite-will-use-the-dark-side-of-the-moon-to-eavesdrop-on-whispers-from-the-early-universe",
-      "image": null,
-      "tags": [
-        "天文",
-        "卫星",
-        "前沿"
-      ],
-      "category": "science",
-      "translated": true
-    },
-    {
-      "id": "yys-oddgame",
-      "title": "一款“刮鱼鳞”的游戏上线前，数百万人已经玩过它的山寨版",
-      "titleZh": "一款“刮鱼鳞”的游戏上线前，数百万人已玩过它的山寨版",
-      "summary": "游研社人文故事：创意可以被抄走，但精神不会。一款小众独立游戏的山寨版先火了——讲的是原创与模仿背后的游戏文化。",
-      "source": "游研社",
-      "sourceUrl": "https://www.yystv.cn/",
-      "publishedAt": "2026-08-19",
-      "url": "https://www.yystv.cn/p/14282",
-      "image": null,
-      "tags": [
-        "游戏",
-        "人文",
-        "独立游戏"
-      ],
-      "category": "game",
-      "translated": true
-    },
-    {
-      "id": "gilequbitatatime20260819",
-      "title": "Building a Quantum Computer, One Fragile Qubit at a Time",
-      "titleZh": null,
-      "summary": "No one yet knows which technology will power the quantum computers of the future, but the race to create them has already produced some of science’s most intricate machinery. The post Building a Quantum Computer, One Fragile Qubit at a Time",
-      "quote": null,
-      "terms": null,
-      "source": "Quanta Magazine",
-      "sourceUrl": "https://www.quantamagazine.org",
-      "publishedAt": "2026-08-19",
-      "url": "https://www.quantamagazine.org/building-a-quantum-computer-one-fragile-qubit-at-a-time-20260819/",
-      "image": "https://www.quantamagazine.org/wp-content/uploads/2056/08/IBMs-quantum-computer-cr-Graham-Carlow-Default.webp",
-      "tags": [],
-      "category": "science",
-      "translated": false
-    },
-    {
-      "id": "openai-chatgpt-teens",
-      "title": "Introducing ChatGPT for Teens",
-      "titleZh": "推出面向青少年的 ChatGPT",
-      "summary": "OpenAI 推出青少年版 ChatGPT，配套家长管控和适龄安全设置。说明大厂也开始把 AI 往更年轻的用户群里推了——和你这个年纪直接相关。",
-      "source": "OpenAI",
-      "sourceUrl": "https://openai.com/news",
-      "publishedAt": "2026-08-18",
-      "url": "https://openai.com/index/chatgpt-for-teens/",
-      "image": null,
-      "tags": [
-        "产品",
-        "青少年"
-      ],
-      "category": "ai",
-      "translated": true
-    },
-    {
-      "id": "aeon-zealotry",
-      "title": "In praise of zealotry",
-      "titleZh": "赞颂狂热：为什么被边缘化的人需要“不礼貌”的辩论",
-      "summary": "思想史散文：早期女权主义者（如 Mary Astell）拒绝在辩论里保持“礼貌”，因为礼貌的框架本身就带着特权。关于辩论伦理、思想自由与发声方式的哲学反思。",
-      "source": "Aeon",
-      "sourceUrl": "https://aeon.co",
-      "publishedAt": "2026-08-18",
-      "url": "https://aeon.co/essays/polite-debate-has-privilege-the-marginalised-need-zealotry",
-      "image": null,
-      "tags": [
-        "哲学",
-        "伦理",
-        "思辨"
-      ],
-      "category": "philosophy",
-      "translated": true
-    },
-    {
-      "id": "yys-sega",
-      "title": "世嘉在中国：30年、7家公司，与一次新的归来",
-      "titleZh": "世嘉在中国：30 年、7 家公司，与一次新的归来",
-      "summary": "从街机、主机到 VCD，再到 PC、网游与旗舰店——世嘉在中国的 30 年，就是一部中国游戏玩家记忆的编年史。",
-      "source": "游研社",
-      "sourceUrl": "https://www.yystv.cn/",
-      "publishedAt": "2026-08-18",
-      "url": "https://www.yystv.cn/p/14276",
-      "image": null,
-      "tags": [
-        "游戏",
-        "历史",
-        "人文"
-      ],
-      "category": "game",
-      "translated": true
-    },
-    {
-      "id": "csstricks-darkmode",
-      "title": "Dark mode toggles: two states are enough",
-      "titleZh": "深色模式开关：两种状态就够，别过度设计",
-      "summary": "CSS-Tricks：深色模式切换只要“亮/暗”两种状态就够了，别搞一堆中间档把用户绕晕。前端 UI 的实用小贴士，你站点也能用。",
-      "source": "CSS-Tricks",
-      "sourceUrl": "https://css-tricks.com/",
-      "publishedAt": "2026-08-17",
-      "url": "https://css-tricks.com/dark-mode-toggles-two-states-are-enough/",
-      "image": null,
-      "tags": [
-        "前端",
-        "UI",
-        "深色模式"
-      ],
-      "category": "frontend",
-      "translated": true
     }
   ]
 }
